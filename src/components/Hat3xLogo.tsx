@@ -1,14 +1,14 @@
-const Hat3xLogo = ({ className = "", size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) => {
+const Hat3xLogo = ({ className = "", size = "md" }: {className?: string;size?: "sm" | "md" | "lg";}) => {
   const sizes = {
     sm: { text: "text-lg", width: 100, height: 32 },
     md: { text: "text-2xl", width: 140, height: 42 },
-    lg: { text: "text-4xl", width: 200, height: 56 },
+    lg: { text: "text-4xl", width: 200, height: 56 }
   };
   const s = sizes[size];
 
   return (
     <div className={`relative inline-flex items-center ${className}`}>
-      <svg width={s.width} height={s.height} viewBox="0 0 200 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width={s.width} height={s.height} viewBox="0 0 200 56" fill="none" xmlns="http://www.w3.org/2000/svg" className="">
         {/* Wordmark HAT3X */}
         <text
           x="100"
@@ -18,8 +18,8 @@ const Hat3xLogo = ({ className = "", size = "md" }: { className?: string; size?:
           fontWeight="800"
           fontSize="34"
           fill="white"
-          letterSpacing="4"
-        >
+          letterSpacing="4">
+
           HAT3X
         </text>
         {/* Saturn ring / ellipse crossing horizontally */}
@@ -31,8 +31,8 @@ const Hat3xLogo = ({ className = "", size = "md" }: { className?: string; size?:
           stroke="url(#ring-gradient)"
           strokeWidth="1.8"
           fill="none"
-          opacity="0.85"
-        />
+          opacity="0.85" />
+
         <ellipse
           cx="100"
           cy="28"
@@ -42,8 +42,8 @@ const Hat3xLogo = ({ className = "", size = "md" }: { className?: string; size?:
           strokeWidth="0.6"
           fill="none"
           opacity="0.4"
-          strokeDasharray="4 6"
-        />
+          strokeDasharray="4 6" />
+
         <defs>
           <linearGradient id="ring-gradient" x1="0" y1="28" x2="200" y2="28" gradientUnits="userSpaceOnUse">
             <stop offset="0%" stopColor="hsl(265 100% 60%)" stopOpacity="0.3" />
@@ -54,8 +54,8 @@ const Hat3xLogo = ({ className = "", size = "md" }: { className?: string; size?:
           </linearGradient>
         </defs>
       </svg>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Hat3xLogo;
