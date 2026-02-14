@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
 import ContactForm from "@/components/ContactForm";
-import { Mail, Phone, Clock } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 
 const Contacto = () =>
 <Layout>
@@ -41,7 +41,7 @@ const Contacto = () =>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Clock className="w-4 h-4 text-primary mt-0.5" />
+                  
                   <div>
                     
                     <p>L–V, 9:00–18:00 CET</p>
