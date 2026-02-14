@@ -44,7 +44,7 @@ const Contacto = () =>
                   
                   <div>
                     
-                    <p>L–V, 9:00–18:00 CET</p>
+                    
                   </div>
                 </div>
               </div>
