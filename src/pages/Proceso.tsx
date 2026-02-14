@@ -9,42 +9,42 @@ import { Button } from "@/components/ui/button";
 const fade = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
 const fases = [
-  {
-    n: "01", title: "Diagnóstico", desc: "Entendemos tu negocio, procesos y objetivos. Identificamos dónde la IA aporta valor real.",
-    entregables: ["Mapa de procesos y dolor", "Oportunidades de IA priorizadas", "Roadmap ejecutable", "Presupuesto orientativo"],
-    necesitas: ["Acceso a stakeholders clave", "Descripción de procesos actuales", "Objetivos de negocio claros"],
-    duracion: "1–2 semanas",
-  },
-  {
-    n: "02", title: "Prototipo", desc: "Construimos un MVP funcional para validar la solución con datos y usuarios reales.",
-    entregables: ["Prototipo funcional", "Testing con datos reales", "Feedback documentado", "Plan de iteración"],
-    necesitas: ["Datos de prueba o acceso a datos", "Feedback del equipo usuario", "Disponibilidad para revisar"],
-    duracion: "2–4 semanas",
-  },
-  {
-    n: "03", title: "Integración", desc: "Conectamos la solución con tus sistemas, datos y flujos de trabajo existentes.",
-    entregables: ["Integraciones configuradas y testadas", "Documentación técnica", "Formación inicial del equipo", "Protocolo de soporte"],
-    necesitas: ["Acceso a sistemas y APIs", "Responsable técnico del cliente", "Plan de comunicación interna"],
-    duracion: "2–6 semanas",
-  },
-  {
-    n: "04", title: "Escalado", desc: "Medimos impacto, iteramos y expandimos la solución a más procesos o equipos.",
-    entregables: ["KPIs definidos y medidos", "Informes de impacto", "Plan de expansión", "Sesiones de mejora continua"],
-    necesitas: ["Compromiso con métricas", "Feedback continuado", "Visión a medio plazo"],
-    duracion: "Continuo",
-  },
-];
+{
+  n: "01", title: "Diagnóstico", desc: "Entendemos tu negocio, procesos y objetivos. Identificamos dónde la IA aporta valor real.",
+  entregables: ["Mapa de procesos y dolor", "Oportunidades de IA priorizadas", "Roadmap ejecutable", "Presupuesto orientativo"],
+  necesitas: ["Acceso a stakeholders clave", "Descripción de procesos actuales", "Objetivos de negocio claros"],
+  duracion: "1–2 semanas"
+},
+{
+  n: "02", title: "Prototipo", desc: "Construimos un MVP funcional para validar la solución con datos y usuarios reales.",
+  entregables: ["Prototipo funcional", "Testing con datos reales", "Feedback documentado", "Plan de iteración"],
+  necesitas: ["Datos de prueba o acceso a datos", "Feedback del equipo usuario", "Disponibilidad para revisar"],
+  duracion: "2–4 semanas"
+},
+{
+  n: "03", title: "Integración", desc: "Conectamos la solución con tus sistemas, datos y flujos de trabajo existentes.",
+  entregables: ["Integraciones configuradas y testadas", "Documentación técnica", "Formación inicial del equipo", "Protocolo de soporte"],
+  necesitas: ["Acceso a sistemas y APIs", "Responsable técnico del cliente", "Plan de comunicación interna"],
+  duracion: "2–6 semanas"
+},
+{
+  n: "04", title: "Escalado", desc: "Medimos impacto, iteramos y expandimos la solución a más procesos o equipos.",
+  entregables: ["KPIs definidos y medidos", "Informes de impacto", "Plan de expansión", "Sesiones de mejora continua"],
+  necesitas: ["Compromiso con métricas", "Feedback continuado", "Visión a medio plazo"],
+  duracion: "Continuo"
+}];
 
-const Proceso = () => (
-  <Layout>
+
+const Proceso = () =>
+<Layout>
     <section className="py-20 md:py-28">
       <div className="container mx-auto px-4 lg:px-8">
         <SectionHeader badge="Proceso" title="Cómo trabajamos" subtitle="Un proceso claro, medible y orientado a resultados. Sin sorpresas." />
       </div>
     </section>
 
-    {fases.map((f, i) => (
-      <section key={i} className="py-8 md:py-12">
+    {fases.map((f, i) =>
+  <section key={i} className="py-8 md:py-12">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div {...fade} transition={{ delay: i * 0.1 }}>
             <GlassCard highlight={i === 0} className="max-w-4xl mx-auto">
@@ -53,16 +53,16 @@ const Proceso = () => (
                 <div>
                   <h3 className="text-2xl font-bold text-foreground">{f.title}</h3>
                   <p className="text-muted-foreground mt-1">{f.desc}</p>
-                  <span className="inline-block text-xs text-primary font-medium mt-2 glass-card px-3 py-1">{f.duracion}</span>
+                  <span className="inline-block text-xs font-medium mt-2 glass-card px-3 py-1 text-accent">{f.duracion}</span>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <div>
-                  <h4 className="text-sm font-semibold text-primary mb-3">Entregables</h4>
+                  <h4 className="text-sm font-semibold mb-3 text-accent">Entregables</h4>
                   <ul className="text-sm text-muted-foreground space-y-2">
-                    {f.entregables.map((e, j) => (
-                      <li key={j} className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" /> {e}</li>
-                    ))}
+                    {f.entregables.map((e, j) =>
+                <li key={j} className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" /> {e}</li>
+                )}
                   </ul>
                 </div>
                 <div>
@@ -76,7 +76,7 @@ const Proceso = () => (
           </motion.div>
         </div>
       </section>
-    ))}
+  )}
 
     {/* Gobierno del proyecto */}
     <section className="py-16">
@@ -85,7 +85,7 @@ const Proceso = () => (
           <h3 className="text-xl font-semibold text-foreground mb-4">Gobierno del proyecto</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
             <div>
-              <h4 className="text-primary font-medium mb-2">Comunicación</h4>
+              <h4 className="font-medium mb-2 text-accent">Comunicación</h4>
               <ul className="space-y-1">
                 <li>· Reuniones semanales de seguimiento</li>
                 <li>· Canal de comunicación directo</li>
@@ -93,7 +93,7 @@ const Proceso = () => (
               </ul>
             </div>
             <div>
-              <h4 className="text-primary font-medium mb-2">Medición</h4>
+              <h4 className="font-medium mb-2 text-accent">Medición</h4>
               <ul className="space-y-1">
                 <li>· KPIs definidos con el cliente</li>
                 <li>· Baseline antes de implementar</li>
@@ -112,7 +112,7 @@ const Proceso = () => (
         </Button>
       </Link>
     </section>
-  </Layout>
-);
+  </Layout>;
+
 
 export default Proceso;
