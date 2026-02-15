@@ -95,28 +95,6 @@ const Index = () => {
             </div>
           </motion.div>
 
-          {/* Abstract mockup */}
-          <motion.div {...fade} transition={{ delay: 0.3, duration: 0.6 }} className="mt-16 lg:mt-20">
-            <div className="glass-card p-6 md:p-8 max-w-4xl mx-auto glow-purple">
-              <div className="grid grid-cols-3 gap-4">
-                <div className="glass-card p-4">
-                  <div className="text-xs text-muted-foreground mb-2">Agentes activos</div>
-                  <div className="text-2xl font-bold text-foreground">12</div>
-                  <div className="h-1 bg-primary/30 rounded mt-2"><div className="h-1 bg-primary rounded w-3/4" /></div>
-                </div>
-                <div className="glass-card p-4">
-                  <div className="text-xs text-muted-foreground mb-2">Automatizaciones</div>
-                  <div className="text-2xl font-bold text-foreground">48</div>
-                  <div className="h-1 bg-accent/30 rounded mt-2"><div className="h-1 bg-accent rounded w-4/5" /></div>
-                </div>
-                <div className="glass-card p-4">
-                  <div className="text-xs text-muted-foreground mb-2">KPIs mejorados</div>
-                  <div className="text-2xl font-bold text-gradient">↑</div>
-                  <div className="h-1 bg-primary/30 rounded mt-2"><div className="h-1 bg-primary rounded w-2/3" /></div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
