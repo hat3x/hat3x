@@ -73,7 +73,7 @@ const Index = () => {
         <div className="container mx-auto px-4 lg:px-8 relative">
           <motion.div {...fade} className="max-w-4xl">
             <Hat3xLogo size="lg" className="mb-8" />
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-6 text-primary">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-6 text-primary-foreground">
               Implementamos IA que mejora tu negocio{" "}
               <span className="text-gradient">desde el primer mes.</span>
             </h1>
