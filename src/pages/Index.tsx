@@ -286,6 +286,28 @@ const Index = () => {
         </div>
       </section>
 
+      {/* TU IDEA */}
+      <section className="py-20 md:py-28">
+        <div className="container mx-auto px-4 lg:px-8">
+          <SectionHeader badge="Tu idea" title="¿Tienes una idea pero no los medios para construirla?" subtitle="Tú pones la visión, nosotros la tecnología. Convertimos ideas revolucionarias en productos reales con IA." />
+          <motion.div {...fade} className="glass-card-highlight p-8 md:p-12 max-w-3xl mx-auto text-center">
+            <Sparkles className="w-10 h-10 text-accent mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-foreground mb-3">De la idea al producto</h3>
+            <p className="text-sm text-muted-foreground mb-6 max-w-xl mx-auto">Analizamos viabilidad, diseñamos la solución y la desarrollamos de principio a fin. Sin necesidad de equipo técnico propio.</p>
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground mb-8">
+              <span className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-primary" /> Evaluación gratuita</span>
+              <span className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-primary" /> MVP en semanas</span>
+              <span className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-primary" /> IA integrada</span>
+            </div>
+            <Link to="/tu-idea">
+              <Button className="bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-base font-semibold px-8 py-3 h-auto gap-2">
+                Cuéntanos tu idea <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA FINAL */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 lg:px-8">
