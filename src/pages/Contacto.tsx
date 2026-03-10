@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
 import ContactForm from "@/components/ContactForm";
-import { Mail } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 
 const Contacto = () =>
 <Layout>
