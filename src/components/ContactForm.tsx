@@ -72,7 +72,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className={labelClass}>Tamaño de empresa</label>
-              <select className={inputClass}>
+              <select name="tamano" className={inputClass}>
                 <option value="">Seleccionar</option>
                 <option>1–10 empleados</option>
                 <option>11–50 empleados</option>
@@ -82,7 +82,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
             </div>
             <div>
               <label className={labelClass}>Área de interés</label>
-              <select className={inputClass}>
+              <select name="area" className={inputClass}>
                 <option value="">Seleccionar</option>
                 <option>Productividad</option>
                 <option>Atención al cliente</option>
@@ -96,7 +96,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className={labelClass}>Objetivo principal</label>
-              <select className={inputClass}>
+              <select name="objetivo" className={inputClass}>
                 <option value="">Seleccionar</option>
                 <option>Reducir costes</option>
                 <option>Mejorar productividad</option>
@@ -108,7 +108,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
             </div>
             <div>
               <label className={labelClass}>Presupuesto estimado (opcional)</label>
-              <select className={inputClass}>
+              <select name="presupuesto" className={inputClass}>
                 <option value="">Seleccionar</option>
                 <option>&lt; 5.000 €</option>
                 <option>5.000 – 15.000 €</option>
@@ -121,7 +121,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
       )}
       <div>
         <label className={labelClass}>Mensaje</label>
-        <textarea className={`${inputClass} min-h-[100px]`} placeholder="Cuéntanos brevemente qué necesitas…" />
+        <textarea name="mensaje" className={`${inputClass} min-h-[100px]`} placeholder="Cuéntanos brevemente qué necesitas…" />
       </div>
       <p className="text-xs text-muted-foreground">No spam. Solo información sobre tu consulta.</p>
       <Button
