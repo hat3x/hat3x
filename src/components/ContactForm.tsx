@@ -11,6 +11,23 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const nombre = formData.get("nombre") || "";
+    const email = formData.get("email") || "";
+    const empresa = formData.get("empresa") || "";
+    const cargo = formData.get("cargo") || "";
+    const tamano = formData.get("tamano") || "";
+    const area = formData.get("area") || "";
+    const objetivo = formData.get("objetivo") || "";
+    const presupuesto = formData.get("presupuesto") || "";
+    const mensaje = formData.get("mensaje") || "";
+
+    const subject = encodeURIComponent(`Consulta de ${nombre} - ${empresa}`);
+    const body = encodeURIComponent(
+      `Nombre: ${nombre}\nEmail: ${email}\nEmpresa: ${empresa}\nCargo: ${cargo}\nTamaño: ${tamano}\nÁrea: ${area}\nObjetivo: ${objetivo}\nPresupuesto: ${presupuesto}\n\nMensaje:\n${mensaje}`
+    );
+    window.location.href = `mailto:info@hat3x.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 
@@ -33,21 +50,21 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className={labelClass}>Nombre *</label>
-          <input required className={inputClass} placeholder="Tu nombre" />
+          <input required name="nombre" className={inputClass} placeholder="Tu nombre" />
         </div>
         <div>
           <label className={labelClass}>Email *</label>
-          <input required type="email" className={inputClass} placeholder="email@empresa.com" />
+          <input required name="email" type="email" className={inputClass} placeholder="email@empresa.com" />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className={labelClass}>Empresa *</label>
-          <input required className={inputClass} placeholder="Nombre de tu empresa" />
+          <input required name="empresa" className={inputClass} placeholder="Nombre de tu empresa" />
         </div>
         <div>
           <label className={labelClass}>Cargo</label>
-          <input className={inputClass} placeholder="Tu puesto" />
+          <input name="cargo" className={inputClass} placeholder="Tu puesto" />
         </div>
       </div>
       {variant === "full" && (
@@ -55,7 +72,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className={labelClass}>Tamaño de empresa</label>
-              <select className={inputClass}>
+              <select name="tamano" className={inputClass}>
                 <option value="">Seleccionar</option>
                 <option>1–10 empleados</option>
                 <option>11–50 empleados</option>
@@ -65,7 +82,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
             </div>
             <div>
               <label className={labelClass}>Área de interés</label>
-              <select className={inputClass}>
+              <select name="area" className={inputClass}>
                 <option value="">Seleccionar</option>
                 <option>Productividad</option>
                 <option>Atención al cliente</option>
@@ -79,7 +96,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className={labelClass}>Objetivo principal</label>
-              <select className={inputClass}>
+              <select name="objetivo" className={inputClass}>
                 <option value="">Seleccionar</option>
                 <option>Reducir costes</option>
                 <option>Mejorar productividad</option>
@@ -91,7 +108,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
             </div>
             <div>
               <label className={labelClass}>Presupuesto estimado (opcional)</label>
-              <select className={inputClass}>
+              <select name="presupuesto" className={inputClass}>
                 <option value="">Seleccionar</option>
                 <option>&lt; 5.000 €</option>
                 <option>5.000 – 15.000 €</option>
@@ -104,7 +121,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
       )}
       <div>
         <label className={labelClass}>Mensaje</label>
-        <textarea className={`${inputClass} min-h-[100px]`} placeholder="Cuéntanos brevemente qué necesitas…" />
+        <textarea name="mensaje" className={`${inputClass} min-h-[100px]`} placeholder="Cuéntanos brevemente qué necesitas…" />
       </div>
       <p className="text-xs text-muted-foreground">No spam. Solo información sobre tu consulta.</p>
       <Button

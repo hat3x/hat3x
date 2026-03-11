@@ -53,11 +53,6 @@ const Navbar = () => {
 
         <div className="hidden lg:flex items-center gap-3">
           <Link to="/contacto">
-            <Button variant="outline" className="glass border-border/50 text-foreground hover:bg-muted/50 rounded-xl text-sm">
-              Hablar con un experto
-            </Button>
-          </Link>
-          <Link to="/contacto">
             <Button className="bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-sm font-semibold">
               Solicitar auditoría
             </Button>
@@ -87,11 +82,6 @@ const Navbar = () => {
             </Link>
           ))}
           <div className="flex flex-col gap-3 mt-4">
-            <Link to="/contacto">
-              <Button variant="outline" className="w-full glass border-border/50 rounded-xl text-sm">
-                Hablar con un experto
-              </Button>
-            </Link>
             <Link to="/contacto">
               <Button className="w-full bg-accent text-accent-foreground rounded-xl text-sm font-semibold">
                 Solicitar auditoría
