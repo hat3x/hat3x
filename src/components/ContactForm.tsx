@@ -11,6 +11,23 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const nombre = formData.get("nombre") || "";
+    const email = formData.get("email") || "";
+    const empresa = formData.get("empresa") || "";
+    const cargo = formData.get("cargo") || "";
+    const tamano = formData.get("tamano") || "";
+    const area = formData.get("area") || "";
+    const objetivo = formData.get("objetivo") || "";
+    const presupuesto = formData.get("presupuesto") || "";
+    const mensaje = formData.get("mensaje") || "";
+
+    const subject = encodeURIComponent(`Consulta de ${nombre} - ${empresa}`);
+    const body = encodeURIComponent(
+      `Nombre: ${nombre}\nEmail: ${email}\nEmpresa: ${empresa}\nCargo: ${cargo}\nTamaño: ${tamano}\nÁrea: ${area}\nObjetivo: ${objetivo}\nPresupuesto: ${presupuesto}\n\nMensaje:\n${mensaje}`
+    );
+    window.location.href = `mailto:info@hat3x.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 

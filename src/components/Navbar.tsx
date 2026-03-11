@@ -83,11 +83,6 @@ const Navbar = () => {
           ))}
           <div className="flex flex-col gap-3 mt-4">
             <Link to="/contacto">
-              <Button variant="outline" className="w-full glass border-border/50 rounded-xl text-sm">
-                Hablar con un experto
-              </Button>
-            </Link>
-            <Link to="/contacto">
               <Button className="w-full bg-accent text-accent-foreground rounded-xl text-sm font-semibold">
                 Solicitar auditoría
               </Button>
