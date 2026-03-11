@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import GlassCard from "./GlassCard";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ContactFormProps {
   variant?: "full" | "short";
@@ -8,27 +9,42 @@ interface ContactFormProps {
 
 const ContactForm = ({ variant = "full" }: ContactFormProps) => {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
-    const nombre = formData.get("nombre") || "";
-    const email = formData.get("email") || "";
-    const empresa = formData.get("empresa") || "";
-    const cargo = formData.get("cargo") || "";
-    const tamano = formData.get("tamano") || "";
-    const area = formData.get("area") || "";
-    const objetivo = formData.get("objetivo") || "";
-    const presupuesto = formData.get("presupuesto") || "";
-    const mensaje = formData.get("mensaje") || "";
 
-    const subject = encodeURIComponent(`Consulta de ${nombre} - ${empresa}`);
-    const body = encodeURIComponent(
-      `Nombre: ${nombre}\nEmail: ${email}\nEmpresa: ${empresa}\nCargo: ${cargo}\nTamaño: ${tamano}\nÁrea: ${area}\nObjetivo: ${objetivo}\nPresupuesto: ${presupuesto}\n\nMensaje:\n${mensaje}`
-    );
-    window.location.href = `mailto:info@hat3x.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    const payload = {
+      nombre: formData.get("nombre") || "",
+      email: formData.get("email") || "",
+      empresa: formData.get("empresa") || "",
+      cargo: formData.get("cargo") || "",
+      tamano: formData.get("tamano") || "",
+      area: formData.get("area") || "",
+      objetivo: formData.get("objetivo") || "",
+      presupuesto: formData.get("presupuesto") || "",
+      mensaje: formData.get("mensaje") || "",
+    };
+
+    try {
+      const { error: fnError } = await supabase.functions.invoke("send-contact-email", {
+        body: payload,
+      });
+
+      if (fnError) throw fnError;
+
+      setSubmitted(true);
+    } catch (err: any) {
+      setError("Hubo un problema al enviar el formulario. Por favor, escríbenos directamente a info@hat3x.com");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -123,12 +139,16 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
         <label className={labelClass}>Mensaje</label>
         <textarea name="mensaje" className={`${inputClass} min-h-[100px]`} placeholder="Cuéntanos brevemente qué necesitas…" />
       </div>
+      {error && (
+        <p className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-xl px-4 py-3">{error}</p>
+      )}
       <p className="text-xs text-muted-foreground">No spam. Solo información sobre tu consulta.</p>
       <Button
         type="submit"
+        disabled={loading}
         className="w-full md:w-auto bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-sm font-semibold px-8 py-3 h-auto"
       >
-        Solicitar auditoría
+        {loading ? "Enviando…" : "Solicitar auditoría"}
       </Button>
     </form>
   );
