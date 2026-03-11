@@ -50,21 +50,21 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className={labelClass}>Nombre *</label>
-          <input required className={inputClass} placeholder="Tu nombre" />
+          <input required name="nombre" className={inputClass} placeholder="Tu nombre" />
         </div>
         <div>
           <label className={labelClass}>Email *</label>
-          <input required type="email" className={inputClass} placeholder="email@empresa.com" />
+          <input required name="email" type="email" className={inputClass} placeholder="email@empresa.com" />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className={labelClass}>Empresa *</label>
-          <input required className={inputClass} placeholder="Nombre de tu empresa" />
+          <input required name="empresa" className={inputClass} placeholder="Nombre de tu empresa" />
         </div>
         <div>
           <label className={labelClass}>Cargo</label>
-          <input className={inputClass} placeholder="Tu puesto" />
+          <input name="cargo" className={inputClass} placeholder="Tu puesto" />
         </div>
       </div>
       {variant === "full" && (
