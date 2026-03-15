@@ -84,7 +84,7 @@ const Navbar = () => {
           <div className="flex flex-col gap-3 mt-4">
             <Link to="/contacto">
               <Button className="w-full bg-accent text-accent-foreground rounded-xl text-sm font-semibold">
-                Solicitar auditoría
+                Cuéntanos tu proyecto
               </Button>
             </Link>
           </div>
