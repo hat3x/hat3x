@@ -1,159 +1,115 @@
-import { useState, useRef, useEffect, useMemo } from "react";
-import { Bot, X, Send, Phone, Mail, Sparkles } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Bot, X, Send, Phone, Mail, Sparkles, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface ChatAction {
+  label: string;
+  /** If set, sends this text as user message */
+  message?: string;
+  /** If set, navigates to this route */
+  navigate?: string;
+  /** If set, opens this href (mailto/tel/https) */
+  href?: string;
+}
 
 interface Message {
   role: "bot" | "user";
   text: string;
-  suggestions?: string[];
+  actions?: ChatAction[];
 }
 
-type IntentKey =
-  | "servicios"
+type Intent =
+  | "saludo"
   | "web"
   | "automatizacion"
   | "app"
-  | "clientes"
-  | "whatsapp"
-  | "citas"
+  | "clientes_whatsapp"
   | "precio"
   | "plazos"
   | "contacto"
   | "proceso"
   | "mantenimiento"
   | "integraciones"
-  | "saludo"
+  | "citas"
   | "gracias"
   | "despedida"
   | "default";
 
-const CONTACT_EMAIL = "info@hat3x.com";
-const CONTACT_PHONE = "+34 614 205 537";
+// ─── Constants ────────────────────────────────────────────────────────────────
 
-const INTENT_KEYWORDS: Record<Exclude<IntentKey, "default">, string[]> = {
-  servicios: [
-    "servicio",
-    "servicios",
-    "que haceis",
-    "qué hacéis",
-    "que ofrecéis",
-    "qué ofrecéis",
-    "ofreceis",
-    "ofrecéis",
-    "que hacéis",
-    "soluciones",
-    "ayudais",
-    "ayudáis",
-  ],
-  web: [
-    "web",
-    "pagina",
-    "página",
-    "pagina web",
-    "página web",
-    "sitio web",
-    "rediseño web",
-    "rediseño",
-    "mejorar web",
-    "crear web",
-    "landing",
-  ],
-  automatizacion: [
-    "automatizacion",
-    "automatización",
-    "automatizar",
-    "automtizar",
-    "automatiza",
-    "procesos",
-    "tareas repetitivas",
-    "ahorrar tiempo",
-    "flujo",
-    "workflow",
-  ],
-  app: [
-    "app",
-    "aplicacion",
-    "aplicación",
-    "plataforma",
-    "herramienta",
-    "software",
-    "programa",
-    "portal",
-    "area privada",
-    "área privada",
-  ],
-  clientes: [
-    "clientes",
-    "atencion",
-    "atención",
-    "responder clientes",
-    "consultas",
-    "mensajes",
-    "leads",
-    "captar clientes",
-  ],
-  whatsapp: ["whatsapp", "wsp", "wasap", "wasap", "instagram", "redes", "mensajes automaticos", "mensajes automáticos"],
-  citas: ["citas", "reservas", "agenda", "agendar", "recordatorios", "turnos", "booking"],
-  precio: [
-    "precio",
-    "precios",
-    "coste",
-    "costo",
-    "cuanto cuesta",
-    "cuánto cuesta",
-    "presupuesto",
-    "presupeusto",
-    "tarifa",
-    "cuanto vale",
-    "cuánto vale",
-  ],
-  plazos: [
-    "tiempo",
-    "plazo",
-    "plazos",
-    "cuanto tarda",
-    "cuánto tarda",
-    "cuanto tiempo",
-    "cuánto tiempo",
-    "semanas",
-    "meses",
-  ],
-  contacto: [
-    "contacto",
-    "email",
-    "correo",
-    "telefono",
-    "teléfono",
-    "llamar",
-    "hablar con alguien",
-    "hablar con vosotros",
-    "whatsapp contacto",
-  ],
-  proceso: [
-    "proceso",
-    "como trabajais",
-    "cómo trabajáis",
-    "como funciona",
-    "cómo funciona",
-    "pasos",
-    "trabajais",
-    "trabajáis",
-  ],
-  mantenimiento: ["mantenimiento", "soporte", "incidencias", "mejoras", "actualizaciones", "seguimiento"],
-  integraciones: ["integraciones", "integrar", "crm", "erp", "api", "sistemas", "google workspace", "microsoft 365"],
-  saludo: ["hola", "buenas", "buenos dias", "buenos días", "hey", "hello"],
-  gracias: ["gracias", "muchas gracias", "perfecto gracias", "genial gracias"],
-  despedida: ["adios", "adiós", "hasta luego", "nos vemos", "bye"],
-};
+const EMAIL = "info@hat3x.com";
+const PHONE = "+34 614 205 537";
+const PHONE_RAW = "+34614205537";
 
-const QUICK_SUGGESTIONS = [
-  "Quiero mejorar mi web",
-  "Quiero automatizar tareas",
-  "Necesito una app o plataforma",
-  "¿Cómo puedo contactar?",
+const INITIAL_ACTIONS: ChatAction[] = [
+  { label: "Quiero mejorar mi web", message: "Quiero mejorar mi web" },
+  { label: "Quiero automatizar tareas", message: "Quiero automatizar tareas" },
+  { label: "Necesito una app o plataforma", message: "Necesito una app o plataforma" },
+  { label: "Quiero contactar con el equipo", message: "Quiero contactar con el equipo" },
 ];
 
-function normalizeText(text: string): string {
+const FALLBACK_ACTIONS: ChatAction[] = [
+  { label: "Mejorar mi web", message: "Quiero mejorar mi web" },
+  { label: "Automatizar tareas", message: "Quiero automatizar tareas" },
+  { label: "Crear una app", message: "Necesito una app o plataforma" },
+  { label: "Hablar con el equipo", message: "Quiero contactar con el equipo" },
+];
+
+// ─── Intent keywords ──────────────────────────────────────────────────────────
+
+const INTENT_MAP: Record<Exclude<Intent, "default">, string[]> = {
+  saludo: ["hola", "buenas", "buenos dias", "buenos días", "hey", "hello", "ola"],
+  web: [
+    "web", "pagina", "página", "sitio", "landing", "rediseno", "rediseño",
+    "mejorar web", "crear web", "pagina web", "página web", "website",
+  ],
+  automatizacion: [
+    "automatiza", "automatizar", "automatizacion", "automatización",
+    "automtizar", "automtizacion", "ahorrar tiempo", "tareas repetitivas",
+    "procesos", "flujo", "workflow", "tarea", "tareas",
+  ],
+  app: [
+    "app", "aplicacion", "aplicación", "aplicion", "plataforma", "software",
+    "herramienta", "portal", "area privada", "área privada", "sistema",
+    "programa", "gestion", "gestión",
+  ],
+  clientes_whatsapp: [
+    "whatsapp", "wasap", "wsp", "instagram", "redes", "mensajes", "clientes",
+    "atencion", "atención", "responder clientes", "consultas", "leads",
+    "captar", "comunicacion", "comunicación", "chat",
+  ],
+  citas: ["citas", "reservas", "agenda", "agendar", "turnos", "booking", "recordatorio"],
+  precio: [
+    "precio", "precios", "coste", "costo", "cuanto cuesta", "cuánto cuesta",
+    "presupuesto", "presupeusto", "tarifa", "cuanto vale", "cuánto vale", "pagar",
+  ],
+  plazos: [
+    "tiempo", "plazo", "plazos", "cuanto tarda", "cuánto tarda",
+    "cuanto tiempo", "cuánto tiempo", "semanas", "meses", "rapido",
+  ],
+  contacto: [
+    "contacto", "contactar", "email", "correo", "telefono", "teléfono",
+    "llamar", "hablar", "escribir", "mensaje", "alguien",
+  ],
+  proceso: [
+    "proceso", "como trabajais", "cómo trabajáis", "como funciona",
+    "cómo funciona", "pasos", "metodologia", "metodología",
+  ],
+  mantenimiento: ["mantenimiento", "soporte", "incidencias", "mejoras", "actualizaciones"],
+  integraciones: [
+    "integra", "integraciones", "crm", "erp", "api", "sistemas",
+    "google workspace", "microsoft", "conectar", "herramientas",
+  ],
+  gracias: ["gracias", "muchas gracias", "perfecto", "genial", "ok gracias"],
+  despedida: ["adios", "adiós", "hasta luego", "nos vemos", "bye", "chao"],
+};
+
+// ─── Text utils ───────────────────────────────────────────────────────────────
+
+function normalize(text: string): string {
   return text
     .toLowerCase()
     .normalize("NFD")
@@ -164,362 +120,279 @@ function normalizeText(text: string): string {
 }
 
 function levenshtein(a: string, b: string): number {
-  const matrix = Array.from({ length: b.length + 1 }, () => new Array(a.length + 1).fill(0));
-
-  for (let i = 0; i <= b.length; i++) matrix[i][0] = i;
-  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-
-  for (let i = 1; i <= b.length; i++) {
-    for (let j = 1; j <= a.length; j++) {
-      const cost = b[i - 1] === a[j - 1] ? 0 : 1;
-      matrix[i][j] = Math.min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j - 1] + cost);
+  const m = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let j = 1; j <= a.length; j++) {
+    let prev = j;
+    for (let i = 1; i <= b.length; i++) {
+      const cur = m[i - 1] === 0 || m[i] === 0
+        ? 0
+        : Math.min(
+            m[i] + 1,
+            prev + 1,
+            m[i - 1] + (a[j - 1] === b[i - 1] ? 0 : 1),
+          );
+      m[i - 1] = prev;
+      prev = cur;
     }
+    m[b.length] = prev;
   }
-
-  return matrix[b.length][a.length];
+  return m[b.length];
 }
 
-function includesApprox(input: string, keyword: string): boolean {
+function fuzzyIncludes(input: string, keyword: string): boolean {
   if (input.includes(keyword)) return true;
-
-  const inputWords = input.split(" ");
-  const keywordWords = keyword.split(" ");
-
-  // Para frases completas, si hay mucha diferencia no intentamos fuzzy agresivo
-  if (keywordWords.length > 1) {
-    return input.includes(keywordWords[0]) || input.includes(keywordWords[keywordWords.length - 1]);
+  const kw = keyword.split(" ");
+  if (kw.length > 1) {
+    return kw.every((w) => input.includes(w)) || input.includes(kw[0]);
   }
-
-  return inputWords.some((word) => {
-    if (Math.abs(word.length - keyword.length) > 2) return false;
-    return levenshtein(word, keyword) <= 2;
-  });
+  return input.split(" ").some(
+    (w) => Math.abs(w.length - keyword.length) <= 2 && levenshtein(w, keyword) <= 2,
+  );
 }
 
-function detectIntent(rawInput: string): IntentKey {
-  const input = normalizeText(rawInput);
-
-  const orderedIntents: Exclude<IntentKey, "default">[] = [
-    "saludo",
-    "gracias",
-    "despedida",
-    "contacto",
-    "precio",
-    "plazos",
-    "web",
-    "automatizacion",
-    "app",
-    "whatsapp",
-    "citas",
-    "clientes",
-    "mantenimiento",
-    "integraciones",
-    "proceso",
-    "servicios",
+function detectIntent(raw: string): Intent {
+  const input = normalize(raw);
+  const order: Exclude<Intent, "default">[] = [
+    "saludo", "gracias", "despedida",
+    "contacto", "precio", "plazos",
+    "web", "automatizacion", "app",
+    "clientes_whatsapp", "citas",
+    "mantenimiento", "integraciones", "proceso",
   ];
-
-  for (const intent of orderedIntents) {
-    for (const keyword of INTENT_KEYWORDS[intent]) {
-      const normalizedKeyword = normalizeText(keyword);
-      if (includesApprox(input, normalizedKeyword)) return intent;
+  for (const intent of order) {
+    for (const kw of INTENT_MAP[intent]) {
+      if (fuzzyIncludes(input, normalize(kw))) return intent;
     }
   }
-
   return "default";
 }
 
-function getHelpfulFallback(input: string): { text: string; suggestions: string[] } {
-  const normalized = normalizeText(input);
+// ─── Response builder ─────────────────────────────────────────────────────────
 
-  const possibleMatches: { intent: IntentKey; keyword: string; distance: number }[] = [];
-
-  Object.entries(INTENT_KEYWORDS).forEach(([intent, keywords]) => {
-    keywords.forEach((keyword) => {
-      const normalizedKeyword = normalizeText(keyword);
-      const words = normalized.split(" ");
-      words.forEach((word) => {
-        if (word.length >= 4 && normalizedKeyword.length >= 4) {
-          const distance = levenshtein(word, normalizedKeyword);
-          if (distance <= 2) {
-            possibleMatches.push({
-              intent: intent as IntentKey,
-              keyword,
-              distance,
-            });
-          }
-        }
-      });
-    });
-  });
-
-  possibleMatches.sort((a, b) => a.distance - b.distance);
-
-  const best = possibleMatches[0];
-
-  if (best) {
-    const suggestedMap: Record<IntentKey, string> = {
-      servicios: "servicios",
-      web: "mejorar o crear una web",
-      automatizacion: "automatizar tareas o procesos",
-      app: "crear una app o plataforma",
-      clientes: "mejorar la atención a clientes",
-      whatsapp: "automatizar WhatsApp o mensajes",
-      citas: "reservas, citas o recordatorios",
-      precio: "presupuesto o precio",
-      plazos: "plazos de implementación",
-      contacto: "contactar con el equipo",
-      proceso: "cómo trabajamos",
-      mantenimiento: "mantenimiento y soporte",
-      integraciones: "integrar herramientas o sistemas",
-      saludo: "saludar",
-      gracias: "agradecer",
-      despedida: "despedirte",
-      default: "algo relacionado con nuestros servicios",
-    };
-
-    return {
-      text: `No estoy del todo seguro, pero quizá querías preguntar por ${suggestedMap[best.intent]}. Si quieres, también puedes elegir una de estas opciones:`,
-      suggestions: QUICK_SUGGESTIONS,
-    };
-  }
-
-  return {
-    text: `No he entendido del todo tu mensaje, pero puedo ayudarte con webs, automatización, apps, atención a clientes, integraciones, precios o plazos. Elige una opción o cuéntamelo con otras palabras.`,
-    suggestions: QUICK_SUGGESTIONS,
-  };
-}
-
-function buildResponse(intent: IntentKey): { text: string; suggestions?: string[] } {
+function buildResponse(intent: Intent): { text: string; actions: ChatAction[] } {
   switch (intent) {
     case "saludo":
       return {
-        text: "¡Hola! Encantado de ayudarte. En HAT3X podemos ayudarte con páginas web, automatización de tareas, apps, plataformas e integraciones para empresas. ¿Qué necesitas exactamente?",
-        suggestions: QUICK_SUGGESTIONS,
-      };
-
-    case "gracias":
-      return {
-        text: "¡De nada! Si quieres, también puedo orientarte sobre webs, automatización, apps, precios, plazos o formas de contacto.",
-        suggestions: QUICK_SUGGESTIONS,
-      };
-
-    case "despedida":
-      return {
-        text: `¡Gracias por escribirnos! Si necesitas hablar con el equipo, puedes contactarnos en ${CONTACT_EMAIL} o en el ${CONTACT_PHONE}.`,
-      };
-
-    case "servicios":
-      return {
-        text: "Podemos ayudarte a crear o mejorar páginas web, automatizar tareas y procesos, desarrollar apps o plataformas personalizadas, integrar herramientas y mejorar la atención a tus clientes. ¿Qué te interesa más?",
-        suggestions: [
-          "Quiero mejorar mi web",
-          "Quiero automatizar tareas",
-          "Necesito una app o plataforma",
-          "Quiero integrar herramientas",
-        ],
+        text: "¡Hola! ¿En qué puedo ayudarte hoy?",
+        actions: INITIAL_ACTIONS,
       };
 
     case "web":
       return {
-        text: "Podemos crear una web nueva o mejorar la que ya tienes. Por ejemplo, hacerla más moderna, más clara, más profesional, optimizada para captar clientes o incluso añadir asistentes inteligentes y formularios más útiles.",
-        suggestions: [
-          "Quiero una web nueva",
-          "Quiero mejorar mi web actual",
-          "Quiero una web con asistente",
-          "Quiero captar más clientes",
+        text: "Podemos ayudarte a crear una web nueva o mejorar la que ya tienes. Por ejemplo, hacerla más moderna, más clara, más profesional y orientada a captar clientes. También podemos añadir formularios más útiles o asistentes inteligentes.",
+        actions: [
+          { label: "Quiero una web nueva", message: "Quiero una web nueva" },
+          { label: "Quiero mejorar mi web actual", message: "Quiero mejorar mi web actual" },
+          { label: "Quiero una web con asistente", message: "Quiero una web con asistente" },
+          { label: "Ver servicios web", navigate: "/servicios" },
         ],
       };
 
     case "automatizacion":
       return {
-        text: "Podemos automatizar tareas repetitivas como respuestas a consultas, presupuestos, formularios, recordatorios, organización interna o procesos entre herramientas. El objetivo es ahorrarte tiempo y reducir trabajo manual.",
-        suggestions: [
-          "Quiero automatizar WhatsApp",
-          "Quiero automatizar formularios",
-          "Quiero ahorrar tiempo",
-          "Quiero automatizar presupuestos",
+        text: "Podemos automatizar tareas repetitivas como respuestas a consultas, formularios, presupuestos, recordatorios, organización interna o procesos entre herramientas. El objetivo es ahorrar tiempo y reducir trabajo manual.",
+        actions: [
+          { label: "Automatizar WhatsApp o mensajes", message: "Quiero automatizar WhatsApp" },
+          { label: "Automatizar tareas internas", message: "Quiero automatizar tareas internas" },
+          { label: "Automatizar formularios", message: "Quiero automatizar formularios" },
+          { label: "Ver servicios de automatización", navigate: "/servicios" },
         ],
       };
 
     case "app":
       return {
-        text: "Podemos desarrollar apps o plataformas a medida para tu empresa o para tus clientes. Por ejemplo, apps de reservas, paneles de gestión, áreas privadas, herramientas internas o plataformas para organizar información en un solo lugar.",
-        suggestions: [
-          "Quiero una app para clientes",
-          "Quiero una plataforma interna",
-          "Quiero un área privada",
-          "Quiero centralizar información",
+        text: "Podemos desarrollar apps y plataformas a medida para tu empresa o para tus clientes. Por ejemplo, herramientas de gestión, áreas privadas, sistemas de reservas o plataformas para centralizar información.",
+        actions: [
+          { label: "App para clientes", message: "Quiero una app para clientes" },
+          { label: "Plataforma interna", message: "Quiero una plataforma interna" },
+          { label: "Centralizar información", message: "Quiero centralizar información en una plataforma" },
+          { label: "Ver servicios de apps", navigate: "/servicios" },
         ],
       };
 
-    case "clientes":
+    case "clientes_whatsapp":
       return {
-        text: "Si quieres mejorar la atención a clientes, podemos ayudarte con asistentes automáticos, respuestas frecuentes, formularios más inteligentes, sistemas para recoger solicitudes y herramientas para no perder consultas importantes.",
-        suggestions: [
-          "Quiero responder más rápido",
-          "Quiero atender clientes 24/7",
-          "Quiero automatizar consultas",
-          "Quiero mejorar mi formulario",
-        ],
-      };
-
-    case "whatsapp":
-      return {
-        text: "Sí, podemos ayudarte a automatizar mensajes y consultas desde WhatsApp, Instagram u otros canales. Por ejemplo, responder preguntas frecuentes, recoger datos del cliente, filtrar consultas o derivarlas correctamente.",
-        suggestions: [
-          "Quiero automatizar WhatsApp",
-          "Quiero automatizar Instagram",
-          "Quiero respuestas automáticas",
-          "Quiero captar clientes por mensajes",
+        text: "También podemos ayudarte a automatizar la atención a clientes en canales como WhatsApp, formularios o redes sociales, para responder más rápido y no perder ninguna consulta.",
+        actions: [
+          { label: "Automatizar WhatsApp", message: "Quiero automatizar WhatsApp" },
+          { label: "Responder consultas automáticamente", message: "Quiero responder consultas automáticamente" },
+          { label: "Captar más clientes", message: "Quiero captar más clientes" },
+          { label: "Ver casos de uso", navigate: "/casos-de-uso" },
         ],
       };
 
     case "citas":
       return {
-        text: "Podemos crear sistemas para gestionar citas, reservas y recordatorios automáticos. Esto ayuda a reducir olvidos, organizar mejor la agenda y dar una mejor experiencia al cliente.",
-        suggestions: [
-          "Quiero gestionar citas",
-          "Quiero recordatorios automáticos",
-          "Quiero reservas online",
-          "Quiero mejorar mi agenda",
+        text: "Podemos crear sistemas para gestionar citas, reservas y recordatorios automáticos. Esto ayuda a reducir olvidos, organizar mejor la agenda y mejorar la experiencia de tus clientes.",
+        actions: [
+          { label: "Gestionar citas online", message: "Quiero gestionar citas online" },
+          { label: "Recordatorios automáticos", message: "Quiero recordatorios automáticos" },
+          { label: "Ver servicios", navigate: "/servicios" },
         ],
       };
 
     case "precio":
       return {
-        text: "El precio depende del tipo de proyecto y de lo que necesites. No es lo mismo mejorar una web que desarrollar una app o automatizar varios procesos. Si quieres, cuéntame brevemente qué necesitas y te orientamos mejor.",
-        suggestions: [
-          "Quiero mejorar mi web",
-          "Quiero automatizar tareas",
-          "Quiero una app",
-          "Quiero hablar con el equipo",
+        text: "El presupuesto depende del tipo de proyecto y de lo que necesites. No es lo mismo mejorar una web que desarrollar una app o automatizar varios procesos. Si quieres, podemos orientarte mejor si nos cuentas brevemente qué necesitas.",
+        actions: [
+          { label: "Pedir presupuesto", navigate: "/contacto" },
+          { label: "Contar mi proyecto", navigate: "/tu-idea" },
+          { label: "Hablar con el equipo", message: "Quiero contactar con el equipo" },
         ],
       };
 
     case "plazos":
       return {
-        text: "Los plazos dependen del proyecto. Algunas mejoras o automatizaciones pueden empezar a estar listas en pocas semanas, mientras que desarrollos más amplios como apps o plataformas pueden llevar más tiempo. Siempre intentamos proponer una solución clara y realista.",
-        suggestions: [
-          "Quiero algo rápido",
-          "Quiero una mejora concreta",
-          "Quiero una app completa",
-          "Quiero hablar del proyecto",
+        text: "Los plazos dependen del proyecto. Algunas mejoras o automatizaciones pueden estar listas en pocas semanas, mientras que desarrollos más amplios como apps o plataformas pueden llevar más tiempo. Siempre proponemos una hoja de ruta clara.",
+        actions: [
+          { label: "Quiero algo rápido", message: "Quiero una solución rápida" },
+          { label: "Quiero una app completa", message: "Necesito una app o plataforma" },
+          { label: "Ver cómo trabajamos", navigate: "/proceso" },
         ],
       };
 
     case "contacto":
       return {
-        text: `Puedes escribirnos a ${CONTACT_EMAIL}, llamarnos al ${CONTACT_PHONE} o usar el formulario de contacto de la web. Si quieres, también puedes contarme por aquí qué necesitas y te orientaré antes de contactar.`,
-        suggestions: [
-          "Quiero enviar un email",
-          "Quiero llamar",
-          "Quiero contar mi proyecto",
-          "Quiero saber qué servicio necesito",
+        text: `Puedes escribirnos a ${EMAIL}, llamarnos al ${PHONE} o usar el formulario de contacto de la web.`,
+        actions: [
+          { label: "Ir a contacto", navigate: "/contacto" },
+          { label: "Enviar email", href: `mailto:${EMAIL}` },
+          { label: "Llamar ahora", href: `tel:${PHONE_RAW}` },
         ],
       };
 
     case "proceso":
       return {
-        text: "Normalmente trabajamos en 4 pasos: entendemos tu empresa, diseñamos la solución, la implementamos y después seguimos mejorando si hace falta. La idea es que el proceso sea claro, práctico y adaptado a tu negocio.",
-        suggestions: [
-          "Quiero saber los plazos",
-          "Quiero contar mi proyecto",
-          "Quiero una propuesta",
-          "Quiero saber qué podéis hacer",
+        text: "Trabajamos en 4 pasos: entendemos tu negocio, diseñamos la solución, la implementamos y después hacemos seguimiento. El proceso es claro, práctico y adaptado a cada empresa.",
+        actions: [
+          { label: "Ver cómo trabajamos", navigate: "/proceso" },
+          { label: "Contar mi proyecto", navigate: "/tu-idea" },
+          { label: "Pedir presupuesto", navigate: "/contacto" },
         ],
       };
 
     case "mantenimiento":
       return {
-        text: "Sí, también ofrecemos mantenimiento y soporte. Podemos ayudarte con mejoras, incidencias, ajustes, optimización y seguimiento de las herramientas o soluciones que se hayan implementado.",
-        suggestions: [
-          "Quiero soporte técnico",
-          "Quiero mejorar una herramienta",
-          "Quiero mantenimiento web",
-          "Quiero seguimiento",
+        text: "También ofrecemos mantenimiento y soporte. Podemos ayudarte con mejoras, incidencias, ajustes y seguimiento de las soluciones implementadas.",
+        actions: [
+          { label: "Soporte técnico", message: "Necesito soporte técnico" },
+          { label: "Mejorar una herramienta existente", message: "Quiero mejorar una herramienta existente" },
+          { label: "Hablar con el equipo", message: "Quiero contactar con el equipo" },
         ],
       };
 
     case "integraciones":
       return {
-        text: "Podemos integrar herramientas y sistemas que ya uses en tu empresa, como CRM, formularios, correo, bases de datos u otras plataformas. La idea es conectar procesos para trabajar de forma más simple y eficiente.",
-        suggestions: [
-          "Quiero integrar mi CRM",
-          "Quiero conectar formularios",
-          "Quiero unir varias herramientas",
-          "Quiero automatizar procesos",
+        text: "Podemos integrar herramientas que ya usas en tu empresa, como CRM, formularios, correo, bases de datos u otras plataformas, para conectar procesos y trabajar de forma más eficiente.",
+        actions: [
+          { label: "Integrar mi CRM", message: "Quiero integrar mi CRM" },
+          { label: "Conectar herramientas", message: "Quiero conectar varias herramientas" },
+          { label: "Ver servicios", navigate: "/servicios" },
+        ],
+      };
+
+    case "gracias":
+      return {
+        text: "¡De nada! Si necesitas algo más, aquí estoy.",
+        actions: [
+          { label: "Ver servicios", navigate: "/servicios" },
+          { label: "Ir a contacto", navigate: "/contacto" },
+        ],
+      };
+
+    case "despedida":
+      return {
+        text: `¡Hasta luego! Si necesitas hablar con el equipo, puedes escribirnos a ${EMAIL} o llamarnos al ${PHONE}.`,
+        actions: [
+          { label: "Enviar email", href: `mailto:${EMAIL}` },
+          { label: "Llamar ahora", href: `tel:${PHONE_RAW}` },
         ],
       };
 
     default:
       return {
-        text: "Gracias por tu mensaje. Puedo ayudarte a orientarte sobre páginas web, automatización, apps, integraciones, atención a clientes, plazos, precios o contacto con el equipo.",
-        suggestions: QUICK_SUGGESTIONS,
+        text: "No estoy completamente seguro de lo que necesitas, pero puedo ayudarte con páginas web, automatización, apps, atención a clientes o contacto con el equipo.",
+        actions: FALLBACK_ACTIONS,
       };
   }
 }
 
+// ─── Component ────────────────────────────────────────────────────────────────
+
 const ChatBot = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "bot",
-      text: "¡Hola! Soy el asistente de HAT3X. Puedo ayudarte con webs, automatización, apps, integraciones, precios, plazos o contacto. ¿Qué necesitas?",
-      suggestions: QUICK_SUGGESTIONS,
+      text: "Hola, soy el asistente de HAT3X. Puedo ayudarte a encontrar la mejor solución para tu empresa, ya sea mejorar tu web, automatizar tareas, crear una app o resolver dudas sobre nuestros servicios. ¿Qué necesitas?",
+      actions: INITIAL_ACTIONS,
     },
   ]);
   const [input, setInput] = useState("");
   const endRef = useRef<HTMLDivElement>(null);
 
-  const quickOptions = useMemo(() => QUICK_SUGGESTIONS, []);
-
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (open) endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, open]);
 
-  const pushBotResponse = (text: string) => {
-    const intent = detectIntent(text);
-    const response = intent === "default" ? getHelpfulFallback(text) : buildResponse(intent);
-
+  const pushBotResponse = (userText: string) => {
+    const intent = detectIntent(userText);
+    const response = buildResponse(intent);
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        {
-          role: "bot",
-          text: response.text,
-          suggestions: response.suggestions,
-        },
+        { role: "bot", text: response.text, actions: response.actions },
       ]);
-    }, 450);
+    }, 380);
+  };
+
+  const handleAction = (action: ChatAction) => {
+    if (action.href) {
+      window.open(action.href, "_blank", "noopener,noreferrer");
+      return;
+    }
+    if (action.navigate) {
+      setOpen(false);
+      navigate(action.navigate);
+      return;
+    }
+    if (action.message) {
+      const userMsg: Message = { role: "user", text: action.message };
+      setMessages((prev) => [...prev, userMsg]);
+      pushBotResponse(action.message);
+    }
   };
 
   const send = (forcedText?: string) => {
     const text = (forcedText ?? input).trim();
     if (!text) return;
-
-    const userMsg: Message = { role: "user", text };
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages((prev) => [...prev, { role: "user", text }]);
     setInput("");
     pushBotResponse(text);
   };
 
+  const isNavOrHref = (action: ChatAction) => action.navigate || action.href;
+
   return (
     <>
+      {/* Toggle button */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-24 z-50 w-14 h-14 rounded-full bg-primary hover:bg-primary/90 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+        className="fixed bottom-6 right-24 z-50 w-14 h-14 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
         aria-label="Abrir chat"
       >
         {open ? <X className="w-6 h-6" /> : <Bot className="w-7 h-7" />}
       </button>
 
+      {/* Chat window */}
       {open && (
         <div
           className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 glass-card border border-border/40 rounded-2xl flex flex-col overflow-hidden shadow-2xl"
-          style={{ maxHeight: "72vh" }}
+          style={{ maxHeight: "76vh" }}
         >
           {/* Header */}
-          <div className="px-4 py-3 border-b border-border/30 flex items-center justify-between gap-3">
+          <div className="px-4 py-3 border-b border-border/30 flex items-center justify-between gap-3 shrink-0">
             <div className="flex items-center gap-2">
               <Bot className="w-5 h-5 text-primary" />
               <div>
@@ -527,43 +400,39 @@ const ChatBot = () => {
                 <div className="text-[11px] text-muted-foreground">Respuestas rápidas sobre nuestros servicios</div>
               </div>
             </div>
-            <Sparkles className="w-4 h-4 text-primary/80" />
-          </div>
-
-          {/* Quick actions top */}
-          <div className="px-3 pt-3 flex flex-wrap gap-2 border-b border-border/20 pb-3">
-            {quickOptions.map((option) => (
-              <button
-                key={option}
-                onClick={() => send(option)}
-                className="text-xs px-3 py-1.5 rounded-full bg-muted/50 hover:bg-muted text-foreground transition-colors"
-              >
-                {option}
-              </button>
-            ))}
+            <Sparkles className="w-4 h-4 text-primary/70" />
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ minHeight: 240 }}>
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((m, i) => (
               <div key={i} className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
+                {/* Bubble */}
                 <div
-                  className={`max-w-[85%] rounded-xl px-3 py-2 text-sm ${
-                    m.role === "user" ? "bg-accent text-accent-foreground" : "bg-muted/50 text-foreground"
+                  className={`max-w-[88%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                    m.role === "user"
+                      ? "bg-primary text-primary-foreground rounded-br-sm"
+                      : "bg-muted/60 text-foreground rounded-bl-sm"
                   }`}
                 >
                   {m.text}
                 </div>
 
-                {m.role === "bot" && m.suggestions && m.suggestions.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-2 max-w-[90%]">
-                    {m.suggestions.map((suggestion) => (
+                {/* Actions */}
+                {m.role === "bot" && m.actions && m.actions.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-2 max-w-[95%]">
+                    {m.actions.map((action, j) => (
                       <button
-                        key={suggestion}
-                        onClick={() => send(suggestion)}
-                        className="text-xs px-3 py-1.5 rounded-full border border-border/50 bg-background/30 hover:bg-background/60 text-foreground transition-colors"
+                        key={j}
+                        onClick={() => handleAction(action)}
+                        className={`inline-flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border transition-colors ${
+                          isNavOrHref(action)
+                            ? "border-primary/40 bg-primary/8 hover:bg-primary/15 text-primary"
+                            : "border-border/50 bg-background/40 hover:bg-background/70 text-foreground"
+                        }`}
                       >
-                        {suggestion}
+                        {action.label}
+                        {isNavOrHref(action) && <ExternalLink className="w-2.5 h-2.5 opacity-60" />}
                       </button>
                     ))}
                   </div>
@@ -574,19 +443,19 @@ const ChatBot = () => {
           </div>
 
           {/* Contact strip */}
-          <div className="px-3 py-2 border-t border-border/20 text-xs text-muted-foreground flex flex-wrap gap-3">
-            <span className="inline-flex items-center gap-1.5">
-              <Mail className="w-3.5 h-3.5" />
-              {CONTACT_EMAIL}
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Phone className="w-3.5 h-3.5" />
-              {CONTACT_PHONE}
-            </span>
+          <div className="px-3 py-2 border-t border-border/20 text-[11px] text-muted-foreground flex flex-wrap gap-3 shrink-0">
+            <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors">
+              <Mail className="w-3 h-3" />
+              {EMAIL}
+            </a>
+            <a href={`tel:${PHONE_RAW}`} className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors">
+              <Phone className="w-3 h-3" />
+              {PHONE}
+            </a>
           </div>
 
           {/* Input */}
-          <div className="border-t border-border/30 p-3 flex gap-2">
+          <div className="border-t border-border/30 p-3 flex gap-2 shrink-0">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -597,7 +466,8 @@ const ChatBot = () => {
             <Button
               size="icon"
               onClick={() => send()}
-              className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl h-9 w-9"
+              disabled={!input.trim()}
+              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl h-9 w-9 shrink-0"
             >
               <Send className="w-4 h-4" />
             </Button>
