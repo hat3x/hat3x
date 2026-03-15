@@ -17,6 +17,8 @@ import {
   Lock,
   Database,
   Headphones,
+  Zap,
+  TrendingUp,
 } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
@@ -248,26 +250,42 @@ const testimonials = [
   },
 ];
 
-// Metric counter item
-function MetricItem({
-  value,
+// Metric counter card
+function MetricCard({
+  icon: Icon,
+  target,
   suffix,
-  label,
-  staticLabel,
+  title,
+  text,
+  delay = 0,
 }: {
-  value: number;
+  icon: React.ElementType;
+  target: number;
   suffix: string;
-  label: string;
-  staticLabel?: boolean;
+  title: string;
+  text: string;
+  delay?: number;
 }) {
-  const { count, ref } = useCountUp(staticLabel ? 0 : value);
+  const { count, ref } = useCountUp(target, 1400);
   return (
-    <div ref={ref} className="text-center">
-      <div className="text-3xl md:text-4xl font-black text-gradient mb-1">
-        {staticLabel ? suffix : `${count}${suffix}`}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55, ease: "easeOut", delay }}
+    >
+      <div className="glass-card p-6 md:p-8 h-full flex flex-col items-center text-center gap-4">
+        <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
+          <Icon className="w-6 h-6 text-accent" />
+        </div>
+        <p className="text-4xl font-bold text-foreground tabular-nums">
+          {count}{suffix}
+        </p>
+        <p className="text-sm font-semibold text-accent">{title}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed">{text}</p>
       </div>
-      <p className="text-xs text-muted-foreground">{label}</p>
-    </div>
+    </motion.div>
   );
 }
 
@@ -464,6 +482,25 @@ const Index = () => {
               </Link>
             </div>
           </AnimatedSection>
+        </div>
+      </section>
+
+      {/* RESULTADOS / MÉTRICAS */}
+      <section className="py-20 md:py-24">
+        <div className="container mx-auto px-4 lg:px-8">
+          <AnimatedSection>
+            <SectionHeader
+              badge="Resultados"
+              title="Tecnología que mejora la forma de trabajar de las empresas"
+              subtitle="Ayudamos a negocios a ahorrar tiempo, mejorar su organización y ofrecer una mejor experiencia a sus clientes mediante herramientas digitales y automatización."
+            />
+          </AnimatedSection>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+            <MetricCard icon={Zap} target={100} suffix="+" title="Tareas optimizadas" text="Procesos repetitivos que nuestros clientes han simplificado o automatizado en sus empresas." delay={0} />
+            <MetricCard icon={Clock} target={60} suffix="%" title="Tiempo recuperado" text="Reducción media del tiempo dedicado a tareas administrativas gracias a automatizaciones." delay={0.1} />
+            <MetricCard icon={MessageCircle} target={24} suffix="/7" title="Atención automatizada" text="Sistemas que permiten responder consultas de clientes en cualquier momento del día." delay={0.2} />
+            <MetricCard icon={TrendingUp} target={3} suffix="x" title="Procesos más rápidos" text="Empresas que han conseguido agilizar tareas internas mediante herramientas digitales." delay={0.3} />
+          </div>
         </div>
       </section>
 
