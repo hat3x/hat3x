@@ -330,12 +330,9 @@ function MetricCard({
   );
 }
 
-const heroLines = [
-  { text: "Haz que tu empresa trabaje mejor,", gradient: false },
-  { text: "rápido y de forma inteligente.", gradient: true },
-];
-
 const Index = () => {
+  const { text1, text2, showCursor } = useTypewriter(36);
+
   return (
     <Layout>
       {/* HERO */}
@@ -344,36 +341,26 @@ const Index = () => {
         <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="container mx-auto px-4 lg:px-8 relative">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
-            className="max-w-4xl"
-          >
-            {/* Logo fade-in */}
+          <div className="max-w-4xl">
+            {/* Logo — emerge from blur */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.05 }}
+              initial={{ opacity: 0, scale: 0.82, filter: "blur(14px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
               className="mb-8"
             >
               <Hat3xLogo size="lg" />
             </motion.div>
 
-            {/* Title — line by line */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.15] mb-6">
-              {heroLines.map((line, i) => (
-                <motion.span
-                  key={i}
-                  custom={i}
-                  initial="hidden"
-                  animate="visible"
-                  variants={heroWordVariants}
-                  className={`block ${line.gradient ? "text-gradient" : "text-primary-foreground"}`}
-                >
-                  {line.text}
-                </motion.span>
-              ))}
+            {/* Title — typewriter */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.15] mb-6 min-h-[2.4em]">
+              <span className="block text-primary-foreground">{text1}</span>
+              <span className="block text-gradient">
+                {text2}
+                {showCursor && (
+                  <span className="inline-block w-[3px] h-[0.85em] bg-accent ml-1 align-middle animate-[pulse_0.85s_step-start_infinite]" />
+                )}
+              </span>
             </h1>
 
             <motion.p
