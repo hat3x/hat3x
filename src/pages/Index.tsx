@@ -23,15 +23,6 @@ const fadeUp = {
   }),
 };
 
-const heroWordVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const, delay: 0.15 + i * 0.06 },
-  }),
-};
-
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
@@ -57,8 +48,32 @@ function AnimatedSection({ children, className }: { children: React.ReactNode; c
   );
 }
 
+// Typewriter hook — types two lines sequentially, runs once
+const LINE1 = "Haz que tu empresa trabaje mejor,";
+const LINE2 = "rápido y de forma inteligente.";
+const TOTAL = LINE1.length + LINE2.length;
+const CHAR_DELAY = 1800 / TOTAL; // ~1.8 s total
+
+function useTypewriter() {
+  const [typed, setTyped] = useState(0);
+  const done = useRef(false);
+
+  useEffect(() => {
+    if (done.current) return;
+    if (typed >= TOTAL) { done.current = true; return; }
+    const timer = setTimeout(() => setTyped((p) => p + 1), CHAR_DELAY);
+    return () => clearTimeout(timer);
+  }, [typed]);
+
+  const line1 = LINE1.slice(0, Math.min(typed, LINE1.length));
+  const line2 = LINE2.slice(0, Math.max(0, typed - LINE1.length));
+  const showCursor = typed < TOTAL;
+
+  return { line1, line2, showCursor };
+}
+
 // Animated counter hook
-function useCountUp(target: number, duration = 1800) {
+function useCountUp(target: number, duration = 1400) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -113,7 +128,7 @@ const testimonials = [
 { name: "Director", role: "Empresa local", text: "La app que desarrollaron nos ha ayudado a tener todo mucho más organizado." },
 { name: "CEO", role: "Empresa de consultoría", text: "Se nota que entienden cómo funcionan las empresas. Las soluciones que propusieron encajaban muy bien con lo que necesitábamos." }];
 
-// Metric counter item
+// Metric counter item — animated on scroll, once
 function MetricItem({ value, suffix, label, staticLabel }: { value: number; suffix: string; label: string; staticLabel?: boolean }) {
   const { count, ref } = useCountUp(staticLabel ? 0 : value);
   return (
@@ -126,12 +141,9 @@ function MetricItem({ value, suffix, label, staticLabel }: { value: number; suff
   );
 }
 
-const heroLines = [
-  { text: "Haz que tu empresa trabaje mejor,", gradient: false },
-  { text: "rápido y de forma inteligente.", gradient: true },
-];
-
 const Index = () => {
+  const { line1, line2, showCursor } = useTypewriter();
+
   return (
     <Layout>
       {/* HERO */}
@@ -156,20 +168,21 @@ const Index = () => {
               <Hat3xLogo size="lg" />
             </motion.div>
 
-            {/* Title — line by line */}
+            {/* Title — typewriter effect */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.15] mb-6">
-              {heroLines.map((line, i) => (
-                <motion.span
-                  key={i}
-                  custom={i}
-                  initial="hidden"
-                  animate="visible"
-                  variants={heroWordVariants}
-                  className={`block ${line.gradient ? "text-gradient" : "text-primary-foreground"}`}
-                >
-                  {line.text}
-                </motion.span>
-              ))}
+              <span className="block text-primary-foreground">
+                {line1}
+                {/* cursor blinks only on line 1 while still typing line 1 */}
+                {showCursor && line2.length === 0 && (
+                  <span className="animate-pulse ml-0.5 text-accent">|</span>
+                )}
+              </span>
+              <span className="block text-gradient">
+                {line2}
+                {showCursor && line2.length > 0 && (
+                  <span className="animate-pulse ml-0.5 text-accent">|</span>
+                )}
+              </span>
             </h1>
 
             <motion.p
