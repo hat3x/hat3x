@@ -29,7 +29,7 @@ const Footer = () =>
         <div className="md:col-span-2">
           <Hat3xLogo size="sm" />
           <p className="text-muted-foreground text-sm mt-4 max-w-sm">
-            Consultoría de Inteligencia Artificial. Implementamos IA que mejora tu negocio desde el primer mes.
+            Ayudamos a empresas a mejorar su forma de trabajar con tecnología, automatización y herramientas digitales a medida.
           </p>
           <div className="mt-6 text-sm text-muted-foreground space-y-1">
             <p>✉️  info@hat3x.com</p>
