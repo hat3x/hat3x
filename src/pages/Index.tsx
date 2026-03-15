@@ -25,10 +25,10 @@ const services = [
 
 
 const problems = [
-{ icon: MessageCircle, title: "Demasiados mensajes y consultas", desc: "Gran parte del día se va respondiendo WhatsApp, correos o mensajes con las mismas preguntas: horarios, precios, disponibilidad o información básica. Esto ocupa tiempo que podrías dedicar a tareas más importantes para tu negocio." },
-{ icon: Repeat, title: "Tareas repetitivas que consumen horas", desc: "Crear facturas, enviar presupuestos, revisar formularios o gestionar citas son tareas que se repiten constantemente. Muchas de estas tareas podrían hacerse de forma automática." },
-{ icon: Layers, title: "Todo repartido en distintas herramientas", desc: "Clientes en Excel, mensajes en WhatsApp, documentos en correos, pedidos en otra plataforma. Tener la información repartida hace difícil gestionar el negocio." },
-{ icon: Clock, title: "Clientes esperando respuesta", desc: "Muchas consultas llegan fuera del horario laboral o cuando el equipo está ocupado. Cuando un cliente no recibe respuesta rápida, muchas veces termina contactando con otra empresa." }];
+{ icon: MessageCircle, title: "Demasiados mensajes y consultas", desc: "Gran parte del día se va respondiendo WhatsApp o correos con las mismas preguntas de siempre. Con sistemas automáticos, muchas de estas consultas pueden resolverse solas." },
+{ icon: Repeat, title: "Tareas repetitivas que consumen horas", desc: "Facturas, presupuestos, correos o gestión de citas son tareas que se repiten constantemente. Automatizar estos procesos puede ahorrar muchas horas de trabajo cada semana." },
+{ icon: Layers, title: "Todo repartido en distintas herramientas", desc: "Clientes, documentos y mensajes en distintas herramientas o archivos. Una app o plataforma que centralice todo puede facilitar mucho la gestión diaria." },
+{ icon: Clock, title: "Clientes esperando respuesta", desc: "Muchas consultas llegan cuando estás ocupado o fuera del horario laboral. Con herramientas adecuadas, los clientes pueden recibir respuesta en cualquier momento." }];
 
 
 const casosVentas = ["Calificación automática de leads", "Resúmenes de llamadas con IA", "Propuestas asistidas por contexto"];
