@@ -142,6 +142,8 @@ function MetricItem({ value, suffix, label, staticLabel }: { value: number; suff
 }
 
 const Index = () => {
+  const { line1, line2, showCursor } = useTypewriter();
+
   return (
     <Layout>
       {/* HERO */}
@@ -166,20 +168,21 @@ const Index = () => {
               <Hat3xLogo size="lg" />
             </motion.div>
 
-            {/* Title — line by line */}
+            {/* Title — typewriter effect */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.15] mb-6">
-              {heroLines.map((line, i) => (
-                <motion.span
-                  key={i}
-                  custom={i}
-                  initial="hidden"
-                  animate="visible"
-                  variants={heroWordVariants}
-                  className={`block ${line.gradient ? "text-gradient" : "text-primary-foreground"}`}
-                >
-                  {line.text}
-                </motion.span>
-              ))}
+              <span className="block text-primary-foreground">
+                {line1}
+                {/* cursor blinks only on line 1 while still typing line 1 */}
+                {showCursor && line2.length === 0 && (
+                  <span className="animate-pulse ml-0.5 text-accent">|</span>
+                )}
+              </span>
+              <span className="block text-gradient">
+                {line2}
+                {showCursor && line2.length > 0 && (
+                  <span className="animate-pulse ml-0.5 text-accent">|</span>
+                )}
+              </span>
             </h1>
 
             <motion.p
