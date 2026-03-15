@@ -3,9 +3,8 @@ import { motion } from "framer-motion";
 import {
   Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, Shield,
   ClipboardCheck, AlertTriangle, Users, LineChart,
-  ArrowRight, Sparkles, Lock, Eye } from
-"lucide-react";
-...
+  ArrowRight, Sparkles, Lock, Eye } from "lucide-react";
+
 const services = [
 { icon: Globe, title: "Páginas web profesionales", desc: "Creamos webs modernas para que tu empresa genere confianza y atraiga nuevos clientes.", detail: "Diseño moderno · Adaptada a móvil · SEO básico" },
 { icon: BrainCircuit, title: "Webs inteligentes con IA", desc: "Páginas web con asistentes que responden a tus clientes de forma automática, 24 horas al día.", detail: "Chat inteligente · Captación automática · Reservas" },
