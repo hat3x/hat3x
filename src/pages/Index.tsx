@@ -55,10 +55,10 @@ const faqs = [
 
 
 const testimonials = [
-{ name: "Director de Operaciones", role: "Empresa logística", text: "En pocas semanas, automatizamos un proceso que nos costaba horas cada día. El equipo lo adoptó sin resistencia." },
-{ name: "Responsable de Ventas", role: "SaaS B2B", text: "El copiloto de ventas nos ayuda a priorizar leads y preparar propuestas mucho más rápido. Impacto inmediato." },
-{ name: "CTO", role: "Fintech", text: "Nos ayudaron a integrar IA en nuestro producto sin romper nada. Buen proceso, buena comunicación." },
-{ name: "CEO", role: "Consultora de servicios", text: "Por fin tenemos visibilidad real de nuestros procesos. Los dashboards inteligentes cambiaron nuestra forma de decidir." }];
+{ name: "Gerente", role: "Empresa de servicios", text: "Nos ayudaron a automatizar varias tareas que hacíamos manualmente. Ahora ahorramos bastante tiempo cada semana." },
+{ name: "Responsable de atención al cliente", role: "", text: "El sistema para responder consultas de clientes nos ha quitado mucho trabajo diario. Funciona muy bien." },
+{ name: "Director", role: "Empresa local", text: "La app que desarrollaron nos ha ayudado a tener todo mucho más organizado." },
+{ name: "CEO", role: "Empresa de consultoría", text: "Se nota que entienden cómo funcionan las empresas. Las soluciones que propusieron encajaban muy bien con lo que necesitábamos." }];
 
 
 const Index = () => {
