@@ -54,121 +54,148 @@ const FALLBACK_ACTIONS: ChatAction[] = [
 
 const KEYWORD_INTENT_PAIRS: [string, Intent][] = [
   // saludo
-  ["hola",         "saludo"],
-  ["buenas",       "saludo"],
-  ["buenos dias",  "saludo"],
-  ["hey",          "saludo"],
-  ["ola",          "saludo"],
+  ["hola",              "saludo"],
+  ["buenas",            "saludo"],
+  ["buenos dias",       "saludo"],
+  ["hey",               "saludo"],
+  ["ola",               "saludo"],
 
   // gracias
-  ["gracias",      "gracias"],
-  ["muchas gracias","gracias"],
-  ["perfecto gracias","gracias"],
+  ["gracias",           "gracias"],
+  ["muchas gracias",    "gracias"],
+  ["perfecto gracias",  "gracias"],
 
   // despedida
-  ["adios",        "despedida"],
-  ["hasta luego",  "despedida"],
-  ["nos vemos",    "despedida"],
-  ["bye",          "despedida"],
+  ["adios",             "despedida"],
+  ["hasta luego",       "despedida"],
+  ["nos vemos",         "despedida"],
+  ["bye",               "despedida"],
 
-  // contacto — antes que clientes_whatsapp para que "email"/"telefono" no se confunda
-  ["contacto",     "contacto"],
-  ["contactar",    "contacto"],
-  ["email",        "contacto"],
-  ["correo",       "contacto"],
-  ["telefono",     "contacto"],
-  ["llamar",       "contacto"],
-  ["hablar con",   "contacto"],
-  ["escribirnos",  "contacto"],
+  // contacto
+  ["contacto",          "contacto"],
+  ["contactar",         "contacto"],
+  ["email",             "contacto"],
+  ["correo",            "contacto"],
+  ["telefono",          "contacto"],
+  ["llamar",            "contacto"],
+  ["hablar con",        "contacto"],
+  ["escribirnos",       "contacto"],
 
   // precio
-  ["precio",       "precio"],
-  ["presupuesto",  "precio"],
-  ["presupeusto",  "precio"],  // typo
-  ["coste",        "precio"],
-  ["costo",        "precio"],
-  ["cuanto cuesta","precio"],
-  ["cuanto vale",  "precio"],
-  ["tarifa",       "precio"],
+  ["precio",            "precio"],
+  ["presupuesto",       "precio"],
+  ["presupeusto",       "precio"],  // typo
+  ["coste",             "precio"],
+  ["costo",             "precio"],
+  ["cuanto cuesta",     "precio"],
+  ["cuanto vale",       "precio"],
+  ["tarifa",            "precio"],
 
   // plazos
-  ["plazo",        "plazos"],
-  ["cuanto tarda", "plazos"],
-  ["cuanto tiempo","plazos"],
-  ["semanas",      "plazos"],
-  ["meses",        "plazos"],
+  ["plazo",             "plazos"],
+  ["cuanto tarda",      "plazos"],
+  ["cuanto tiempo",     "plazos"],
+  ["semanas",           "plazos"],
+  ["meses",             "plazos"],
 
-  // web — antes que app para que "landing" no caiga en default
-  ["web",          "web"],
-  ["pagina web",   "web"],
-  ["pagina",       "web"],
-  ["sitio web",    "web"],
-  ["sitio",        "web"],
-  ["landing",      "web"],
-  ["rediseno",     "web"],
-  ["mejorar web",  "web"],
-  ["crear web",    "web"],
-  ["website",      "web"],
+  // ── web sub-intents (específicos antes que el genérico) ──
+  ["web nueva",         "web_nueva"],
+  ["nueva web",         "web_nueva"],
+  ["crear web",         "web_nueva"],
+  ["quiero una web",    "web_nueva"],
+  ["mejorar mi web",    "web_mejorar"],
+  ["mejorar web",       "web_mejorar"],
+  ["rediseno",          "web_mejorar"],
+  ["rediseño",          "web_mejorar"],
+  ["web actual",        "web_mejorar"],
+  ["web con asistente", "web_asistente"],
+  ["asistente web",     "web_asistente"],
+  ["asistente inteligente", "web_asistente"],
 
-  // automatizacion
-  ["automatizar",  "automatizacion"],
-  ["automatizacion","automatizacion"],
-  ["automtizar",   "automatizacion"],  // typo
-  ["ahorrar tiempo","automatizacion"],
+  // web genérico
+  ["web",               "web"],
+  ["pagina web",        "web"],
+  ["pagina",            "web"],
+  ["sitio web",         "web"],
+  ["sitio",             "web"],
+  ["landing",           "web"],
+  ["website",           "web"],
+
+  // ── automatizacion sub-intents ──
+  ["automatizar whatsapp",       "auto_whatsapp"],
+  ["automatizar mensajes",       "auto_whatsapp"],
+  ["automatizar formularios",    "auto_formularios"],
+  ["formularios automaticos",    "auto_formularios"],
+  ["tareas internas",            "auto_interno"],
+  ["procesos internos",          "auto_interno"],
+  ["ahorrar tiempo en",          "auto_interno"],
+
+  // automatizacion genérico
+  ["automatizar",       "automatizacion"],
+  ["automatizacion",    "automatizacion"],
+  ["automtizar",        "automatizacion"],  // typo
+  ["ahorrar tiempo",    "automatizacion"],
   ["tareas repetitivas","automatizacion"],
-  ["workflow",     "automatizacion"],
-  ["flujo",        "automatizacion"],
+  ["workflow",          "automatizacion"],
+  ["flujo",             "automatizacion"],
 
-  // clientes / whatsapp (antes que "app" para que "mensajes" no caiga en app)
-  ["whatsapp",     "clientes_whatsapp"],
-  ["wasap",        "clientes_whatsapp"],
-  ["wsp",          "clientes_whatsapp"],
-  ["instagram",    "clientes_whatsapp"],
+  // clientes / whatsapp
+  ["whatsapp",          "clientes_whatsapp"],
+  ["wasap",             "clientes_whatsapp"],
+  ["wsp",               "clientes_whatsapp"],
+  ["instagram",         "clientes_whatsapp"],
   ["atencion al cliente","clientes_whatsapp"],
   ["responder clientes","clientes_whatsapp"],
-  ["consultas",    "clientes_whatsapp"],
-  ["captar clientes","clientes_whatsapp"],
-  ["leads",        "clientes_whatsapp"],
+  ["consultas",         "clientes_whatsapp"],
+  ["captar clientes",   "clientes_whatsapp"],
+  ["leads",             "clientes_whatsapp"],
 
   // citas
-  ["cita",         "citas"],
-  ["reserva",      "citas"],
-  ["agenda",       "citas"],
-  ["agendar",      "citas"],
-  ["turnos",       "citas"],
-  ["booking",      "citas"],
-  ["recordatorio", "citas"],
+  ["cita",              "citas"],
+  ["reserva",           "citas"],
+  ["agenda",            "citas"],
+  ["agendar",           "citas"],
+  ["turnos",            "citas"],
+  ["booking",           "citas"],
+  ["recordatorio",      "citas"],
 
-  // app
-  ["app",          "app"],
-  ["aplicacion",   "app"],
-  ["aplicacion",   "app"],
-  ["aplicion",     "app"],   // typo
-  ["plataforma",   "app"],
-  ["software",     "app"],
-  ["portal",       "app"],
-  ["area privada", "app"],
-  ["herramienta",  "app"],
+  // ── app sub-intents ──
+  ["app para clientes",    "app_clientes"],
+  ["aplicacion para clientes", "app_clientes"],
+  ["plataforma interna",   "app_interna"],
+  ["herramienta interna",  "app_interna"],
+  ["centralizar informacion", "app_centralizar"],
+  ["centralizar información", "app_centralizar"],
+
+  // app genérico
+  ["app",               "app"],
+  ["aplicacion",        "app"],
+  ["aplicion",          "app"],  // typo
+  ["plataforma",        "app"],
+  ["software",          "app"],
+  ["portal",            "app"],
+  ["area privada",      "app"],
+  ["herramienta",       "app"],
 
   // proceso
-  ["proceso",      "proceso"],
-  ["como trabajais","proceso"],
-  ["como funciona","proceso"],
-  ["pasos",        "proceso"],
-  ["metodologia",  "proceso"],
+  ["proceso",           "proceso"],
+  ["como trabajais",    "proceso"],
+  ["como funciona",     "proceso"],
+  ["pasos",             "proceso"],
+  ["metodologia",       "proceso"],
 
   // mantenimiento
-  ["mantenimiento","mantenimiento"],
-  ["soporte",      "mantenimiento"],
-  ["incidencias",  "mantenimiento"],
-  ["actualizaciones","mantenimiento"],
+  ["mantenimiento",     "mantenimiento"],
+  ["soporte",           "mantenimiento"],
+  ["incidencias",       "mantenimiento"],
+  ["actualizaciones",   "mantenimiento"],
 
   // integraciones
-  ["integracion",  "integraciones"],
-  ["integrar",     "integraciones"],
-  ["crm",          "integraciones"],
-  ["erp",          "integraciones"],
-  ["api",          "integraciones"],
+  ["integracion",       "integraciones"],
+  ["integrar",          "integraciones"],
+  ["crm",               "integraciones"],
+  ["erp",               "integraciones"],
+  ["api",               "integraciones"],
   ["conectar herramientas","integraciones"],
 ];
 
