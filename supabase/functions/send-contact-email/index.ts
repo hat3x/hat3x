@@ -25,8 +25,7 @@ serve(async (req) => {
         <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Email</td><td style="padding:8px;border:1px solid #ddd;">${email}</td></tr>
         <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Empresa</td><td style="padding:8px;border:1px solid #ddd;">${empresa}</td></tr>
         ${tamano ? `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Tamaño empresa</td><td style="padding:8px;border:1px solid #ddd;">${tamano}</td></tr>` : ""}
-        ${area ? `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Área de interés</td><td style="padding:8px;border:1px solid #ddd;">${area}</td></tr>` : ""}
-        ${objetivo ? `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Objetivo</td><td style="padding:8px;border:1px solid #ddd;">${objetivo}</td></tr>` : ""}
+        ${area ? `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">¿En qué podemos ayudar?</td><td style="padding:8px;border:1px solid #ddd;">${area}</td></tr>` : ""}
         ${mensaje ? `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Mensaje</td><td style="padding:8px;border:1px solid #ddd;">${mensaje}</td></tr>` : ""}
       </table>
     `;
