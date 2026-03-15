@@ -16,7 +16,7 @@ const footerLinks = [
   links: [
   { label: "Contacto", to: "/contacto" },
   { label: "Privacidad", to: "/legal/privacidad" },
-  { label: "Términos", to: "/legal/terminos" }]
+  { label: "Términos y condiciones", to: "/legal/terminos" }]
 
 }];
 
@@ -29,7 +29,7 @@ const Footer = () =>
         <div className="md:col-span-2">
           <Hat3xLogo size="sm" />
           <p className="text-muted-foreground text-sm mt-4 max-w-sm">
-            Consultoría de Inteligencia Artificial. Implementamos IA que mejora tu negocio desde el primer mes.
+            Ayudamos a empresas a mejorar su forma de trabajar con tecnología, automatización y herramientas digitales a medida.
           </p>
           <div className="mt-6 text-sm text-muted-foreground space-y-1">
             <p>✉️  info@hat3x.com</p>
@@ -61,7 +61,7 @@ const Footer = () =>
         <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} HAT3X. Todos los derechos reservados.</p>
         <div className="flex gap-6 text-xs text-muted-foreground">
           <Link to="/legal/privacidad" className="hover:text-foreground transition-colors">Privacidad</Link>
-          <Link to="/legal/terminos" className="hover:text-foreground transition-colors">Términos</Link>
+          <Link to="/legal/terminos" className="hover:text-foreground transition-colors">Términos y condiciones</Link>
         </div>
       </div>
     </div>
