@@ -111,7 +111,11 @@ const Index = () => {
                 <GlassCard>
                   <p.icon className="w-8 h-8 text-accent mb-4" />
                   <h3 className="font-semibold text-foreground mb-2">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground">{p.desc}</p>
+                  <ul className="text-sm text-muted-foreground space-y-2">
+                    {p.points.map((point, j) => (
+                      <li key={j} className="flex gap-2"><span className="shrink-0">–</span><span>{point}</span></li>
+                    ))}
+                  </ul>
                 </GlassCard>
               </motion.div>
             )}
