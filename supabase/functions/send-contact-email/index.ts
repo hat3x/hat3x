@@ -11,7 +11,7 @@ serve(async (req) => {
   }
 
   try {
-    const { nombre, email, empresa, cargo, tamano, area, objetivo, presupuesto, mensaje } = await req.json();
+    const { nombre, email, empresa, tamano, area, objetivo, mensaje } = await req.json();
 
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
     if (!RESEND_API_KEY) {
