@@ -100,7 +100,11 @@ const Index = () => {
       {/* PROBLEMAS */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 lg:px-8">
-          <SectionHeader badge="El problema" title="¿Reconoces alguno de estos retos?" />
+          <SectionHeader
+            badge="¿Te suena?"
+            title="¿Te suena alguna de estas situaciones en tu empresa?"
+            subtitle="Muchas empresas pierden tiempo cada día en tareas que podrían hacerse de forma más simple, automática o mejor organizadas."
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {problems.map((p, i) =>
             <motion.div key={i} {...fade} transition={{ delay: i * 0.1 }}>
@@ -113,11 +117,12 @@ const Index = () => {
             )}
           </div>
           <motion.div {...fade} className="mt-12 glass-card p-8 max-w-2xl mx-auto text-center">
-            <h3 className="text-lg font-semibold text-foreground mb-3">Lo que hacemos</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-3">Cómo podemos ayudarte</h3>
             <ul className="text-sm text-muted-foreground space-y-2">
-              <li>✓ Identificamos dónde la IA genera impacto real en tu negocio</li>
-              <li>✓ Diseñamos e implementamos soluciones medibles</li>
-              <li>✓ Integramos con tus sistemas sin disrupciones</li>
+              <li>✔ Automatizamos tareas repetitivas para ahorrar tiempo</li>
+              <li>✔ Creamos sistemas que responden automáticamente a clientes</li>
+              <li>✔ Desarrollamos apps y herramientas que organizan tu negocio en un solo lugar</li>
+              <li>✔ Implementamos soluciones tecnológicas adaptadas a cada empresa</li>
             </ul>
           </motion.div>
         </div>
