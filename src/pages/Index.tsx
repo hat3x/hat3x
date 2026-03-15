@@ -181,6 +181,8 @@ const Index = () => {
                 viewport={{ once: true, margin: "-60px" }}
                 variants={fadeUp}
                 custom={i}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
               >
                 <GlassCard className="h-full">
                   <motion.div
