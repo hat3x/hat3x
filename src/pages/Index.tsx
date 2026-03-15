@@ -166,7 +166,7 @@ const Index = () => {
                   <h3 className="text-lg font-semibold text-foreground mt-3 mb-2">{p.title}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{p.desc}</p>
                   <div className="text-xs text-muted-foreground">
-                    <span className="text-primary font-medium text-xs">Entregables:</span>
+                    <span className="text-primary font-medium text-xs">Resultado:</span>
                     <ul className="mt-1 space-y-1">
                       {p.entregables.map((e, j) => <li key={j}>· {e}</li>)}
                     </ul>
