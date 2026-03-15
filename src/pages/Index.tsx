@@ -17,6 +17,8 @@ import {
   Lock,
   Database,
   Headphones,
+  Zap,
+  TrendingUp,
 } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
