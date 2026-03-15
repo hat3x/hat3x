@@ -483,6 +483,25 @@ const Index = () => {
         </div>
       </section>
 
+      {/* RESULTADOS / MÉTRICAS */}
+      <section className="py-20 md:py-24">
+        <div className="container mx-auto px-4 lg:px-8">
+          <AnimatedSection>
+            <SectionHeader
+              badge="Resultados"
+              title="Tecnología que mejora la forma de trabajar de las empresas"
+              subtitle="Ayudamos a negocios a ahorrar tiempo, mejorar su organización y ofrecer una mejor experiencia a sus clientes mediante herramientas digitales y automatización."
+            />
+          </AnimatedSection>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+            <MetricCard icon={Zap} target={100} suffix="+" title="Tareas optimizadas" text="Procesos repetitivos que nuestros clientes han simplificado o automatizado en sus empresas." delay={0} />
+            <MetricCard icon={Clock} target={60} suffix="%" title="Tiempo recuperado" text="Reducción media del tiempo dedicado a tareas administrativas gracias a automatizaciones." delay={0.1} />
+            <MetricCard icon={MessageCircle} target={24} suffix="/7" title="Atención automatizada" text="Sistemas que permiten responder consultas de clientes en cualquier momento del día." delay={0.2} />
+            <MetricCard icon={TrendingUp} target={3} suffix="x" title="Procesos más rápidos" text="Empresas que han conseguido agilizar tareas internas mediante herramientas digitales." delay={0.3} />
+          </div>
+        </div>
+      </section>
+
       {/* SEGURIDAD */}
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
