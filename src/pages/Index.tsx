@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, Shield,
-  ClipboardCheck, AlertTriangle, Users, LineChart,
-  ArrowRight, Sparkles, Lock, Eye } from "lucide-react";
+  MessageCircle, Repeat, Layers, Clock,
+  ArrowRight, Lock, Eye } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
