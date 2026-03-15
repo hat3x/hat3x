@@ -73,8 +73,8 @@ const Index = () => {
           <motion.div {...fade} className="max-w-4xl">
             <Hat3xLogo size="lg" className="mb-8" />
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-6 text-primary-foreground">
-              Haz que tu empresa trabaje mejor, más rápido{" "}
-              <span className="text-gradient">y de forma más inteligente.</span>
+              Haz que tu empresa trabaje mejor, rápido{" "}
+              <span className="text-gradient">y de forma inteligente.</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-4 leading-relaxed">
               Ayudamos a empresas a modernizar su negocio con soluciones tecnológicas que automatizan tareas, mejoran la organización y facilitan el crecimiento.
