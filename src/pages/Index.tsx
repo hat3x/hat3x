@@ -23,6 +23,15 @@ const fadeUp = {
   }),
 };
 
+const heroWordVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const, delay: 0.15 + i * 0.06 },
+  }),
+};
+
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
@@ -105,17 +114,22 @@ const testimonials = [
 { name: "CEO", role: "Empresa de consultoría", text: "Se nota que entienden cómo funcionan las empresas. Las soluciones que propusieron encajaban muy bien con lo que necesitábamos." }];
 
 // Metric counter item
-function MetricItem({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const { count, ref } = useCountUp(value);
+function MetricItem({ value, suffix, label, staticLabel }: { value: number; suffix: string; label: string; staticLabel?: boolean }) {
+  const { count, ref } = useCountUp(staticLabel ? 0 : value);
   return (
     <div ref={ref} className="text-center">
       <div className="text-3xl md:text-4xl font-black text-gradient mb-1">
-        {count}{suffix}
+        {staticLabel ? suffix : `${count}${suffix}`}
       </div>
       <p className="text-xs text-muted-foreground">{label}</p>
     </div>
   );
 }
+
+const heroLines = [
+  { text: "Haz que tu empresa trabaje mejor,", gradient: false },
+  { text: "rápido y de forma inteligente.", gradient: true },
+];
 
 const Index = () => {
   return (
@@ -132,21 +146,54 @@ const Index = () => {
             variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
             className="max-w-4xl"
           >
-            <motion.div variants={fadeUp}>
-              <Hat3xLogo size="lg" className="mb-8" />
-            </motion.div>
-            <motion.h1
-              variants={fadeUp}
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-6 text-primary-foreground"
+            {/* Logo fade-in */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.05 }}
+              className="mb-8"
             >
-              Haz que tu empresa trabaje mejor, rápido{" "}
-              <span className="text-gradient">y de forma inteligente.</span>
-            </motion.h1>
-            <motion.p variants={fadeUp} className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-4 leading-relaxed">
+              <Hat3xLogo size="lg" />
+            </motion.div>
+
+            {/* Title — line by line */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.15] mb-6">
+              {heroLines.map((line, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  initial="hidden"
+                  animate="visible"
+                  variants={heroWordVariants}
+                  className={`block ${line.gradient ? "text-gradient" : "text-primary-foreground"}`}
+                >
+                  {line.text}
+                </motion.span>
+              ))}
+            </h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: "easeOut", delay: 0.42 }}
+              className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-4 leading-relaxed"
+            >
               Ayudamos a empresas a modernizar su negocio con soluciones tecnológicas que automatizan tareas, mejoran la organización y facilitan el crecimiento.
             </motion.p>
-            <motion.p variants={fadeUp} className="text-sm text-muted-foreground mb-8">Sin complicaciones. Soluciones claras. Resultados reales.</motion.p>
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.52 }}
+              className="text-sm text-muted-foreground mb-8"
+            >
+              Sin complicaciones. Soluciones claras. Resultados reales.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.62 }}
+              className="flex flex-wrap gap-4"
+            >
               <Link to="/contacto">
                 <Button className="bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-base font-semibold px-8 py-3 h-auto btn-lift group">
                   Cuéntanos tu proyecto
@@ -249,6 +296,18 @@ const Index = () => {
               </motion.div>
             )}
           </div>
+          {/* MÉTRICAS DE SERVICIOS */}
+          <AnimatedSection>
+            <div className="glass-card p-8 md:p-12 max-w-3xl mx-auto mt-14">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <MetricItem value={100} suffix="+" label="Tareas optimizadas" />
+                <MetricItem value={60} suffix="%" label="Tiempo recuperado" />
+                <MetricItem value={0} suffix="24/7" label="Atención automatizada" staticLabel />
+                <MetricItem value={3} suffix="x" label="Procesos más rápidos" />
+              </div>
+            </div>
+          </AnimatedSection>
+
           <AnimatedSection>
             <div className="text-center mt-10">
               <Link to="/servicios">
@@ -256,57 +315,6 @@ const Index = () => {
                   Ver servicios <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </Button>
               </Link>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* PROCESO */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4 lg:px-8">
-          <AnimatedSection>
-            <SectionHeader badge="Proceso" title="Cómo trabajamos contigo para mejorar tu empresa" subtitle="Un proceso claro y sencillo para implementar soluciones tecnológicas que realmente ayuden a tu negocio." />
-          </AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pasos.map((p, i) =>
-              <motion.div
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                variants={fadeUp}
-                custom={i}
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-              >
-                <GlassCard highlight={i === 1} className="h-full">
-                  <span className="text-3xl font-black text-gradient">{p.n}</span>
-                  <h3 className="text-lg font-semibold text-foreground mt-3 mb-2">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{p.desc}</p>
-                  <div className="text-xs text-muted-foreground">
-                    <span className="text-primary font-medium text-xs">Resultado:</span>
-                    <ul className="mt-1 space-y-1">
-                      {p.entregables.map((e, j) => <li key={j}>· {e}</li>)}
-                    </ul>
-                  </div>
-                </GlassCard>
-              </motion.div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* MÉTRICAS */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 lg:px-8">
-          <AnimatedSection>
-            <div className="glass-card p-8 md:p-12 max-w-3xl mx-auto">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <MetricItem value={50} suffix="+" label="Proyectos entregados" />
-                <MetricItem value={95} suffix="%" label="Clientes satisfechos" />
-                <MetricItem value={3} suffix="x" label="Retorno medio en productividad" />
-                <MetricItem value={48} suffix="h" label="Tiempo medio de respuesta" />
-              </div>
             </div>
           </AnimatedSection>
         </div>
