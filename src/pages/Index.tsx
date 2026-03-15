@@ -181,13 +181,31 @@ const Index = () => {
       {/* SEGURIDAD */}
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="glass-card p-8 md:p-12 max-w-3xl mx-auto text-center">
+          <div className="glass-card p-8 md:p-12 max-w-4xl mx-auto text-center">
             <Shield className="w-10 h-10 text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-4">Seguridad y confianza</h3>
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-              <span className="flex items-center gap-2"><Lock className="w-4 h-4 text-primary" /> Permisos por rol</span>
-              <span className="flex items-center gap-2"><Eye className="w-4 h-4 text-primary" /> Trazabilidad y registros</span>
-              <span className="flex items-center gap-2"><Shield className="w-4 h-4 text-primary" /> Protección de datos</span>
+            <h3 className="text-xl font-semibold text-foreground mb-2">Seguridad y confianza en cada proyecto</h3>
+            <p className="text-sm text-muted-foreground mb-8 max-w-xl mx-auto">Trabajamos con herramientas seguras y buenas prácticas para proteger la información de tu empresa y garantizar un funcionamiento fiable.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+              <div className="flex flex-col gap-2">
+                <Lock className="w-5 h-5 text-primary" />
+                <span className="font-medium text-foreground text-sm">Control de accesos</span>
+                <p className="text-xs text-muted-foreground">Solo las personas autorizadas pueden acceder a la información y herramientas de la empresa.</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Database className="w-5 h-5 text-primary" />
+                <span className="font-medium text-foreground text-sm">Protección de datos</span>
+                <p className="text-xs text-muted-foreground">Aplicamos medidas para proteger la información sensible de tu negocio y tus clientes.</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Shield className="w-5 h-5 text-primary" />
+                <span className="font-medium text-foreground text-sm">Sistemas fiables</span>
+                <p className="text-xs text-muted-foreground">Trabajamos con tecnologías estables y probadas para asegurar que todo funcione correctamente.</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Headphones className="w-5 h-5 text-primary" />
+                <span className="font-medium text-foreground text-sm">Soporte cercano</span>
+                <p className="text-xs text-muted-foreground">Estamos disponibles para resolver dudas o problemas y asegurar que todo siga funcionando.</p>
+              </div>
             </div>
           </div>
         </div>
