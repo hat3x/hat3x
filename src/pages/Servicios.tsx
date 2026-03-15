@@ -32,7 +32,7 @@ const servicios = [
     "Respuestas automáticas a preguntas frecuentes",
     "Captación automática de contactos o clientes potenciales",
     "Posibilidad de reservar citas o solicitar información",
-    "• Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
+    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
   ],
   para: "Empresas que reciben muchas consultas y quieren atender a sus clientes incluso fuera del horario laboral.",
   tiempo: "3–6 semanas"
