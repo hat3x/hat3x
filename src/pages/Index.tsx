@@ -4,8 +4,16 @@ import {
   Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, Shield,
   ClipboardCheck, AlertTriangle, Users, LineChart,
   ArrowRight, Sparkles, Lock, Eye } from "lucide-react";
+import Layout from "@/components/Layout";
+import GlassCard from "@/components/GlassCard";
+import SectionHeader from "@/components/SectionHeader";
+import Hat3xLogo from "@/components/Hat3xLogo";
+import ContactForm from "@/components/ContactForm";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
-const services = [
+const fade = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 { icon: Globe, title: "Páginas web profesionales", desc: "Creamos webs modernas para que tu empresa genere confianza y atraiga nuevos clientes.", detail: "Diseño moderno · Adaptada a móvil · SEO básico" },
 { icon: BrainCircuit, title: "Webs inteligentes con IA", desc: "Páginas web con asistentes que responden a tus clientes de forma automática, 24 horas al día.", detail: "Chat inteligente · Captación automática · Reservas" },
 { icon: Cog, title: "Automatización de tareas", desc: "Automatizamos tareas repetitivas para que tu equipo ahorre tiempo y se centre en lo importante.", detail: "Documentos · Facturas · Correos · Recordatorios" },
