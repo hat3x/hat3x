@@ -253,8 +253,10 @@ function detectIntent(raw: string): Intent {
 
   // Special: if input is a bare intent key (sent by initial buttons)
   const bareIntents: Intent[] = [
-    "web", "automatizacion", "app", "contacto",
-    "precio", "plazos", "proceso", "citas",
+    "web", "web_nueva", "web_mejorar", "web_asistente",
+    "automatizacion", "auto_whatsapp", "auto_formularios", "auto_interno",
+    "app", "app_clientes", "app_interna", "app_centralizar",
+    "contacto", "precio", "plazos", "proceso", "citas",
     "mantenimiento", "integraciones", "clientes_whatsapp",
     "saludo", "gracias", "despedida",
   ];
