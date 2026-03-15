@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MessageCircle, FileText, LayoutGrid, CalendarX, RefreshCw, Clock, Inbox, Cog } from "lucide-react";
+import { ArrowRight, MessageCircle, FileText, LayoutGrid, CalendarX, Monitor, Zap, RefreshCw, Clock, Inbox, Cog } from "lucide-react";
 
 const fade = {
   initial: { opacity: 0, y: 20 },
@@ -43,6 +43,20 @@ const casos = [
     resultado: "Menos cancelaciones y mejor organización.",
   },
   {
+    icon: Monitor,
+    title: "Web desactualizada o poco intuitiva",
+    problema: "Muchas empresas tienen páginas web antiguas, difíciles de usar o que no transmiten una imagen profesional.",
+    solucion: "Diseño o rediseño de una web moderna, clara y adaptada a lo que los clientes realmente necesitan encontrar.",
+    resultado: "Mejor imagen de empresa y más clientes que encuentran fácilmente la información.",
+  },
+  {
+    icon: Zap,
+    title: "Web que no aprovecha herramientas inteligentes",
+    problema: "Muchas páginas web solo muestran información y no ayudan realmente a atender o captar clientes.",
+    solucion: "Integración de herramientas inteligentes en la web como asistentes automáticos, formularios inteligentes o sistemas de atención al cliente.",
+    resultado: "Una web que no solo informa, sino que también ayuda a captar y atender clientes.",
+  },
+  {
     icon: RefreshCw,
     title: "Demasiadas tareas repetitivas",
     problema: "El equipo pierde muchas horas en tareas administrativas que se repiten cada día.",
@@ -55,20 +69,6 @@ const casos = [
     problema: "Muchos clientes contactan cuando la empresa está cerrada o el equipo está ocupado.",
     solucion: "Herramientas que responden automáticamente y recogen la información del cliente.",
     resultado: "No perder oportunidades de negocio.",
-  },
-  {
-    icon: Inbox,
-    title: "Dificultad para organizar clientes o solicitudes",
-    problema: "Cuando llegan muchas solicitudes o consultas es fácil perder información o tardar en responder.",
-    solucion: "Sistemas que organizan automáticamente las solicitudes y facilitan el seguimiento.",
-    resultado: "Mejor organización y respuestas más rápidas.",
-  },
-  {
-    icon: Cog,
-    title: "Procesos internos poco eficientes",
-    problema: "Muchos procesos internos requieren pasos manuales y consumen tiempo innecesario.",
-    solucion: "Automatización de tareas internas y conexión entre herramientas.",
-    resultado: "Procesos más rápidos y menos errores.",
   },
 ];
 
