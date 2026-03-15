@@ -248,26 +248,42 @@ const testimonials = [
   },
 ];
 
-// Metric counter item
-function MetricItem({
-  value,
+// Metric counter card
+function MetricCard({
+  icon: Icon,
+  target,
   suffix,
-  label,
-  staticLabel,
+  title,
+  text,
+  delay = 0,
 }: {
-  value: number;
+  icon: React.ElementType;
+  target: number;
   suffix: string;
-  label: string;
-  staticLabel?: boolean;
+  title: string;
+  text: string;
+  delay?: number;
 }) {
-  const { count, ref } = useCountUp(staticLabel ? 0 : value);
+  const { count, ref } = useCountUp(target, 1400);
   return (
-    <div ref={ref} className="text-center">
-      <div className="text-3xl md:text-4xl font-black text-gradient mb-1">
-        {staticLabel ? suffix : `${count}${suffix}`}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55, ease: "easeOut", delay }}
+    >
+      <div className="glass-card p-6 md:p-8 h-full flex flex-col items-center text-center gap-4">
+        <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
+          <Icon className="w-6 h-6 text-accent" />
+        </div>
+        <p className="text-4xl font-bold text-foreground tabular-nums">
+          {count}{suffix}
+        </p>
+        <p className="text-sm font-semibold text-accent">{title}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed">{text}</p>
       </div>
-      <p className="text-xs text-muted-foreground">{label}</p>
-    </div>
+    </motion.div>
   );
 }
 
