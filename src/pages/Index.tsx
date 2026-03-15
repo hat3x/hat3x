@@ -23,6 +23,15 @@ const fadeUp = {
   }),
 };
 
+const heroWordVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const, delay: 0.15 + i * 0.06 },
+  }),
+};
+
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
