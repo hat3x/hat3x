@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Search, Zap, Code, Bot, BarChart3, Shield, ArrowRight } from "lucide-react";
+import { Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, ArrowRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
@@ -10,46 +10,87 @@ const fade = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }
 
 const servicios = [
 {
-  icon: Search, title: "Auditoría y roadmap de IA",
-  desc: "Analizamos tus procesos, datos y objetivos para identificar dónde la IA genera impacto real.",
-  incluye: ["Mapa de procesos y oportunidades", "Priorización impacto/esfuerzo", "Roadmap ejecutable con fases", "Presentación de resultados"],
-  para: "Empresas que quieren empezar con IA de forma estratégica.",
-  tiempo: "1–3 semanas"
-},
-{
-  icon: Zap, title: "Automatización y agentes",
-  desc: "Diseñamos workflows inteligentes y copilotos de IA que eliminan tareas repetitivas.",
-  incluye: ["Diseño de workflows automatizados", "Agentes conversacionales (internos o externos)", "Integraciones con herramientas existentes", "Testing y puesta en producción"],
-  para: "Equipos con carga operativa alta y procesos repetitivos.",
-  tiempo: "2–6 semanas"
-},
-{
-  icon: Code, title: "Apps y productos con IA",
-  desc: "Desarrollamos aplicaciones web y móvil con inteligencia artificial integrada.",
-  incluye: ["Diseño UX/UI", "Desarrollo frontend y backend", "Integración de modelos de IA", "Deploy y mantenimiento"],
-  para: "Empresas que quieren lanzar un producto con IA o añadir IA a un producto existente.",
-  tiempo: "4–12 semanas"
-},
-{
-  icon: Bot, title: "Integraciones",
-  desc: "Conectamos IA con tu CRM, ERP, bases de datos, Google Workspace, Microsoft 365 y más.",
-  incluye: ["Análisis de sistemas y APIs", "Desarrollo de conectores", "Sincronización de datos", "Documentación técnica"],
-  para: "Empresas con ecosistema de herramientas consolidado.",
+  icon: Globe,
+  title: "Creación de páginas web profesionales",
+  desc: "Creamos páginas web modernas para que tu empresa tenga presencia online, genere confianza y atraiga nuevos clientes.",
+  incluye: [
+    "Diseño moderno y profesional",
+    "Web rápida y adaptada a móvil",
+    "Formularios de contacto para captar clientes",
+    "Optimización básica para aparecer en Google",
+    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+  ],
+  para: "Empresas que quieren mejorar su presencia online y atraer nuevos clientes.",
   tiempo: "2–4 semanas"
 },
 {
-  icon: BarChart3, title: "Analítica y ML",
-  desc: "Modelos predictivos, scoring, detección de anomalías y dashboards inteligentes.",
-  incluye: ["Exploración y preparación de datos", "Entrenamiento de modelos", "Dashboards y alertas", "Documentación y mantenimiento"],
-  para: "Empresas con datos que quieren tomar decisiones basadas en evidencia.",
-  tiempo: "3–8 semanas"
+  icon: BrainCircuit,
+  title: "Webs inteligentes con IA (asistente 24/7)",
+  desc: "Creamos páginas web avanzadas con asistentes inteligentes que pueden responder automáticamente a las preguntas de tus clientes y ayudarles a encontrar lo que buscan.",
+  incluye: [
+    "Chat inteligente en la web",
+    "Respuestas automáticas a preguntas frecuentes",
+    "Captación automática de contactos o clientes potenciales",
+    "Posibilidad de reservar citas o solicitar información",
+    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+  ],
+  para: "Empresas que reciben muchas consultas y quieren atender a sus clientes incluso fuera del horario laboral.",
+  tiempo: "3–6 semanas"
 },
 {
-  icon: Shield, title: "Gobernanza y adopción",
-  desc: "Seguridad, permisos, trazabilidad y formación para que tu equipo adopte la IA.",
-  incluye: ["Auditoría de seguridad y permisos", "Políticas de uso de IA", "Formación para equipos", "Plan de adopción y seguimiento"],
-  para: "Empresas que priorizan la seguridad y la adopción real por parte de su equipo.",
+  icon: Cog,
+  title: "Automatización de tareas del negocio",
+  desc: "Automatizamos tareas repetitivas para que tu empresa ahorre tiempo y pueda centrarse en lo realmente importante.",
+  incluye: [
+    "Automatización de documentos",
+    "Automatización de facturas o presupuestos",
+    "Automatización de correos y formularios",
+    "Recordatorios automáticos de citas o tareas",
+    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+  ],
+  para: "Empresas que quieren reducir trabajo manual y mejorar la eficiencia de sus procesos.",
+  tiempo: "2–5 semanas"
+},
+{
+  icon: MessageSquare,
+  title: "Automatización de comunicación con clientes",
+  desc: "Configuramos sistemas automáticos para gestionar mensajes y consultas de clientes en distintos canales como WhatsApp, redes sociales o formularios de la web.",
+  incluye: [
+    "Automatización de mensajes en WhatsApp",
+    "Automatización en Instagram y redes sociales",
+    "Respuestas automáticas a preguntas frecuentes",
+    "Integración con formularios o sistemas de reservas",
+    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+  ],
+  para: "Empresas que reciben muchas consultas de clientes y quieren responder de forma rápida y organizada.",
   tiempo: "2–4 semanas"
+},
+{
+  icon: LayoutDashboard,
+  title: "Apps y plataformas personalizadas para empresas",
+  desc: "Desarrollamos aplicaciones y plataformas digitales adaptadas a tu negocio, tanto para uso interno como para tus propios clientes.",
+  incluye: [
+    "Desarrollo de aplicaciones web o móviles",
+    "Paneles para gestionar clientes, productos o servicios",
+    "Plataformas privadas para clientes o empleados",
+    "Integración con sistemas de la empresa",
+    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+  ],
+  para: "Empresas que quieren digitalizar procesos o ofrecer nuevos servicios digitales a sus clientes.",
+  tiempo: "4–10 semanas"
+},
+{
+  icon: Headset,
+  title: "Mantenimiento y soporte tecnológico",
+  desc: "Ofrecemos mantenimiento y soporte continuo para asegurar que todas las soluciones tecnológicas de tu empresa funcionen correctamente en todo momento.",
+  incluye: [
+    "Supervisión y mantenimiento de sistemas implementados",
+    "Resolución de problemas técnicos",
+    "Actualizaciones y mejoras de funcionalidades",
+    "Ajustes y optimización de herramientas o automatizaciones",
+  ],
+  para: "Empresas que quieren garantizar que su tecnología funcione correctamente y contar con soporte cuando lo necesiten.",
+  tiempo: "Servicio continuo"
 }];
 
 
@@ -57,7 +98,11 @@ const Servicios = () =>
 <Layout>
     <section className="py-20 md:py-28">
       <div className="container mx-auto px-4 lg:px-8">
-        <SectionHeader badge="Servicios" title="IA aplicada a procesos, producto y negocio." subtitle="Cada servicio entrega resultados medibles. Combinamos lo que necesites." />
+        <SectionHeader
+          badge="Servicios"
+          title="Soluciones tecnológicas para hacer crecer tu empresa"
+          subtitle="Creamos páginas web, automatizamos tareas y desarrollamos herramientas inteligentes para ayudarte a atraer más clientes y trabajar de forma más eficiente."
+        />
       </div>
     </section>
 
@@ -99,7 +144,7 @@ const Servicios = () =>
       <div className="container mx-auto px-4 lg:px-8 text-center">
         <Link to="/contacto">
           <Button className="bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-base font-semibold px-8 py-3 h-auto gap-2">
-            Solicitar auditoría <ArrowRight className="w-4 h-4" />
+            Cuéntanos tu proyecto <ArrowRight className="w-4 h-4" />
           </Button>
         </Link>
       </div>
