@@ -43,10 +43,10 @@ const Contacto = () =>
               </div>
             </GlassCard>
 
-            <GlassCard highlight>
-              <h4 className="text-sm font-semibold text-foreground mb-2">Auditoría gratuita</h4>
+            <GlassCard>
+              <h4 className="text-sm font-semibold text-foreground mb-2">¿Prefieres hablar directamente?</h4>
               <p className="text-sm text-muted-foreground">
-                Agenda una llamada de 30 min y te decimos dónde la IA puede ahorrarte tiempo esta semana.
+                También puedes escribirnos o llamarnos y te responderemos lo antes posible.
               </p>
             </GlassCard>
           </div>
