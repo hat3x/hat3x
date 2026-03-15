@@ -339,7 +339,7 @@ const Index = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <MetricItem value={100} suffix="+" label="Tareas optimizadas" />
                 <MetricItem value={60} suffix="%" label="Tiempo recuperado" />
-                <MetricItem value={0} suffix="24/7" label="Atención automatizada" staticLabel />
+                <MetricItem value={24} suffix="/7" label="Atención automatizada" />
                 <MetricItem value={3} suffix="x" label="Procesos más rápidos" />
               </div>
             </div>
