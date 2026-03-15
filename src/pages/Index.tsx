@@ -126,6 +126,11 @@ function MetricItem({ value, suffix, label }: { value: number; suffix: string; l
   );
 }
 
+const heroLines = [
+  { text: "Haz que tu empresa trabaje mejor,", gradient: false },
+  { text: "rápido y de forma inteligente.", gradient: true },
+];
+
 const Index = () => {
   return (
     <Layout>
@@ -141,21 +146,54 @@ const Index = () => {
             variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
             className="max-w-4xl"
           >
-            <motion.div variants={fadeUp}>
-              <Hat3xLogo size="lg" className="mb-8" />
-            </motion.div>
-            <motion.h1
-              variants={fadeUp}
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-6 text-primary-foreground"
+            {/* Logo fade-in */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.05 }}
+              className="mb-8"
             >
-              Haz que tu empresa trabaje mejor, rápido{" "}
-              <span className="text-gradient">y de forma inteligente.</span>
-            </motion.h1>
-            <motion.p variants={fadeUp} className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-4 leading-relaxed">
+              <Hat3xLogo size="lg" />
+            </motion.div>
+
+            {/* Title — line by line */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.15] mb-6">
+              {heroLines.map((line, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  initial="hidden"
+                  animate="visible"
+                  variants={heroWordVariants}
+                  className={`block ${line.gradient ? "text-gradient" : "text-primary-foreground"}`}
+                >
+                  {line.text}
+                </motion.span>
+              ))}
+            </h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: "easeOut", delay: 0.42 }}
+              className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-4 leading-relaxed"
+            >
               Ayudamos a empresas a modernizar su negocio con soluciones tecnológicas que automatizan tareas, mejoran la organización y facilitan el crecimiento.
             </motion.p>
-            <motion.p variants={fadeUp} className="text-sm text-muted-foreground mb-8">Sin complicaciones. Soluciones claras. Resultados reales.</motion.p>
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.52 }}
+              className="text-sm text-muted-foreground mb-8"
+            >
+              Sin complicaciones. Soluciones claras. Resultados reales.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.62 }}
+              className="flex flex-wrap gap-4"
+            >
               <Link to="/contacto">
                 <Button className="bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-base font-semibold px-8 py-3 h-auto btn-lift group">
                   Cuéntanos tu proyecto
