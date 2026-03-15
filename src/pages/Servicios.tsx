@@ -74,7 +74,7 @@ const servicios = [
     "Paneles para gestionar clientes, productos o servicios",
     "Plataformas privadas para clientes o empleados",
     "Integración con sistemas de la empresa",
-    "• Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
+    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
   ],
   para: "Empresas que quieren digitalizar procesos o ofrecer nuevos servicios digitales a sus clientes.",
   tiempo: "4–10 semanas"
