@@ -101,7 +101,7 @@ const Servicios = () =>
         <SectionHeader
           badge="Servicios"
           title="Soluciones tecnológicas para hacer crecer tu empresa"
-          subtitle="Creamos páginas web, automatizamos tareas y desarrollamos herramientas inteligentes para ayudarte a atraer más clientes y trabajar de forma más eficiente."
+          subtitle="Nuestros servicios están pensados para ayudar a las empresas a trabajar de forma más eficiente, automatizar tareas y ofrecer una experiencia más profesional a sus clientes."
         />
       </div>
     </section>
@@ -158,7 +158,7 @@ const Servicios = () =>
             },
             {
               icon: Clock,
-              number: "40%",
+              number: "60%",
               title: "Tiempo recuperado",
               text: "Reducción media del tiempo dedicado a tareas administrativas gracias a automatizaciones.",
             },
@@ -170,7 +170,7 @@ const Servicios = () =>
             },
             {
               icon: TrendingUp,
-              number: "2x",
+              number: "3x",
               title: "Procesos más rápidos",
               text: "Empresas que han conseguido agilizar tareas internas mediante herramientas digitales.",
             },
