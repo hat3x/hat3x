@@ -54,7 +54,7 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center gap-3">
           <Link to="/contacto">
             <Button className="bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-sm font-semibold">
-              Solicitar auditoría
+              Cuéntanos tu proyecto
             </Button>
           </Link>
         </div>
