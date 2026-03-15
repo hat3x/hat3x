@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MessageCircle, FileText, LayoutGrid, CalendarX, RefreshCw, Clock, Inbox, Cog } from "lucide-react";
+import { ArrowRight, MessageCircle, FileText, LayoutGrid, CalendarX, Monitor, Zap, RefreshCw, Clock, Inbox, Cog } from "lucide-react";
 
 const fade = {
   initial: { opacity: 0, y: 20 },
