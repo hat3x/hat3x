@@ -158,7 +158,7 @@ const Servicios = () =>
             },
             {
               icon: Clock,
-              number: "40%",
+              number: "60%",
               title: "Tiempo recuperado",
               text: "Reducción media del tiempo dedicado a tareas administrativas gracias a automatizaciones.",
             },
@@ -170,7 +170,7 @@ const Servicios = () =>
             },
             {
               icon: TrendingUp,
-              number: "2x",
+              number: "3x",
               title: "Procesos más rápidos",
               text: "Empresas que han conseguido agilizar tareas internas mediante herramientas digitales.",
             },
