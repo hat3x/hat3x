@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Lightbulb, Rocket, Handshake, ArrowRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeader from "@/components/SectionHeader";
 import GlassCard from "@/components/GlassCard";
-import ContactForm from "@/components/ContactForm";
+import { Button } from "@/components/ui/button";
 
 const fade = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
@@ -23,11 +24,11 @@ const TuIdea = () => (
             Tu idea, nuestra tecnología
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6 text-foreground">
-            ¿Tienes una idea revolucionaria?{" "}
-            <span className="text-gradient">Nosotros la construimos.</span>
+            ¿Tienes una idea o proyecto digital?{" "}
+            <span className="text-gradient">Nosotros te ayudamos a hacerlo realidad.</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            Muchas grandes ideas no se materializan por falta de recursos técnicos. En HAT3X convertimos tu visión en un producto funcional con inteligencia artificial, desarrollo a medida y estrategia de negocio.
+            Muchas buenas ideas nunca se desarrollan porque falta el equipo técnico adecuado. En HAT3X te ayudamos a convertir esa idea en una herramienta o producto real utilizando tecnología, desarrollo a medida y estrategia.
           </p>
         </motion.div>
       </div>
@@ -76,13 +77,16 @@ const TuIdea = () => (
 
     <section className="py-20 md:py-28">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="glass-card-highlight p-8 md:p-12 lg:p-16 max-w-3xl mx-auto">
+        <div className="glass-card-highlight p-8 md:p-12 lg:p-16 max-w-3xl mx-auto text-center">
           <SectionHeader
-            title="Cuéntanos tu idea. Sin compromiso."
-            subtitle="Evaluamos cada propuesta y te damos feedback honesto sobre viabilidad, tecnología y próximos pasos."
-            align="left"
+            title="¿Quieres que lo hagamos realidad?"
+            subtitle="Cuéntanos tu idea y te decimos cómo podemos ayudarte."
           />
-          <ContactForm variant="short" />
+          <Link to="/contacto">
+            <Button className="bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-base font-semibold px-8 py-3 h-auto gap-2">
+              Cuéntanos tu idea <ArrowRight className="w-4 h-4" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
