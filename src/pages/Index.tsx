@@ -38,10 +38,10 @@ const casosFinanzas = ["Detección de fraude y anomalías", "Conciliación autom
 const casosRRHH = ["Screening automático de candidatos", "Onboarding asistido por IA", "Análisis de clima y rotación"];
 
 const pasos = [
-{ n: "01", title: "Diagnóstico", desc: "Auditoría de procesos, objetivos y datos disponibles.", entregables: ["Mapa de oportunidades", "Priorización por impacto/esfuerzo", "Roadmap inicial"] },
-{ n: "02", title: "Prototipo", desc: "MVP funcional en días o semanas para validar la solución.", entregables: ["Prototipo funcional", "Pruebas con datos reales", "Feedback del equipo"] },
-{ n: "03", title: "Integración", desc: "Conexión con tus sistemas, datos y flujos existentes.", entregables: ["Integraciones configuradas", "Documentación técnica", "Formación inicial"] },
-{ n: "04", title: "Escalado", desc: "Medición de impacto, mejora continua y expansión.", entregables: ["KPIs definidos", "Informes de impacto", "Plan de expansión"] }];
+{ n: "01", title: "Entendemos tu empresa", desc: "Analizamos cómo funciona tu negocio, qué tareas te quitan más tiempo y dónde la tecnología puede ayudarte realmente.", entregables: ["Identificamos oportunidades claras de mejora"] },
+{ n: "02", title: "Diseñamos la solución", desc: "Proponemos una solución adaptada a tu empresa: automatizaciones, herramientas digitales o nuevas funcionalidades.", entregables: ["Tienes claro qué se va a implementar y cómo funcionará"] },
+{ n: "03", title: "Implementamos las herramientas", desc: "Desarrollamos e integramos las soluciones necesarias para que todo funcione correctamente dentro de tu negocio.", entregables: ["Empiezas a ahorrar tiempo y mejorar tus procesos"] },
+{ n: "04", title: "Mejoramos y ampliamos", desc: "A medida que tu empresa crece, podemos seguir mejorando las herramientas e implementar nuevas funcionalidades.", entregables: ["La tecnología evoluciona junto a tu negocio"] }];
 
 
 const faqs = [
