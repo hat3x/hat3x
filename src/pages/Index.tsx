@@ -45,13 +45,13 @@ const pasos = [
 
 
 const faqs = [
-{ q: "¿Qué empresas se benefician más?", a: "Empresas con procesos repetitivos, volúmenes de datos o equipos que necesitan escalar sin multiplicar recursos. Desde pymes consolidadas hasta grandes corporaciones." },
-{ q: "¿Cuánto tarda una primera entrega?", a: "Depende del alcance, pero un primer prototipo funcional suele estar listo en 2–4 semanas tras el diagnóstico inicial." },
-{ q: "¿Necesitamos muchos datos?", a: "No siempre. Muchas soluciones de IA generativa funcionan con pocos datos propios. En diagnóstico evaluamos qué es viable con lo que tienes." },
-{ q: "¿Se integra con nuestras herramientas?", a: "Sí. Trabajamos con CRMs, ERPs, bases de datos, Google Workspace, Microsoft 365 y prácticamente cualquier sistema con API." },
-{ q: "¿Qué pasa con la seguridad y privacidad?", a: "Aplicamos buenas prácticas de seguridad: permisos por rol, cifrado, trazabilidad. Nos adaptamos a tus políticas internas." },
-{ q: "¿Podéis crear una app o web con IA?", a: "Sí. Diseñamos y desarrollamos productos digitales con IA integrada: chatbots, paneles inteligentes, herramientas internas, apps móvil." },
-{ q: "¿Cómo medimos el impacto?", a: "Definimos KPIs junto a tu equipo antes de empezar. Medimos tiempo ahorrado, errores reducidos, velocidad de respuesta y adopción." }];
+{ q: "¿Qué tipo de empresas pueden beneficiarse de estos servicios?", a: "Cualquier empresa que quiera ahorrar tiempo en tareas repetitivas, mejorar la organización de su negocio o ofrecer una mejor atención a sus clientes." },
+{ q: "¿Cuánto tiempo tarda en implementarse una solución?", a: "Depende del proyecto, pero muchas soluciones pueden empezar a funcionar en pocas semanas." },
+{ q: "¿Necesito conocimientos técnicos para usar estas herramientas?", a: "No. Diseñamos las soluciones para que sean fáciles de usar en el día a día." },
+{ q: "¿Se puede adaptar a las herramientas que ya usamos?", a: "Sí. Siempre que sea posible, integramos las soluciones con las herramientas que ya utiliza tu empresa." },
+{ q: "¿La información de mi empresa estará segura?", a: "Sí. Aplicamos buenas prácticas de seguridad y trabajamos con herramientas fiables para proteger los datos." },
+{ q: "¿Podéis crear una app o plataforma para mi empresa?", a: "Sí. Desarrollamos aplicaciones y herramientas digitales adaptadas a cada negocio." },
+{ q: "¿Las soluciones se pueden ampliar en el futuro?", a: "Sí. Las herramientas pueden evolucionar con tu empresa y añadir nuevas funcionalidades cuando sea necesario." }];
 
 
 const testimonials = [
