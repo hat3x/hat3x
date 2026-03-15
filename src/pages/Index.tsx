@@ -25,10 +25,10 @@ const services = [
 
 
 const problems = [
-{ icon: ClipboardCheck, title: "Procesos lentos y manuales", desc: "Tu equipo pierde horas en tareas que una IA puede resolver en segundos." },
-{ icon: AlertTriangle, title: "Información dispersa", desc: "Datos en 10 herramientas distintas, sin visión unificada." },
-{ icon: Users, title: "Soporte y ventas saturados", desc: "Tus equipos no escalan porque dependen de respuestas humanas constantes." },
-{ icon: LineChart, title: "Decisiones sin datos", desc: "Actúas por intuición cuando podrías usar predicción e inteligencia." }];
+{ icon: MessageCircle, title: "Demasiados mensajes y consultas", desc: "Gran parte del día se va respondiendo WhatsApp, correos o mensajes con las mismas preguntas: horarios, precios, disponibilidad o información básica. Esto ocupa tiempo que podrías dedicar a tareas más importantes para tu negocio." },
+{ icon: Repeat, title: "Tareas repetitivas que consumen horas", desc: "Crear facturas, enviar presupuestos, revisar formularios o gestionar citas son tareas que se repiten constantemente. Muchas de estas tareas podrían hacerse de forma automática." },
+{ icon: Layers, title: "Todo repartido en distintas herramientas", desc: "Clientes en Excel, mensajes en WhatsApp, documentos en correos, pedidos en otra plataforma. Tener la información repartida hace difícil gestionar el negocio." },
+{ icon: Clock, title: "Clientes esperando respuesta", desc: "Muchas consultas llegan fuera del horario laboral o cuando el equipo está ocupado. Cuando un cliente no recibe respuesta rápida, muchas veces termina contactando con otra empresa." }];
 
 
 const casosVentas = ["Calificación automática de leads", "Resúmenes de llamadas con IA", "Propuestas asistidas por contexto"];
