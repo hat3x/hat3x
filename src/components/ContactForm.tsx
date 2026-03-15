@@ -24,11 +24,9 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
       nombre: formData.get("nombre") || "",
       email: formData.get("email") || "",
       empresa: formData.get("empresa") || "",
-      cargo: formData.get("cargo") || "",
       tamano: formData.get("tamano") || "",
       area: formData.get("area") || "",
       objetivo: formData.get("objetivo") || "",
-      presupuesto: formData.get("presupuesto") || "",
       mensaje: formData.get("mensaje") || "",
     };
 
@@ -73,15 +71,9 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
           <input required name="email" type="email" className={inputClass} placeholder="email@empresa.com" />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div>
-          <label className={labelClass}>Empresa *</label>
-          <input required name="empresa" className={inputClass} placeholder="Nombre de tu empresa" />
-        </div>
-        <div>
-          <label className={labelClass}>Cargo</label>
-          <input name="cargo" className={inputClass} placeholder="Tu puesto" />
-        </div>
+      <div>
+        <label className={labelClass}>Empresa *</label>
+        <input required name="empresa" className={inputClass} placeholder="Nombre de tu empresa" />
       </div>
       {variant === "full" && (
         <>
@@ -100,38 +92,26 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
               <label className={labelClass}>Área de interés</label>
               <select name="area" className={inputClass}>
                 <option value="">Seleccionar</option>
-                <option>Productividad</option>
-                <option>Atención al cliente</option>
-                <option>Ventas</option>
-                <option>Automatización</option>
-                <option>App con IA</option>
-                <option>Analítica</option>
+                <option>Crear o mejorar una página web</option>
+                <option>Automatizar tareas o procesos</option>
+                <option>Crear una app o plataforma</option>
+                <option>Mejorar la atención a clientes</option>
+                <option>Integrar herramientas o sistemas</option>
+                <option>No estoy seguro, quiero asesoramiento</option>
               </select>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label className={labelClass}>Objetivo principal</label>
-              <select name="objetivo" className={inputClass}>
-                <option value="">Seleccionar</option>
-                <option>Reducir costes</option>
-                <option>Mejorar productividad</option>
-                <option>Automatizar procesos</option>
-                <option>Crear producto con IA</option>
-                <option>Mejorar atención al cliente</option>
-                <option>Otro</option>
-              </select>
-            </div>
-            <div>
-              <label className={labelClass}>Presupuesto estimado (opcional)</label>
-              <select name="presupuesto" className={inputClass}>
-                <option value="">Seleccionar</option>
-                <option>&lt; 5.000 €</option>
-                <option>5.000 – 15.000 €</option>
-                <option>15.000 – 50.000 €</option>
-                <option>+50.000 €</option>
-              </select>
-            </div>
+          <div>
+            <label className={labelClass}>Objetivo principal</label>
+            <select name="objetivo" className={inputClass}>
+              <option value="">Seleccionar</option>
+              <option>Reducir costes</option>
+              <option>Mejorar productividad</option>
+              <option>Automatizar procesos</option>
+              <option>Crear producto con IA</option>
+              <option>Mejorar atención al cliente</option>
+              <option>Otro</option>
+            </select>
           </div>
         </>
       )}
