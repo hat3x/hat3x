@@ -77,13 +77,16 @@ const TuIdea = () => (
 
     <section className="py-20 md:py-28">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="glass-card-highlight p-8 md:p-12 lg:p-16 max-w-3xl mx-auto">
+        <div className="glass-card-highlight p-8 md:p-12 lg:p-16 max-w-3xl mx-auto text-center">
           <SectionHeader
-            title="Cuéntanos tu idea. Sin compromiso."
-            subtitle="Evaluamos cada propuesta y te damos feedback honesto sobre viabilidad, tecnología y próximos pasos."
-            align="left"
+            title="¿Quieres que lo hagamos realidad?"
+            subtitle="Cuéntanos tu idea y te decimos cómo podemos ayudarte."
           />
-          <ContactForm variant="short" />
+          <Link to="/contacto">
+            <Button className="bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-base font-semibold px-8 py-3 h-auto gap-2">
+              Cuéntanos tu idea <ArrowRight className="w-4 h-4" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
