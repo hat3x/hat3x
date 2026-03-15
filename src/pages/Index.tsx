@@ -114,12 +114,12 @@ const testimonials = [
 { name: "CEO", role: "Empresa de consultoría", text: "Se nota que entienden cómo funcionan las empresas. Las soluciones que propusieron encajaban muy bien con lo que necesitábamos." }];
 
 // Metric counter item
-function MetricItem({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const { count, ref } = useCountUp(value);
+function MetricItem({ value, suffix, label, staticLabel }: { value: number; suffix: string; label: string; staticLabel?: boolean }) {
+  const { count, ref } = useCountUp(staticLabel ? 0 : value);
   return (
     <div ref={ref} className="text-center">
       <div className="text-3xl md:text-4xl font-black text-gradient mb-1">
-        {count}{suffix}
+        {staticLabel ? suffix : `${count}${suffix}`}
       </div>
       <p className="text-xs text-muted-foreground">{label}</p>
     </div>
