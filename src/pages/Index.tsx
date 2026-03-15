@@ -72,25 +72,61 @@ function useTypewriter() {
   return { line1, line2, showCursor };
 }
 
-// Animated counter hook
+// Animated counter — uses native IntersectionObserver, fires exactly once
 function useCountUp(target: number, duration = 1400) {
   const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
 
   useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) { setCount(target); clearInterval(timer); }
-      else setCount(Math.floor(start));
-    }, 16);
-    return () => clearInterval(timer);
-  }, [inView, target, duration]);
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || started.current) return;
+        started.current = true;
+        observer.disconnect();
+
+        const startTime = performance.now();
+        const tick = (now: number) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // ease-out quad
+          const eased = 1 - Math.pow(1 - progress, 2);
+          setCount(Math.floor(eased * target));
+          if (progress < 1) requestAnimationFrame(tick);
+          else setCount(target);
+        };
+        requestAnimationFrame(tick);
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { count, ref };
+}
+
+// Metric counter item — animated on scroll, once
+function MetricItem({ value, suffix, label, prefixStatic }: {
+  value: number;
+  suffix: string;
+  label: string;
+  prefixStatic?: boolean; // for "24/7": animate 24, append /7
+}) {
+  const { count, ref } = useCountUp(value);
+  return (
+    <div ref={ref} className="text-center">
+      <div className="text-3xl md:text-4xl font-black text-gradient mb-1">
+        {prefixStatic ? `${count}${suffix}` : `${count}${suffix}`}
+      </div>
+      <p className="text-xs text-muted-foreground">{label}</p>
+    </div>
+  );
 }
 
 const services = [
