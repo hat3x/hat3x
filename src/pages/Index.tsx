@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, Shield,
-  ClipboardCheck, AlertTriangle, Users, LineChart,
-  ArrowRight, Sparkles, Lock, Eye } from "lucide-react";
+  MessageCircle, Repeat, Layers, Clock,
+  ArrowRight, Lock, Eye } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
@@ -25,10 +25,10 @@ const services = [
 
 
 const problems = [
-{ icon: ClipboardCheck, title: "Procesos lentos y manuales", desc: "Tu equipo pierde horas en tareas que una IA puede resolver en segundos." },
-{ icon: AlertTriangle, title: "Información dispersa", desc: "Datos en 10 herramientas distintas, sin visión unificada." },
-{ icon: Users, title: "Soporte y ventas saturados", desc: "Tus equipos no escalan porque dependen de respuestas humanas constantes." },
-{ icon: LineChart, title: "Decisiones sin datos", desc: "Actúas por intuición cuando podrías usar predicción e inteligencia." }];
+{ icon: MessageCircle, title: "Demasiados mensajes y consultas", desc: "Gran parte del día se va respondiendo WhatsApp, correos o mensajes con las mismas preguntas: horarios, precios, disponibilidad o información básica. Esto ocupa tiempo que podrías dedicar a tareas más importantes para tu negocio." },
+{ icon: Repeat, title: "Tareas repetitivas que consumen horas", desc: "Crear facturas, enviar presupuestos, revisar formularios o gestionar citas son tareas que se repiten constantemente. Muchas de estas tareas podrían hacerse de forma automática." },
+{ icon: Layers, title: "Todo repartido en distintas herramientas", desc: "Clientes en Excel, mensajes en WhatsApp, documentos en correos, pedidos en otra plataforma. Tener la información repartida hace difícil gestionar el negocio." },
+{ icon: Clock, title: "Clientes esperando respuesta", desc: "Muchas consultas llegan fuera del horario laboral o cuando el equipo está ocupado. Cuando un cliente no recibe respuesta rápida, muchas veces termina contactando con otra empresa." }];
 
 
 const casosVentas = ["Calificación automática de leads", "Resúmenes de llamadas con IA", "Propuestas asistidas por contexto"];
@@ -100,7 +100,11 @@ const Index = () => {
       {/* PROBLEMAS */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 lg:px-8">
-          <SectionHeader badge="El problema" title="¿Reconoces alguno de estos retos?" />
+          <SectionHeader
+            badge="¿Te suena?"
+            title="¿Te suena alguna de estas situaciones en tu empresa?"
+            subtitle="Muchas empresas pierden tiempo cada día en tareas que podrían hacerse de forma más simple, automática o mejor organizadas."
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {problems.map((p, i) =>
             <motion.div key={i} {...fade} transition={{ delay: i * 0.1 }}>
@@ -113,11 +117,12 @@ const Index = () => {
             )}
           </div>
           <motion.div {...fade} className="mt-12 glass-card p-8 max-w-2xl mx-auto text-center">
-            <h3 className="text-lg font-semibold text-foreground mb-3">Lo que hacemos</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-3">Cómo podemos ayudarte</h3>
             <ul className="text-sm text-muted-foreground space-y-2">
-              <li>✓ Identificamos dónde la IA genera impacto real en tu negocio</li>
-              <li>✓ Diseñamos e implementamos soluciones medibles</li>
-              <li>✓ Integramos con tus sistemas sin disrupciones</li>
+              <li>✔ Automatizamos tareas repetitivas para ahorrar tiempo</li>
+              <li>✔ Creamos sistemas que responden automáticamente a clientes</li>
+              <li>✔ Desarrollamos apps y herramientas que organizan tu negocio en un solo lugar</li>
+              <li>✔ Implementamos soluciones tecnológicas adaptadas a cada empresa</li>
             </ul>
           </motion.div>
         </div>
