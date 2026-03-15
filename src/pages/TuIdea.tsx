@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Lightbulb, Rocket, Handshake, ArrowRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionHeader from "@/components/SectionHeader";
 import GlassCard from "@/components/GlassCard";
-import ContactForm from "@/components/ContactForm";
+import { Button } from "@/components/ui/button";
 
 const fade = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
