@@ -95,6 +95,47 @@ function useCountUp(target: number, duration = 1800) {
   return { count, ref };
 }
 
+// Typewriter hook — types two lines sequentially, runs once
+const LINE1 = "Haz que tu empresa trabaje mejor,";
+const LINE2 = "rápido y de forma inteligente.";
+
+function useTypewriter(speed = 38) {
+  const [text1, setText1] = useState("");
+  const [text2, setText2] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+  const done = useRef(false);
+
+  useEffect(() => {
+    if (done.current) return;
+    done.current = true;
+
+    let i = 0;
+    // type line 1
+    const type1 = setInterval(() => {
+      i++;
+      setText1(LINE1.slice(0, i));
+      if (i >= LINE1.length) {
+        clearInterval(type1);
+        let j = 0;
+        // small pause then type line 2
+        setTimeout(() => {
+          const type2 = setInterval(() => {
+            j++;
+            setText2(LINE2.slice(0, j));
+            if (j >= LINE2.length) {
+              clearInterval(type2);
+              // hide cursor after finish
+              setTimeout(() => setShowCursor(false), 900);
+            }
+          }, speed);
+        }, 180);
+      }
+    }, speed);
+  }, []);
+
+  return { text1, text2, showCursor };
+}
+
 const services = [
   {
     icon: Globe,
