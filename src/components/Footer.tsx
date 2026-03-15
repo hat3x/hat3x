@@ -16,7 +16,7 @@ const footerLinks = [
   links: [
   { label: "Contacto", to: "/contacto" },
   { label: "Privacidad", to: "/legal/privacidad" },
-  { label: "Términos", to: "/legal/terminos" }]
+  { label: "Términos y condiciones", to: "/legal/terminos" }]
 
 }];
 
