@@ -18,7 +18,7 @@ const servicios = [
     "Web rápida y adaptada a móvil",
     "Formularios de contacto para captar clientes",
     "Optimización básica para aparecer en Google",
-    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+    "• Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
   ],
   para: "Empresas que quieren mejorar su presencia online y atraer nuevos clientes.",
   tiempo: "2–4 semanas"
