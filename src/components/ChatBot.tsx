@@ -273,6 +273,8 @@ function detectIntent(raw: string): Intent {
 
 function buildResponse(intent: Intent): { text: string; actions: ChatAction[] } {
   switch (intent) {
+
+    // ── Saludo / gracias / despedida ─────────────────────────────────────────
     case "saludo":
       return {
         text: "¡Hola! ¿En qué puedo ayudarte hoy?",
@@ -281,7 +283,7 @@ function buildResponse(intent: Intent): { text: string; actions: ChatAction[] } 
 
     case "gracias":
       return {
-        text: "¡De nada! Si necesitas algo más, estoy aquí.",
+        text: "¡De nada! Si necesitas algo más, aquí estoy.",
         actions: [
           { label: "Ver servicios",  navigate: "/servicios" },
           { label: "Ir a contacto", navigate: "/contacto" },
@@ -291,126 +293,181 @@ function buildResponse(intent: Intent): { text: string; actions: ChatAction[] } 
     case "despedida":
       return {
         text: `¡Hasta luego! Si necesitas algo, escríbenos a ${EMAIL} o llámanos al ${PHONE}.`,
-        actions: [
-          { label: "Enviar email", href: `mailto:${EMAIL}` },
-          { label: "Llamar ahora", href: `tel:${PHONE_RAW}` },
-        ],
+        actions: [],
       };
 
+    // ── Web ──────────────────────────────────────────────────────────────────
     case "web":
       return {
         text: "Podemos ayudarte a crear una web nueva o mejorar la que ya tienes: más moderna, más clara, más profesional y enfocada a captar clientes. También podemos añadir formularios más útiles o asistentes inteligentes.",
         actions: [
-          { label: "Quiero una web nueva",          message: "Quiero una web nueva" },
-          { label: "Mejorar mi web actual",          message: "Quiero mejorar mi web actual" },
-          { label: "Web con asistente inteligente",  message: "Quiero una web con asistente" },
-          { label: "Ver servicios web",              navigate: "/servicios" },
+          { label: "Quiero una web nueva",         message: "web_nueva" },
+          { label: "Mejorar mi web actual",         message: "web_mejorar" },
+          { label: "Web con asistente inteligente", message: "web_asistente" },
+          { label: "Ver servicios web",             navigate: "/servicios" },
         ],
       };
 
+    case "web_nueva":
+      return {
+        text: "Perfecto. Diseñamos y desarrollamos tu web desde cero: estructura, diseño, contenido y optimización para que esté lista para captar clientes desde el primer día.",
+        actions: [
+          { label: "Ver servicios web", navigate: "/servicios" },
+        ],
+      };
+
+    case "web_mejorar":
+      return {
+        text: "Podemos revisar tu web actual y mejorar lo que sea necesario: diseño más moderno, mejor estructura, velocidad, textos más claros o formularios más efectivos.",
+        actions: [
+          { label: "Ver servicios web", navigate: "/servicios" },
+        ],
+      };
+
+    case "web_asistente":
+      return {
+        text: "Podemos añadir un asistente inteligente a tu web para atender consultas, captar leads o guiar a tus visitas automáticamente, sin que tengas que estar pendiente.",
+        actions: [
+          { label: "Ver servicios web", navigate: "/servicios" },
+        ],
+      };
+
+    // ── Automatización ───────────────────────────────────────────────────────
     case "automatizacion":
       return {
         text: "Podemos automatizar tareas repetitivas como formularios, respuestas a clientes, presupuestos, recordatorios o procesos internos. El objetivo es ahorrar tiempo y reducir trabajo manual.",
         actions: [
-          { label: "Automatizar WhatsApp o mensajes",   message: "Quiero automatizar WhatsApp" },
-          { label: "Automatizar formularios",           message: "Quiero automatizar formularios" },
-          { label: "Ahorrar tiempo en tareas internas", message: "Quiero ahorrar tiempo en tareas internas" },
+          { label: "Automatizar WhatsApp o mensajes",   message: "auto_whatsapp" },
+          { label: "Automatizar formularios",           message: "auto_formularios" },
+          { label: "Ahorrar tiempo en tareas internas", message: "auto_interno" },
           { label: "Ver casos de uso",                  navigate: "/casos-de-uso" },
         ],
       };
 
+    case "auto_whatsapp":
+      return {
+        text: "Podemos automatizar la atención en WhatsApp, Instagram o cualquier canal de mensajería: respuestas automáticas, captación de datos, gestión de consultas frecuentes y mucho más.",
+        actions: [],
+      };
+
+    case "auto_formularios":
+      return {
+        text: "Podemos automatizar formularios para que los datos lleguen solos a donde los necesitas: CRM, hojas de cálculo, correo o cualquier herramienta que uses. Sin trabajo manual.",
+        actions: [],
+      };
+
+    case "auto_interno":
+      return {
+        text: "Podemos identificar las tareas internas que más tiempo consumen y automatizarlas: recordatorios, seguimientos, generación de documentos, notificaciones o flujos entre herramientas.",
+        actions: [],
+      };
+
+    // ── App / Plataforma ─────────────────────────────────────────────────────
     case "app":
       return {
         text: "Podemos desarrollar apps y plataformas a medida para tu empresa o para tus clientes: áreas privadas, herramientas de gestión, sistemas de reservas o plataformas para centralizar toda la información en un solo lugar.",
         actions: [
-          { label: "App para clientes",       message: "Quiero una app para clientes" },
-          { label: "Plataforma interna",       message: "Quiero una plataforma interna" },
-          { label: "Centralizar información",  message: "Quiero centralizar información" },
-          { label: "Ver servicios de apps",    navigate: "/servicios" },
+          { label: "App para clientes",      message: "app_clientes" },
+          { label: "Plataforma interna",      message: "app_interna" },
+          { label: "Centralizar información", message: "app_centralizar" },
+          { label: "Ver servicios",           navigate: "/servicios" },
         ],
       };
 
-    case "clientes_whatsapp":
+    case "app_clientes":
       return {
-        text: "Podemos ayudarte a automatizar la atención a clientes en canales como WhatsApp, formularios o redes sociales, para responder más rápido y no perder ninguna consulta.",
-        actions: [
-          { label: "Automatizar WhatsApp",             message: "Quiero automatizar WhatsApp" },
-          { label: "Responder consultas automáticamente", message: "Quiero responder consultas automáticamente" },
-          { label: "Captar más clientes",              message: "Quiero captar más clientes" },
-          { label: "Ver casos de uso",                 navigate: "/casos-de-uso" },
-        ],
+        text: "Podemos crear una app o área privada para que tus clientes accedan a sus pedidos, reservas, documentos o servicios desde cualquier dispositivo. Una experiencia más profesional y completa.",
+        actions: [],
       };
 
-    case "citas":
+    case "app_interna":
       return {
-        text: "Podemos crear sistemas para gestionar citas, reservas y recordatorios automáticos. Reduce olvidos, organiza mejor la agenda y mejora la experiencia de tus clientes.",
-        actions: [
-          { label: "Gestionar citas online",    message: "Quiero gestionar citas online" },
-          { label: "Recordatorios automáticos", message: "Quiero recordatorios automáticos" },
-          { label: "Ver servicios",             navigate: "/servicios" },
-        ],
+        text: "Podemos desarrollar una plataforma interna para que tu equipo trabaje de forma más organizada: gestión de tareas, seguimiento de proyectos, acceso centralizado a la información y mucho más.",
+        actions: [],
       };
 
-    case "precio":
+    case "app_centralizar":
       return {
-        text: "El presupuesto depende del tipo de proyecto. No es lo mismo mejorar una web que desarrollar una app o automatizar varios procesos. Cuéntanos brevemente qué necesitas y te orientamos.",
-        actions: [
-          { label: "Pedir presupuesto",        navigate: "/contacto" },
-          { label: "Contar mi proyecto",       navigate: "/tu-idea" },
-          { label: "Hablar con el equipo",     message: "contacto" },
-        ],
+        text: "Podemos crear una plataforma donde toda la información de tu negocio esté en un solo lugar: clientes, proyectos, documentos, métricas. Sin herramientas dispersas ni datos perdidos.",
+        actions: [],
       };
 
-    case "plazos":
-      return {
-        text: "Los plazos dependen del proyecto. Algunas mejoras o automatizaciones pueden estar listas en pocas semanas, mientras que apps o plataformas completas pueden llevar más tiempo. Siempre proponemos una hoja de ruta clara.",
-        actions: [
-          { label: "Quiero algo rápido",        message: "web" },
-          { label: "Quiero una app completa",   message: "app" },
-          { label: "Ver cómo trabajamos",       navigate: "/proceso" },
-        ],
-      };
-
+    // ── Contacto ─────────────────────────────────────────────────────────────
     case "contacto":
       return {
         text: `Puedes escribirnos a ${EMAIL}, llamarnos al ${PHONE} o ir directamente a la página de contacto.`,
         actions: [
           { label: "Ir a contacto", navigate: "/contacto" },
-          { label: "Enviar email",  href: `mailto:${EMAIL}` },
-          { label: "Llamar ahora", href: `tel:${PHONE_RAW}` },
         ],
       };
 
+    // ── Atención a clientes / WhatsApp ────────────────────────────────────────
+    case "clientes_whatsapp":
+      return {
+        text: "Podemos ayudarte a automatizar la atención a clientes en canales como WhatsApp, formularios o redes sociales, para responder más rápido y no perder ninguna consulta.",
+        actions: [
+          { label: "Ver casos de uso", navigate: "/casos-de-uso" },
+        ],
+      };
+
+    // ── Citas ─────────────────────────────────────────────────────────────────
+    case "citas":
+      return {
+        text: "Podemos crear sistemas para gestionar citas, reservas y recordatorios automáticos. Reduce olvidos, organiza mejor la agenda y mejora la experiencia de tus clientes.",
+        actions: [
+          { label: "Ver servicios", navigate: "/servicios" },
+        ],
+      };
+
+    // ── Precio ────────────────────────────────────────────────────────────────
+    case "precio":
+      return {
+        text: "El presupuesto depende del tipo de proyecto. No es lo mismo mejorar una web que desarrollar una app o automatizar varios procesos. Cuéntanos brevemente qué necesitas y te orientamos.",
+        actions: [
+          { label: "Pedir presupuesto",  navigate: "/contacto" },
+          { label: "Contar mi proyecto", navigate: "/tu-idea" },
+        ],
+      };
+
+    // ── Plazos ────────────────────────────────────────────────────────────────
+    case "plazos":
+      return {
+        text: "Los plazos dependen del proyecto. Algunas mejoras o automatizaciones pueden estar listas en pocas semanas, mientras que apps o plataformas completas pueden llevar más tiempo. Siempre proponemos una hoja de ruta clara.",
+        actions: [
+          { label: "Ver cómo trabajamos", navigate: "/proceso" },
+          { label: "Ir a contacto",       navigate: "/contacto" },
+        ],
+      };
+
+    // ── Proceso ───────────────────────────────────────────────────────────────
     case "proceso":
       return {
         text: "Trabajamos en 4 pasos: entendemos tu negocio, diseñamos la solución, la implementamos y hacemos seguimiento. El proceso es claro, práctico y adaptado a cada empresa.",
         actions: [
           { label: "Ver cómo trabajamos", navigate: "/proceso" },
-          { label: "Contar mi proyecto",  navigate: "/tu-idea" },
           { label: "Pedir presupuesto",   navigate: "/contacto" },
         ],
       };
 
+    // ── Mantenimiento ─────────────────────────────────────────────────────────
     case "mantenimiento":
       return {
         text: "También ofrecemos mantenimiento y soporte. Te ayudamos con mejoras, incidencias, ajustes y seguimiento de las soluciones implementadas.",
         actions: [
-          { label: "Necesito soporte",           message: "Necesito soporte técnico" },
-          { label: "Mejorar herramienta actual",  message: "Quiero mejorar una herramienta existente" },
-          { label: "Hablar con el equipo",        message: "contacto" },
+          { label: "Hablar con el equipo", navigate: "/contacto" },
         ],
       };
 
+    // ── Integraciones ─────────────────────────────────────────────────────────
     case "integraciones":
       return {
         text: "Podemos integrar herramientas que ya usas en tu empresa, como CRM, formularios, correo o bases de datos, para conectar procesos y trabajar de forma más eficiente.",
         actions: [
-          { label: "Integrar mi CRM",        message: "Quiero integrar mi CRM" },
-          { label: "Conectar herramientas",  message: "Quiero conectar varias herramientas" },
-          { label: "Ver servicios",          navigate: "/servicios" },
+          { label: "Ver servicios", navigate: "/servicios" },
         ],
       };
 
+    // ── Default ───────────────────────────────────────────────────────────────
     default:
       return {
         text: "No estoy completamente seguro de lo que necesitas, pero puedo ayudarte con páginas web, automatización, apps, atención a clientes o contacto con el equipo.",
