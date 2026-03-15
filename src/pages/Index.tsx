@@ -1,28 +1,18 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  Search, Zap, Bot, Code, BarChart3, Shield,
+  Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, Shield,
   ClipboardCheck, AlertTriangle, Users, LineChart,
   ArrowRight, Sparkles, Lock, Eye } from
 "lucide-react";
-import Layout from "@/components/Layout";
-import GlassCard from "@/components/GlassCard";
-import SectionHeader from "@/components/SectionHeader";
-import Hat3xLogo from "@/components/Hat3xLogo";
-import ContactForm from "@/components/ContactForm";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-
-const fade = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
-
+...
 const services = [
-{ icon: Search, title: "Auditoría y roadmap de IA", desc: "Identificamos oportunidades reales de IA en tu empresa y priorizamos por impacto.", detail: "Entregable: roadmap priorizado" },
-{ icon: Zap, title: "Automatización y agentes", desc: "Workflows inteligentes y copilotos que eliminan tareas repetitivas.", detail: "Desde procesos simples a agentes complejos" },
-{ icon: Code, title: "Apps y productos con IA", desc: "Desarrollo a medida de apps web y móvil con IA integrada.", detail: "MVP en semanas" },
-{ icon: Bot, title: "Integraciones", desc: "Conectamos IA con tu CRM, ERP, bases de datos y herramientas diarias.", detail: "APIs, RPA, conectores nativos" },
-{ icon: BarChart3, title: "Analítica y ML", desc: "Modelos predictivos, scoring, alertas y dashboards inteligentes.", detail: "De datos a decisiones" },
-{ icon: Shield, title: "Gobernanza y adopción", desc: "Seguridad, permisos, trazabilidad y formación para tu equipo.", detail: "Adopción real, no solo tech" }];
+{ icon: Globe, title: "Páginas web profesionales", desc: "Creamos webs modernas para que tu empresa genere confianza y atraiga nuevos clientes.", detail: "Diseño moderno · Adaptada a móvil · SEO básico" },
+{ icon: BrainCircuit, title: "Webs inteligentes con IA", desc: "Páginas web con asistentes que responden a tus clientes de forma automática, 24 horas al día.", detail: "Chat inteligente · Captación automática · Reservas" },
+{ icon: Cog, title: "Automatización de tareas", desc: "Automatizamos tareas repetitivas para que tu equipo ahorre tiempo y se centre en lo importante.", detail: "Documentos · Facturas · Correos · Recordatorios" },
+{ icon: MessageSquare, title: "Comunicación con clientes", desc: "Gestionamos mensajes y consultas automáticamente en WhatsApp, redes sociales o tu web.", detail: "WhatsApp · Instagram · Formularios" },
+{ icon: LayoutDashboard, title: "Apps y plataformas a medida", desc: "Desarrollamos aplicaciones y plataformas digitales adaptadas a las necesidades de tu negocio.", detail: "Apps web y móvil · Paneles de gestión · Integraciones" },
+{ icon: Headset, title: "Mantenimiento y soporte", desc: "Supervisión y soporte continuo para que tu tecnología funcione correctamente en todo momento.", detail: "Servicio continuo · Actualizaciones · Soporte técnico" }];
 
 
 const problems = [
