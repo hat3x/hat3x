@@ -25,10 +25,10 @@ const services = [
 
 
 const problems = [
-{ icon: MessageCircle, title: "Demasiados mensajes y consultas", desc: "Gran parte del día se va respondiendo WhatsApp o correos con las mismas preguntas de siempre. Con sistemas automáticos, muchas de estas consultas pueden resolverse solas." },
-{ icon: Repeat, title: "Tareas repetitivas que consumen horas", desc: "Facturas, presupuestos, correos o gestión de citas son tareas que se repiten constantemente. Automatizar estos procesos puede ahorrar muchas horas de trabajo cada semana." },
-{ icon: Layers, title: "Todo repartido en distintas herramientas", desc: "Clientes, documentos y mensajes en distintas herramientas o archivos. Una app o plataforma que centralice todo puede facilitar mucho la gestión diaria." },
-{ icon: Clock, title: "Clientes esperando respuesta", desc: "Muchas consultas llegan cuando estás ocupado o fuera del horario laboral. Con herramientas adecuadas, los clientes pueden recibir respuesta en cualquier momento." }];
+{ icon: MessageCircle, title: "Demasiados mensajes y consultas", points: ["Gran parte del día se va respondiendo WhatsApp o correos con las mismas preguntas de siempre.", "Con sistemas automáticos, muchas de estas consultas pueden resolverse solas."] },
+{ icon: Repeat, title: "Tareas repetitivas que consumen horas", points: ["Facturas, presupuestos, correos o gestión de citas son tareas que se repiten constantemente.", "Automatizar estos procesos puede ahorrar muchas horas de trabajo cada semana."] },
+{ icon: Layers, title: "Todo repartido en distintas herramientas", points: ["Clientes, documentos y mensajes en distintas herramientas o archivos.", "Una app o plataforma que centralice todo puede facilitar mucho la gestión diaria."] },
+{ icon: Clock, title: "Clientes esperando respuesta", points: ["Muchas consultas llegan cuando estás ocupado o fuera del horario laboral.", "Con herramientas adecuadas, los clientes pueden recibir respuesta en cualquier momento."] }];
 
 
 const casosVentas = ["Calificación automática de leads", "Resúmenes de llamadas con IA", "Propuestas asistidas por contexto"];
@@ -73,8 +73,8 @@ const Index = () => {
           <motion.div {...fade} className="max-w-4xl">
             <Hat3xLogo size="lg" className="mb-8" />
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-6 text-primary-foreground">
-              Haz que tu empresa trabaje mejor, más rápido{" "}
-              <span className="text-gradient">y de forma más inteligente.</span>
+              Haz que tu empresa trabaje mejor, rápido{" "}
+              <span className="text-gradient">y de forma inteligente.</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-4 leading-relaxed">
               Ayudamos a empresas a modernizar su negocio con soluciones tecnológicas que automatizan tareas, mejoran la organización y facilitan el crecimiento.
@@ -111,7 +111,11 @@ const Index = () => {
                 <GlassCard>
                   <p.icon className="w-8 h-8 text-accent mb-4" />
                   <h3 className="font-semibold text-foreground mb-2">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground">{p.desc}</p>
+                  <ul className="text-sm text-muted-foreground space-y-2">
+                    {p.points.map((point, j) => (
+                      <li key={j} className="flex gap-2"><span className="shrink-0">–</span><span>{point}</span></li>
+                    ))}
+                  </ul>
                 </GlassCard>
               </motion.div>
             )}
