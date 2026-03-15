@@ -89,7 +89,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
               </select>
             </div>
             <div>
-              <label className={labelClass}>Área de interés</label>
+              <label className={labelClass}>¿En qué podemos ayudarte?</label>
               <select name="area" className={inputClass}>
                 <option value="">Seleccionar</option>
                 <option>Crear o mejorar una página web</option>
@@ -100,18 +100,6 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
                 <option>No estoy seguro, quiero asesoramiento</option>
               </select>
             </div>
-          </div>
-          <div>
-            <label className={labelClass}>Objetivo principal</label>
-            <select name="objetivo" className={inputClass}>
-              <option value="">Seleccionar</option>
-              <option>Reducir costes</option>
-              <option>Mejorar productividad</option>
-              <option>Automatizar procesos</option>
-              <option>Crear producto con IA</option>
-              <option>Mejorar atención al cliente</option>
-              <option>Otro</option>
-            </select>
           </div>
         </>
       )}
