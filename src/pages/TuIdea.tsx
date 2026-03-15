@@ -24,11 +24,11 @@ const TuIdea = () => (
             Tu idea, nuestra tecnología
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6 text-foreground">
-            ¿Tienes una idea revolucionaria?{" "}
-            <span className="text-gradient">Nosotros la construimos.</span>
+            ¿Tienes una idea o proyecto digital?{" "}
+            <span className="text-gradient">Nosotros te ayudamos a hacerlo realidad.</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            Muchas grandes ideas no se materializan por falta de recursos técnicos. En HAT3X convertimos tu visión en un producto funcional con inteligencia artificial, desarrollo a medida y estrategia de negocio.
+            Muchas buenas ideas nunca se desarrollan porque falta el equipo técnico adecuado. En HAT3X te ayudamos a convertir esa idea en una herramienta o producto real utilizando tecnología, desarrollo a medida y estrategia.
           </p>
         </motion.div>
       </div>
