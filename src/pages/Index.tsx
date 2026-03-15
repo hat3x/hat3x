@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import {
   Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, Shield,
   MessageCircle, Repeat, Layers, Clock,
-  ArrowRight, Lock, Eye } from "lucide-react";
+  ArrowRight, Lock, Database, Headphones } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
@@ -45,20 +45,20 @@ const pasos = [
 
 
 const faqs = [
-{ q: "¿Qué empresas se benefician más?", a: "Empresas con procesos repetitivos, volúmenes de datos o equipos que necesitan escalar sin multiplicar recursos. Desde pymes consolidadas hasta grandes corporaciones." },
-{ q: "¿Cuánto tarda una primera entrega?", a: "Depende del alcance, pero un primer prototipo funcional suele estar listo en 2–4 semanas tras el diagnóstico inicial." },
-{ q: "¿Necesitamos muchos datos?", a: "No siempre. Muchas soluciones de IA generativa funcionan con pocos datos propios. En diagnóstico evaluamos qué es viable con lo que tienes." },
-{ q: "¿Se integra con nuestras herramientas?", a: "Sí. Trabajamos con CRMs, ERPs, bases de datos, Google Workspace, Microsoft 365 y prácticamente cualquier sistema con API." },
-{ q: "¿Qué pasa con la seguridad y privacidad?", a: "Aplicamos buenas prácticas de seguridad: permisos por rol, cifrado, trazabilidad. Nos adaptamos a tus políticas internas." },
-{ q: "¿Podéis crear una app o web con IA?", a: "Sí. Diseñamos y desarrollamos productos digitales con IA integrada: chatbots, paneles inteligentes, herramientas internas, apps móvil." },
-{ q: "¿Cómo medimos el impacto?", a: "Definimos KPIs junto a tu equipo antes de empezar. Medimos tiempo ahorrado, errores reducidos, velocidad de respuesta y adopción." }];
+{ q: "¿Qué tipo de empresas pueden beneficiarse de estos servicios?", a: "Cualquier empresa que quiera ahorrar tiempo en tareas repetitivas, mejorar la organización de su negocio o ofrecer una mejor atención a sus clientes." },
+{ q: "¿Cuánto tiempo tarda en implementarse una solución?", a: "Depende del proyecto, pero muchas soluciones pueden empezar a funcionar en pocas semanas." },
+{ q: "¿Necesito conocimientos técnicos para usar estas herramientas?", a: "No. Diseñamos las soluciones para que sean fáciles de usar en el día a día." },
+{ q: "¿Se puede adaptar a las herramientas que ya usamos?", a: "Sí. Siempre que sea posible, integramos las soluciones con las herramientas que ya utiliza tu empresa." },
+{ q: "¿La información de mi empresa estará segura?", a: "Sí. Aplicamos buenas prácticas de seguridad y trabajamos con herramientas fiables para proteger los datos." },
+{ q: "¿Podéis crear una app o plataforma para mi empresa?", a: "Sí. Desarrollamos aplicaciones y herramientas digitales adaptadas a cada negocio." },
+{ q: "¿Las soluciones se pueden ampliar en el futuro?", a: "Sí. Las herramientas pueden evolucionar con tu empresa y añadir nuevas funcionalidades cuando sea necesario." }];
 
 
 const testimonials = [
-{ name: "Director de Operaciones", role: "Empresa logística", text: "En pocas semanas, automatizamos un proceso que nos costaba horas cada día. El equipo lo adoptó sin resistencia." },
-{ name: "Responsable de Ventas", role: "SaaS B2B", text: "El copiloto de ventas nos ayuda a priorizar leads y preparar propuestas mucho más rápido. Impacto inmediato." },
-{ name: "CTO", role: "Fintech", text: "Nos ayudaron a integrar IA en nuestro producto sin romper nada. Buen proceso, buena comunicación." },
-{ name: "CEO", role: "Consultora de servicios", text: "Por fin tenemos visibilidad real de nuestros procesos. Los dashboards inteligentes cambiaron nuestra forma de decidir." }];
+{ name: "Gerente", role: "Empresa de servicios", text: "Nos ayudaron a automatizar varias tareas que hacíamos manualmente. Ahora ahorramos bastante tiempo cada semana." },
+{ name: "Responsable de atención al cliente", role: "", text: "El sistema para responder consultas de clientes nos ha quitado mucho trabajo diario. Funciona muy bien." },
+{ name: "Director", role: "Empresa local", text: "La app que desarrollaron nos ha ayudado a tener todo mucho más organizado." },
+{ name: "CEO", role: "Empresa de consultoría", text: "Se nota que entienden cómo funcionan las empresas. Las soluciones que propusieron encajaban muy bien con lo que necesitábamos." }];
 
 
 const Index = () => {
@@ -181,13 +181,31 @@ const Index = () => {
       {/* SEGURIDAD */}
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="glass-card p-8 md:p-12 max-w-3xl mx-auto text-center">
+          <div className="glass-card p-8 md:p-12 max-w-4xl mx-auto text-center">
             <Shield className="w-10 h-10 text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-4">Seguridad y confianza</h3>
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-              <span className="flex items-center gap-2"><Lock className="w-4 h-4 text-primary" /> Permisos por rol</span>
-              <span className="flex items-center gap-2"><Eye className="w-4 h-4 text-primary" /> Trazabilidad y registros</span>
-              <span className="flex items-center gap-2"><Shield className="w-4 h-4 text-primary" /> Protección de datos</span>
+            <h3 className="text-xl font-semibold text-foreground mb-2">Seguridad y confianza en cada proyecto</h3>
+            <p className="text-sm text-muted-foreground mb-8 max-w-xl mx-auto">Trabajamos con herramientas seguras y buenas prácticas para proteger la información de tu empresa y garantizar un funcionamiento fiable.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+              <div className="flex flex-col gap-2">
+                <Lock className="w-5 h-5 text-primary" />
+                <span className="font-medium text-foreground text-sm">Control de accesos</span>
+                <p className="text-xs text-muted-foreground">Solo las personas autorizadas pueden acceder a la información y herramientas de la empresa.</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Database className="w-5 h-5 text-primary" />
+                <span className="font-medium text-foreground text-sm">Protección de datos</span>
+                <p className="text-xs text-muted-foreground">Aplicamos medidas para proteger la información sensible de tu negocio y tus clientes.</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Shield className="w-5 h-5 text-primary" />
+                <span className="font-medium text-foreground text-sm">Sistemas fiables</span>
+                <p className="text-xs text-muted-foreground">Trabajamos con tecnologías estables y probadas para asegurar que todo funcione correctamente.</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Headphones className="w-5 h-5 text-primary" />
+                <span className="font-medium text-foreground text-sm">Soporte cercano</span>
+                <p className="text-xs text-muted-foreground">Estamos disponibles para resolver dudas o problemas y asegurar que todo siga funcionando.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -204,7 +222,7 @@ const Index = () => {
                   <p className="text-sm text-muted-foreground italic mb-4">"{t.text}"</p>
                   <div className="text-sm">
                     <span className="font-medium text-foreground">{t.name}</span>
-                    <span className="text-muted-foreground"> · {t.role}</span>
+                    {t.role && <span className="text-muted-foreground"> · {t.role}</span>}
                   </div>
                 </GlassCard>
               </motion.div>
