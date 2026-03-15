@@ -73,17 +73,17 @@ const Index = () => {
           <motion.div {...fade} className="max-w-4xl">
             <Hat3xLogo size="lg" className="mb-8" />
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-6 text-primary-foreground">
-              Implementamos IA que mejora tu negocio{" "}
-              <span className="text-gradient">desde el primer mes.</span>
+              Haz que tu empresa trabaje mejor, más rápido{" "}
+              <span className="text-gradient">y de forma más inteligente.</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-4 leading-relaxed">
-              Diseñamos e integramos soluciones de IA en tu empresa: automatización, agentes, apps y flujos inteligentes para aumentar productividad, reducir costes y acelerar decisiones.
+              Ayudamos a empresas a modernizar su negocio con soluciones tecnológicas que automatizan tareas, mejoran la organización y facilitan el crecimiento.
             </p>
-            <p className="text-sm text-muted-foreground mb-8">Sin humo. Entregables claros. Medición de impacto.</p>
+            <p className="text-sm text-muted-foreground mb-8">Sin complicaciones. Soluciones claras. Resultados reales.</p>
             <div className="flex flex-wrap gap-4">
               <Link to="/contacto">
                 <Button className="bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-base font-semibold px-8 py-3 h-auto">
-                  Solicitar auditoría
+                  Cuéntanos tu proyecto
                 </Button>
               </Link>
               <Link to="/casos-de-uso">
@@ -94,24 +94,6 @@ const Index = () => {
             </div>
           </motion.div>
 
-        </div>
-      </section>
-
-      {/* PRUEBA SOCIAL */}
-      <section className="py-16 border-y border-border/20">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8">
-            {["Implementación end-to-end", "Integración con tus sistemas", "Seguridad por diseño"].map((b) =>
-            <span key={b} className="glass-card px-5 py-2.5 text-sm font-medium text-foreground flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-primary" /> {b}
-              </span>
-            )}
-          </div>
-          <div className="flex flex-wrap justify-center gap-8 mt-8 text-sm text-muted-foreground">
-            <span>→ Menos tareas manuales</span>
-            <span>→ Respuestas más rápidas</span>
-            <span>→ Procesos trazables</span>
-          </div>
         </div>
       </section>
 
