@@ -61,7 +61,7 @@ const Footer = () =>
         <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} HAT3X. Todos los derechos reservados.</p>
         <div className="flex gap-6 text-xs text-muted-foreground">
           <Link to="/legal/privacidad" className="hover:text-foreground transition-colors">Privacidad</Link>
-          <Link to="/legal/terminos" className="hover:text-foreground transition-colors">Términos</Link>
+          <Link to="/legal/terminos" className="hover:text-foreground transition-colors">Términos y condiciones</Link>
         </div>
       </div>
     </div>
