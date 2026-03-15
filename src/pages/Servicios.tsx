@@ -46,7 +46,7 @@ const servicios = [
     "Automatización de facturas o presupuestos",
     "Automatización de correos y formularios",
     "Recordatorios automáticos de citas o tareas",
-    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+    "• Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
   ],
   para: "Empresas que quieren reducir trabajo manual y mejorar la eficiencia de sus procesos.",
   tiempo: "2–5 semanas"
