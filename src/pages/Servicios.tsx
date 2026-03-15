@@ -140,6 +140,56 @@ const Servicios = () =>
       </section>
   )}
 
+    {/* Métricas */}
+    <section className="py-20 md:py-24">
+      <div className="container mx-auto px-4 lg:px-8">
+        <SectionHeader
+          badge="Resultados"
+          title="Tecnología que mejora la forma de trabajar de las empresas"
+          subtitle="Ayudamos a negocios a ahorrar tiempo, mejorar su organización y ofrecer una mejor experiencia a sus clientes mediante herramientas digitales y automatización."
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+          {[
+            {
+              icon: Zap,
+              number: "100+",
+              title: "Tareas optimizadas",
+              text: "Procesos repetitivos que nuestros clientes han simplificado o automatizado en sus empresas.",
+            },
+            {
+              icon: Clock,
+              number: "40%",
+              title: "Tiempo recuperado",
+              text: "Reducción media del tiempo dedicado a tareas administrativas gracias a automatizaciones.",
+            },
+            {
+              icon: MessageCircle,
+              number: "24/7",
+              title: "Atención automatizada",
+              text: "Sistemas que permiten responder consultas de clientes en cualquier momento del día.",
+            },
+            {
+              icon: TrendingUp,
+              number: "2x",
+              title: "Procesos más rápidos",
+              text: "Empresas que han conseguido agilizar tareas internas mediante herramientas digitales.",
+            },
+          ].map((item, i) => (
+            <motion.div key={i} {...fade}>
+              <div className="glass-card p-6 md:p-8 h-full flex flex-col items-center text-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
+                  <item.icon className="w-6 h-6 text-accent" />
+                </div>
+                <p className="text-4xl font-bold text-foreground">{item.number}</p>
+                <p className="text-sm font-semibold text-accent">{item.title}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <section className="py-20">
       <div className="container mx-auto px-4 lg:px-8 text-center">
         <Link to="/contacto">
