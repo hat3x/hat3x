@@ -72,25 +72,61 @@ function useTypewriter() {
   return { line1, line2, showCursor };
 }
 
-// Animated counter hook
+// Animated counter — uses native IntersectionObserver, fires exactly once
 function useCountUp(target: number, duration = 1400) {
   const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
 
   useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) { setCount(target); clearInterval(timer); }
-      else setCount(Math.floor(start));
-    }, 16);
-    return () => clearInterval(timer);
-  }, [inView, target, duration]);
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || started.current) return;
+        started.current = true;
+        observer.disconnect();
+
+        const startTime = performance.now();
+        const tick = (now: number) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // ease-out quad
+          const eased = 1 - Math.pow(1 - progress, 2);
+          setCount(Math.floor(eased * target));
+          if (progress < 1) requestAnimationFrame(tick);
+          else setCount(target);
+        };
+        requestAnimationFrame(tick);
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { count, ref };
+}
+
+// Metric counter item — animated on scroll, once
+function MetricItem({ value, suffix, label, prefixStatic }: {
+  value: number;
+  suffix: string;
+  label: string;
+  prefixStatic?: boolean; // for "24/7": animate 24, append /7
+}) {
+  const { count, ref } = useCountUp(value);
+  return (
+    <div ref={ref} className="text-center">
+      <div className="text-3xl md:text-4xl font-black text-gradient mb-1">
+        {prefixStatic ? `${count}${suffix}` : `${count}${suffix}`}
+      </div>
+      <p className="text-xs text-muted-foreground">{label}</p>
+    </div>
+  );
 }
 
 const services = [
@@ -128,18 +164,6 @@ const testimonials = [
 { name: "Director", role: "Empresa local", text: "La app que desarrollaron nos ha ayudado a tener todo mucho más organizado." },
 { name: "CEO", role: "Empresa de consultoría", text: "Se nota que entienden cómo funcionan las empresas. Las soluciones que propusieron encajaban muy bien con lo que necesitábamos." }];
 
-// Metric counter item — animated on scroll, once
-function MetricItem({ value, suffix, label, staticLabel }: { value: number; suffix: string; label: string; staticLabel?: boolean }) {
-  const { count, ref } = useCountUp(staticLabel ? 0 : value);
-  return (
-    <div ref={ref} className="text-center">
-      <div className="text-3xl md:text-4xl font-black text-gradient mb-1">
-        {staticLabel ? suffix : `${count}${suffix}`}
-      </div>
-      <p className="text-xs text-muted-foreground">{label}</p>
-    </div>
-  );
-}
 
 const Index = () => {
   const { line1, line2, showCursor } = useTypewriter();
@@ -315,7 +339,7 @@ const Index = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <MetricItem value={100} suffix="+" label="Tareas optimizadas" />
                 <MetricItem value={60} suffix="%" label="Tiempo recuperado" />
-                <MetricItem value={0} suffix="24/7" label="Atención automatizada" staticLabel />
+                <MetricItem value={24} suffix="/7" label="Atención automatizada" />
                 <MetricItem value={3} suffix="x" label="Procesos más rápidos" />
               </div>
             </div>
