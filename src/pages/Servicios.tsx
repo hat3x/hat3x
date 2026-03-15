@@ -60,7 +60,7 @@ const servicios = [
     "Automatización en Instagram y redes sociales",
     "Respuestas automáticas a preguntas frecuentes",
     "Integración con formularios o sistemas de reservas",
-    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+    "• Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
   ],
   para: "Empresas que reciben muchas consultas de clientes y quieren responder de forma rápida y organizada.",
   tiempo: "2–4 semanas"
