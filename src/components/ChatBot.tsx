@@ -20,7 +20,9 @@ interface Message {
 
 type Intent =
   | "saludo" | "gracias" | "despedida"
-  | "web" | "automatizacion" | "app"
+  | "web" | "web_nueva" | "web_mejorar" | "web_asistente"
+  | "automatizacion" | "auto_whatsapp" | "auto_formularios" | "auto_interno"
+  | "app" | "app_clientes" | "app_interna" | "app_centralizar"
   | "clientes_whatsapp" | "citas"
   | "precio" | "plazos" | "contacto"
   | "proceso" | "mantenimiento" | "integraciones"
