@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, ArrowRight, Zap, Clock, MessageCircle, TrendingUp } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
@@ -7,6 +8,64 @@ import SectionHeader from "@/components/SectionHeader";
 import { Button } from "@/components/ui/button";
 
 const fade = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
+
+function useCountUp(target: number, duration = 1400) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    let startTime: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+      else setCount(target);
+    };
+    requestAnimationFrame(step);
+  }, [started, target, duration]);
+
+  return { count, ref };
+}
+
+function MetricCard({ icon: Icon, target, prefix = "", suffix = "", title, text }: {
+  icon: React.ElementType; target: number; prefix?: string; suffix?: string; title: string; text: string;
+}) {
+  const { count, ref } = useCountUp(target);
+  return (
+    <motion.div {...fade}>
+      <div ref={ref} className="glass-card p-6 md:p-8 h-full flex flex-col items-center text-center gap-4">
+        <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
+          <Icon className="w-6 h-6 text-accent" />
+        </div>
+        <p className="text-4xl font-bold text-foreground tabular-nums">
+          {prefix}{count}{suffix}
+        </p>
+        <p className="text-sm font-semibold text-accent">{title}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed">{text}</p>
+      </div>
+    </motion.div>
+  );
+}
 
 const servicios = [
 {
