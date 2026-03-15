@@ -26,7 +26,6 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
       empresa: formData.get("empresa") || "",
       tamano: formData.get("tamano") || "",
       area: formData.get("area") || "",
-      objetivo: formData.get("objetivo") || "",
       mensaje: formData.get("mensaje") || "",
     };
 
