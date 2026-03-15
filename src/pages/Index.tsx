@@ -144,7 +144,7 @@ const Index = () => {
       {/* SERVICIOS */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 lg:px-8">
-          <SectionHeader badge="Servicios" title="IA aplicada a procesos, producto y negocio" subtitle="Cada servicio está diseñado para entregar resultados medibles." />
+          <SectionHeader badge="Servicios" title="Soluciones tecnológicas para hacer crecer tu empresa" subtitle="Páginas web, automatizaciones, herramientas inteligentes y apps a medida para que tu negocio trabaje mejor." />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((s, i) =>
             <motion.div key={i} {...fade} transition={{ delay: i * 0.08 }}>
