@@ -115,7 +115,7 @@ const ContactForm = ({ variant = "full" }: ContactFormProps) => {
         disabled={loading}
         className="w-full md:w-auto bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-sm font-semibold px-8 py-3 h-auto"
       >
-        {loading ? "Enviando…" : "Solicitar auditoría"}
+        {loading ? "Enviando…" : "Enviar solicitud"}
       </Button>
     </form>
   );

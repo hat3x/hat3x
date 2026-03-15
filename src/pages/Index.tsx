@@ -25,10 +25,10 @@ const services = [
 
 
 const problems = [
-{ icon: MessageCircle, title: "Demasiados mensajes y consultas", desc: "Gran parte del día se va respondiendo WhatsApp o correos con las mismas preguntas de siempre. Con sistemas automáticos, muchas de estas consultas pueden resolverse solas." },
-{ icon: Repeat, title: "Tareas repetitivas que consumen horas", desc: "Facturas, presupuestos, correos o gestión de citas son tareas que se repiten constantemente. Automatizar estos procesos puede ahorrar muchas horas de trabajo cada semana." },
-{ icon: Layers, title: "Todo repartido en distintas herramientas", desc: "Clientes, documentos y mensajes en distintas herramientas o archivos. Una app o plataforma que centralice todo puede facilitar mucho la gestión diaria." },
-{ icon: Clock, title: "Clientes esperando respuesta", desc: "Muchas consultas llegan cuando estás ocupado o fuera del horario laboral. Con herramientas adecuadas, los clientes pueden recibir respuesta en cualquier momento." }];
+{ icon: MessageCircle, title: "Demasiados mensajes y consultas", points: ["Gran parte del día se va respondiendo WhatsApp o correos con las mismas preguntas de siempre.", "Con sistemas automáticos, muchas de estas consultas pueden resolverse solas."] },
+{ icon: Repeat, title: "Tareas repetitivas que consumen horas", points: ["Facturas, presupuestos, correos o gestión de citas son tareas que se repiten constantemente.", "Automatizar estos procesos puede ahorrar muchas horas de trabajo cada semana."] },
+{ icon: Layers, title: "Todo repartido en distintas herramientas", points: ["Clientes, documentos y mensajes en distintas herramientas o archivos.", "Una app o plataforma que centralice todo puede facilitar mucho la gestión diaria."] },
+{ icon: Clock, title: "Clientes esperando respuesta", points: ["Muchas consultas llegan cuando estás ocupado o fuera del horario laboral.", "Con herramientas adecuadas, los clientes pueden recibir respuesta en cualquier momento."] }];
 
 
 const casosVentas = ["Calificación automática de leads", "Resúmenes de llamadas con IA", "Propuestas asistidas por contexto"];
