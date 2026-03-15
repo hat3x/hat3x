@@ -18,7 +18,7 @@ const servicios = [
     "Web rápida y adaptada a móvil",
     "Formularios de contacto para captar clientes",
     "Optimización básica para aparecer en Google",
-    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+    "• Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
   ],
   para: "Empresas que quieren mejorar su presencia online y atraer nuevos clientes.",
   tiempo: "2–4 semanas"
@@ -32,7 +32,7 @@ const servicios = [
     "Respuestas automáticas a preguntas frecuentes",
     "Captación automática de contactos o clientes potenciales",
     "Posibilidad de reservar citas o solicitar información",
-    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+    "• Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
   ],
   para: "Empresas que reciben muchas consultas y quieren atender a sus clientes incluso fuera del horario laboral.",
   tiempo: "3–6 semanas"
@@ -46,7 +46,7 @@ const servicios = [
     "Automatización de facturas o presupuestos",
     "Automatización de correos y formularios",
     "Recordatorios automáticos de citas o tareas",
-    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+    "• Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
   ],
   para: "Empresas que quieren reducir trabajo manual y mejorar la eficiencia de sus procesos.",
   tiempo: "2–5 semanas"
@@ -60,7 +60,7 @@ const servicios = [
     "Automatización en Instagram y redes sociales",
     "Respuestas automáticas a preguntas frecuentes",
     "Integración con formularios o sistemas de reservas",
-    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+    "• Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
   ],
   para: "Empresas que reciben muchas consultas de clientes y quieren responder de forma rápida y organizada.",
   tiempo: "2–4 semanas"
@@ -74,7 +74,7 @@ const servicios = [
     "Paneles para gestionar clientes, productos o servicios",
     "Plataformas privadas para clientes o empleados",
     "Integración con sistemas de la empresa",
-    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa y puede incluir muchas más funcionalidades.",
+    "• Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
   ],
   para: "Empresas que quieren digitalizar procesos o ofrecer nuevos servicios digitales a sus clientes.",
   tiempo: "4–10 semanas"
