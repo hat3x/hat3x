@@ -222,7 +222,7 @@ const Index = () => {
                   <p className="text-sm text-muted-foreground italic mb-4">"{t.text}"</p>
                   <div className="text-sm">
                     <span className="font-medium text-foreground">{t.name}</span>
-                    <span className="text-muted-foreground"> · {t.role}</span>
+                    {t.role && <span className="text-muted-foreground"> · {t.role}</span>}
                   </div>
                 </GlassCard>
               </motion.div>
