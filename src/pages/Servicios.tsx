@@ -101,7 +101,7 @@ const Servicios = () =>
         <SectionHeader
           badge="Servicios"
           title="Soluciones tecnológicas para hacer crecer tu empresa"
-          subtitle="Creamos páginas web, automatizamos tareas y desarrollamos herramientas inteligentes para ayudarte a atraer más clientes y trabajar de forma más eficiente."
+          subtitle="Nuestros servicios están pensados para ayudar a las empresas a trabajar de forma más eficiente, automatizar tareas y ofrecer una experiencia más profesional a sus clientes."
         />
       </div>
     </section>
