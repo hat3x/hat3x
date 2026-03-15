@@ -1,50 +1,71 @@
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { CheckCircle, Clock, Wrench, TrendingUp } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
-import { Button } from "@/components/ui/button";
 
 const fade = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
 const fases = [
-{
-  n: "01", title: "Diagnóstico", desc: "Entendemos tu negocio, procesos y objetivos. Identificamos dónde la IA aporta valor real.",
-  entregables: ["Mapa de procesos y dolor", "Oportunidades de IA priorizadas", "Roadmap ejecutable", "Presupuesto orientativo"],
-  necesitas: ["Acceso a stakeholders clave", "Descripción de procesos actuales", "Objetivos de negocio claros"],
-  duracion: "1–2 semanas"
-},
-{
-  n: "02", title: "Prototipo", desc: "Construimos un MVP funcional para validar la solución con datos y usuarios reales.",
-  entregables: ["Prototipo funcional", "Testing con datos reales", "Feedback documentado", "Plan de iteración"],
-  necesitas: ["Datos de prueba o acceso a datos", "Feedback del equipo usuario", "Disponibilidad para revisar"],
-  duracion: "2–4 semanas"
-},
-{
-  n: "03", title: "Integración", desc: "Conectamos la solución con tus sistemas, datos y flujos de trabajo existentes.",
-  entregables: ["Integraciones configuradas y testadas", "Documentación técnica", "Formación inicial del equipo", "Protocolo de soporte"],
-  necesitas: ["Acceso a sistemas y APIs", "Responsable técnico del cliente", "Plan de comunicación interna"],
-  duracion: "2–6 semanas"
-},
-{
-  n: "04", title: "Escalado", desc: "Medimos impacto, iteramos y expandimos la solución a más procesos o equipos.",
-  entregables: ["KPIs definidos y medidos", "Informes de impacto", "Plan de expansión", "Sesiones de mejora continua"],
-  necesitas: ["Compromiso con métricas", "Feedback continuado", "Visión a medio plazo"],
-  duracion: "Continuo"
-}];
+  {
+    n: "01",
+    icon: CheckCircle,
+    title: "Entendemos tu empresa",
+    desc: "Analizamos cómo funciona tu negocio, qué tareas consumen más tiempo y qué procesos se pueden mejorar.",
+    resultado: "Identificamos oportunidades claras donde la tecnología puede ayudarte a ahorrar tiempo o mejorar tu forma de trabajar."
+  },
+  {
+    n: "02",
+    icon: CheckCircle,
+    title: "Diseñamos la solución",
+    desc: "A partir de lo que hemos analizado, proponemos una solución adaptada a tu empresa. Puede ser una automatización, una mejora de tu web o una herramienta digital que facilite tu trabajo.",
+    resultado: "Tienes claro qué vamos a implementar y cómo va a ayudarte en el día a día."
+  },
+  {
+    n: "03",
+    icon: Wrench,
+    title: "Implementamos las herramientas",
+    desc: "Desarrollamos e integramos las soluciones necesarias dentro de tu negocio para que todo funcione correctamente.",
+    resultado: "Empiezas a ahorrar tiempo, organizar mejor tu trabajo o mejorar la atención a tus clientes."
+  },
+  {
+    n: "04",
+    icon: TrendingUp,
+    title: "Mejoramos y ampliamos",
+    desc: "Una vez implementado, podemos seguir optimizando las herramientas o añadir nuevas soluciones a medida que tu empresa crece.",
+    resultado: "La tecnología evoluciona contigo y sigue aportando valor a tu negocio."
+  }
+];
 
+const plazos = [
+  {
+    titulo: "Primeros análisis y propuesta",
+    texto: "Durante las primeras semanas analizamos tu negocio y definimos la solución más adecuada."
+  },
+  {
+    titulo: "Implementación de la solución",
+    texto: "Dependiendo del tipo de proyecto, la implementación puede tardar desde unas semanas hasta algunos meses."
+  },
+  {
+    titulo: "Mejora continua",
+    texto: "Una vez implementado, podemos seguir optimizando las herramientas o añadir nuevas funcionalidades según las necesidades de tu empresa."
+  }
+];
 
 const Proceso = () =>
-<Layout>
+  <Layout>
     <section className="py-20 md:py-28">
       <div className="container mx-auto px-4 lg:px-8">
-        <SectionHeader badge="Proceso" title="Cómo trabajamos" subtitle="Un proceso claro, medible y orientado a resultados. Sin sorpresas." />
+        <SectionHeader
+          badge="Proceso"
+          title="Cómo trabajamos contigo para mejorar tu empresa"
+          subtitle="Un proceso claro y sencillo para implementar soluciones tecnológicas que realmente ayuden a tu negocio."
+        />
       </div>
     </section>
 
     {fases.map((f, i) =>
-  <section key={i} className="py-8 md:py-12">
+      <section key={i} className="py-8 md:py-12">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div {...fade} transition={{ delay: i * 0.1 }}>
             <GlassCard highlight={i === 0} className="max-w-4xl mx-auto">
@@ -52,67 +73,46 @@ const Proceso = () =>
                 <span className="text-4xl font-black text-gradient">{f.n}</span>
                 <div>
                   <h3 className="text-2xl font-bold text-foreground">{f.title}</h3>
-                  <p className="text-muted-foreground mt-1">{f.desc}</p>
-                  <span className="inline-block text-xs font-medium mt-2 glass-card px-3 py-1 text-accent">{f.duracion}</span>
+                  <p className="text-muted-foreground mt-2">{f.desc}</p>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <div>
-                  <h4 className="text-sm font-semibold mb-3 text-accent">Entregables</h4>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    {f.entregables.map((e, j) =>
-                <li key={j} className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" /> {e}</li>
-                )}
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-accent mb-3">Qué necesitamos de ti</h4>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    {f.necesitas.map((n, j) => <li key={j}>· {n}</li>)}
-                  </ul>
-                </div>
+              <div className="border-t border-border/40 pt-4 mt-2">
+                <h4 className="text-sm font-semibold mb-2 text-accent">Resultado</h4>
+                <p className="text-sm text-muted-foreground">{f.resultado}</p>
               </div>
             </GlassCard>
           </motion.div>
         </div>
       </section>
-  )}
+    )}
 
-    {/* Gobierno del proyecto */}
+    {/* Plazos aproximados */}
     <section className="py-16">
       <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-        <GlassCard>
-          <h3 className="text-xl font-semibold text-foreground mb-4">Gobierno del proyecto</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
-            <div>
-              <h4 className="font-medium mb-2 text-accent">Comunicación</h4>
-              <ul className="space-y-1">
-                <li>· Reuniones semanales de seguimiento</li>
-                <li>· Canal de comunicación directo</li>
-                <li>· Informes de progreso periódicos</li>
-              </ul>
+        <motion.div {...fade}>
+          <GlassCard>
+            <div className="flex items-center gap-3 mb-4">
+              <Clock className="w-5 h-5 text-accent shrink-0" />
+              <h3 className="text-xl font-semibold text-foreground">Plazos aproximados de implementación</h3>
             </div>
-            <div>
-              <h4 className="font-medium mb-2 text-accent">Medición</h4>
-              <ul className="space-y-1">
-                <li>· KPIs definidos con el cliente</li>
-                <li>· Baseline antes de implementar</li>
-                <li>· Revisión mensual de impacto</li>
-              </ul>
+            <p className="text-sm text-muted-foreground mb-6">
+              Cada empresa y cada proyecto es diferente, por lo que los tiempos pueden variar según las herramientas o soluciones que se implementen. Sin embargo, la mayoría de proyectos siguen un proceso similar y comienzan a mostrar resultados en pocas semanas.
+            </p>
+            <div className="space-y-4">
+              {plazos.map((p, i) =>
+                <div key={i} className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full bg-accent shrink-0 mt-2" />
+                  <div>
+                    <h4 className="text-sm font-semibold text-foreground">{p.titulo}</h4>
+                    <p className="text-sm text-muted-foreground mt-0.5">{p.texto}</p>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        </GlassCard>
+          </GlassCard>
+        </motion.div>
       </div>
     </section>
-
-    <section className="py-16 text-center">
-      <Link to="/contacto">
-        <Button className="bg-accent text-accent-foreground hover:bg-accent/90 btn-primary-glow rounded-xl text-base font-semibold px-8 py-3 h-auto gap-2">
-          Agendar auditoría <ArrowRight className="w-4 h-4" />
-        </Button>
-      </Link>
-    </section>
   </Layout>;
-
 
 export default Proceso;
