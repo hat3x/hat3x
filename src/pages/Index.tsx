@@ -296,6 +296,18 @@ const Index = () => {
               </motion.div>
             )}
           </div>
+          {/* MÉTRICAS DE SERVICIOS */}
+          <AnimatedSection>
+            <div className="glass-card p-8 md:p-12 max-w-3xl mx-auto mt-14">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <MetricItem value={100} suffix="+" label="Tareas optimizadas" />
+                <MetricItem value={60} suffix="%" label="Tiempo recuperado" />
+                <MetricItem value={0} suffix="24/7" label="Atención automatizada" staticLabel />
+                <MetricItem value={3} suffix="x" label="Procesos más rápidos" />
+              </div>
+            </div>
+          </AnimatedSection>
+
           <AnimatedSection>
             <div className="text-center mt-10">
               <Link to="/servicios">
@@ -303,57 +315,6 @@ const Index = () => {
                   Ver servicios <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </Button>
               </Link>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* PROCESO */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4 lg:px-8">
-          <AnimatedSection>
-            <SectionHeader badge="Proceso" title="Cómo trabajamos contigo para mejorar tu empresa" subtitle="Un proceso claro y sencillo para implementar soluciones tecnológicas que realmente ayuden a tu negocio." />
-          </AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pasos.map((p, i) =>
-              <motion.div
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                variants={fadeUp}
-                custom={i}
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-              >
-                <GlassCard highlight={i === 1} className="h-full">
-                  <span className="text-3xl font-black text-gradient">{p.n}</span>
-                  <h3 className="text-lg font-semibold text-foreground mt-3 mb-2">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{p.desc}</p>
-                  <div className="text-xs text-muted-foreground">
-                    <span className="text-primary font-medium text-xs">Resultado:</span>
-                    <ul className="mt-1 space-y-1">
-                      {p.entregables.map((e, j) => <li key={j}>· {e}</li>)}
-                    </ul>
-                  </div>
-                </GlassCard>
-              </motion.div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* MÉTRICAS */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 lg:px-8">
-          <AnimatedSection>
-            <div className="glass-card p-8 md:p-12 max-w-3xl mx-auto">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <MetricItem value={50} suffix="+" label="Proyectos entregados" />
-                <MetricItem value={95} suffix="%" label="Clientes satisfechos" />
-                <MetricItem value={3} suffix="x" label="Retorno medio en productividad" />
-                <MetricItem value={48} suffix="h" label="Tiempo medio de respuesta" />
-              </div>
             </div>
           </AnimatedSection>
         </div>
