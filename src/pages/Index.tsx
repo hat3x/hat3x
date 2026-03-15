@@ -38,10 +38,10 @@ const casosFinanzas = ["Detección de fraude y anomalías", "Conciliación autom
 const casosRRHH = ["Screening automático de candidatos", "Onboarding asistido por IA", "Análisis de clima y rotación"];
 
 const pasos = [
-{ n: "01", title: "Diagnóstico", desc: "Auditoría de procesos, objetivos y datos disponibles.", entregables: ["Mapa de oportunidades", "Priorización por impacto/esfuerzo", "Roadmap inicial"] },
-{ n: "02", title: "Prototipo", desc: "MVP funcional en días o semanas para validar la solución.", entregables: ["Prototipo funcional", "Pruebas con datos reales", "Feedback del equipo"] },
-{ n: "03", title: "Integración", desc: "Conexión con tus sistemas, datos y flujos existentes.", entregables: ["Integraciones configuradas", "Documentación técnica", "Formación inicial"] },
-{ n: "04", title: "Escalado", desc: "Medición de impacto, mejora continua y expansión.", entregables: ["KPIs definidos", "Informes de impacto", "Plan de expansión"] }];
+{ n: "01", title: "Entendemos tu empresa", desc: "Analizamos cómo funciona tu negocio, qué tareas te quitan más tiempo y dónde la tecnología puede ayudarte realmente.", entregables: ["Identificamos oportunidades claras de mejora"] },
+{ n: "02", title: "Diseñamos la solución", desc: "Proponemos una solución adaptada a tu empresa: automatizaciones, herramientas digitales o nuevas funcionalidades.", entregables: ["Tienes claro qué se va a implementar y cómo funcionará"] },
+{ n: "03", title: "Implementamos las herramientas", desc: "Desarrollamos e integramos las soluciones necesarias para que todo funcione correctamente dentro de tu negocio.", entregables: ["Empiezas a ahorrar tiempo y mejorar tus procesos"] },
+{ n: "04", title: "Mejoramos y ampliamos", desc: "A medida que tu empresa crece, podemos seguir mejorando las herramientas e implementar nuevas funcionalidades.", entregables: ["La tecnología evoluciona junto a tu negocio"] }];
 
 
 const faqs = [
@@ -154,54 +154,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CASOS DE USO */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4 lg:px-8">
-          <SectionHeader badge="Casos de uso" title="IA en cada área de tu empresa" subtitle="Resultados reales en ventas, soporte, operaciones, finanzas y RRHH." />
-          <Tabs defaultValue="ventas" className="max-w-3xl mx-auto">
-            <TabsList className="w-full flex flex-wrap glass rounded-xl mb-8 h-auto p-1">
-              {[
-              { v: "ventas", l: "Ventas" }, { v: "atencion", l: "Atención al cliente" },
-              { v: "ops", l: "Operaciones" }, { v: "finanzas", l: "Finanzas" }, { v: "rrhh", l: "RRHH" }].
-              map((t) =>
-              <TabsTrigger key={t.v} value={t.v} className="rounded-lg data-[state=active]:bg-primary/20 data-[state=active]:text-foreground flex-1 text-xs md:text-sm">
-                  {t.l}
-                </TabsTrigger>
-              )}
-            </TabsList>
-            {[
-            { v: "ventas", items: casosVentas }, { v: "atencion", items: casosAtencion },
-            { v: "ops", items: casosOps }, { v: "finanzas", items: casosFinanzas }, { v: "rrhh", items: casosRRHH }].
-            map((tab) =>
-            <TabsContent key={tab.v} value={tab.v}>
-                <div className="space-y-4">
-                  {tab.items.map((item, i) =>
-                <GlassCard key={i} className="flex items-start gap-4">
-                      <span className="text-accent font-bold text-lg mt-0.5">{i + 1}</span>
-                      <div>
-                        <h4 className="font-medium text-foreground">{item}</h4>
-                        <p className="text-sm text-muted-foreground mt-1">Resultado esperado: mayor eficiencia y menor tiempo de respuesta.</p>
-                      </div>
-                    </GlassCard>
-                )}
-                </div>
-              </TabsContent>
-            )}
-          </Tabs>
-          <div className="text-center mt-10">
-            <Link to="/casos-de-uso">
-              <Button variant="outline" className="glass border-border/50 rounded-xl gap-2">
-                Ver todos los casos <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* PROCESO */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 lg:px-8">
-          <SectionHeader badge="Proceso" title="De la idea al impacto en 4 fases" />
+          <SectionHeader badge="Proceso" title="Cómo trabajamos contigo para mejorar tu empresa" subtitle="Un proceso claro y sencillo para implementar soluciones tecnológicas que realmente ayuden a tu negocio." />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {pasos.map((p, i) =>
             <motion.div key={i} {...fade} transition={{ delay: i * 0.12 }}>
@@ -210,7 +166,7 @@ const Index = () => {
                   <h3 className="text-lg font-semibold text-foreground mt-3 mb-2">{p.title}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{p.desc}</p>
                   <div className="text-xs text-muted-foreground">
-                    <span className="text-primary font-medium text-xs">Entregables:</span>
+                    <span className="text-primary font-medium text-xs">Resultado:</span>
                     <ul className="mt-1 space-y-1">
                       {p.entregables.map((e, j) => <li key={j}>· {e}</li>)}
                     </ul>
