@@ -276,6 +276,8 @@ const Index = () => {
                 viewport={{ once: true, margin: "-60px" }}
                 variants={fadeUp}
                 custom={i}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
               >
                 <GlassCard highlight={i === 1} className="h-full">
                   <span className="text-3xl font-black text-gradient">{p.n}</span>
