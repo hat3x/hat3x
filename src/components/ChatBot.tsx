@@ -383,21 +383,36 @@ async function fetchGPTFallback(params: {
   context: ChatContext;
 }): Promise<{ text: string; actions?: ChatAction[] } | null> {
   try {
-    // Descomenta cuando tengas backend:
-    /*
-    const res = await fetch("/api/chat-assistant", {
+    const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+    const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/chat-assistant`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+      },
       body: JSON.stringify(params),
     });
 
-    if (!res.ok) throw new Error("GPT fallback failed");
-    return await res.json();
-    */
+    if (res.status === 429) {
+      return {
+        text: "En este momento hay mucho tráfico. Puedes escribirnos directamente por WhatsApp o email.",
+        actions: [
+          { label: "WhatsApp", href: WHATSAPP_URL, primary: true },
+          { label: "Ir a contacto", navigate: "/contacto" },
+        ],
+      };
+    }
 
-    // Placeholder temporal:
+    if (!res.ok) throw new Error(`AI error ${res.status}`);
+
+    const data = await res.json();
+
+    if (data.error) throw new Error(data.error);
+
     return {
-      text: "Entiendo tu caso. Para orientarte mejor, lo ideal sería ver si necesitas mejorar tu presencia online, automatizar parte del proceso o desarrollar una solución a medida. Si quieres, podemos ayudarte a identificar la opción más útil para tu negocio.",
+      text: data.text,
       actions: [
         { label: "Ver servicios", navigate: "/servicios" },
         { label: "Contarnos tu idea", navigate: "/tu-idea" },
@@ -405,8 +420,14 @@ async function fetchGPTFallback(params: {
       ],
     };
   } catch (error) {
-    console.error(error);
-    return null;
+    console.error("[chat-assistant]", error);
+    return {
+      text: "No he podido procesar tu mensaje. Puedes escribirnos directamente y te atendemos en breve.",
+      actions: [
+        { label: "WhatsApp", href: WHATSAPP_URL, primary: true },
+        { label: "Ir a contacto", navigate: "/contacto" },
+      ],
+    };
   }
 }
 
