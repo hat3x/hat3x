@@ -347,13 +347,13 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.82, filter: "blur(14px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
-              className="mb-8"
+              className="mb-2"
             >
               <Hat3xLogo size="lg" />
             </motion.div>
 
             {/* Title — typewriter */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.15] mb-6 min-h-[2.4em]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.3] mb-6 overflow-visible">
               <span className="block text-primary-foreground">{text1}</span>
               <span className="block text-gradient">
                 {text2}
