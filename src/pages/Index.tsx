@@ -353,7 +353,7 @@ const Index = () => {
             </motion.div>
 
             {/* Title — typewriter */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.15] mb-6 min-h-[2.4em]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.3] mb-6 overflow-visible">
               <span className="block text-primary-foreground">{text1}</span>
               <span className="block text-gradient">
                 {text2}
