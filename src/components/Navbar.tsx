@@ -87,6 +87,11 @@ const Navbar = () => {
             </Link>
           ))}
           <div className="flex flex-col gap-3 mt-4">
+            <Link to="/login">
+              <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground rounded-xl text-sm">
+                Acceso cliente
+              </Button>
+            </Link>
             <Link to="/contacto">
               <Button className="w-full bg-accent text-accent-foreground rounded-xl text-sm font-semibold">
                 Cuéntanos tu proyecto
