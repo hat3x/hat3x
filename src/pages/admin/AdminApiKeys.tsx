@@ -35,7 +35,7 @@ const AdminApiKeys = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newKeyVisible, setNewKeyVisible] = useState<string | null>(null);
   const [name, setName] = useState("");
-  const [companyId, setCompanyId] = useState("");
+  
 
   const { data: apiKeys, isLoading } = useQuery({
     queryKey: ["api-keys"],
