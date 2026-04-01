@@ -38,6 +38,7 @@ const adminNavItems: NavItem[] = [
   { label: "Documentos", to: "/admin/documents", icon: Upload },
   { label: "Mensajes", to: "/admin/messages", icon: MessageSquare },
   { label: "Notas internas", to: "/admin/notes", icon: StickyNote },
+  { label: "API Keys", to: "/admin/api-keys", icon: Key },
 ];
 
 interface PortalLayoutProps {
