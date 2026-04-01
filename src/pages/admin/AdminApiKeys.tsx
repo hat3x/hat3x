@@ -127,8 +127,7 @@ const AdminApiKeys = () => {
     <PortalLayout type="admin">
       <PageHeader
         title="API Keys"
-        description="Gestiona las claves de API para integraciones externas"
-        icon={Key}
+        subtitle="Gestiona las claves de API para integraciones externas"
       />
 
       {/* Usage instructions */}
