@@ -62,7 +62,7 @@ const AdminApiKeys = () => {
       if (!user) throw new Error("No user");
 
       const { error } = await supabase.from("api_keys").insert({
-        company_id: companyId,
+        company_id: firstCompany.id,
         created_by: user.id,
         name,
         key_prefix: keyPrefix,
