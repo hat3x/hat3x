@@ -185,17 +185,6 @@ const AdminApiKeys = () => {
                   <Label>Nombre</Label>
                   <Input value={name} onChange={e => setName(e.target.value)} placeholder="Ej: Integración CRM" />
                 </div>
-                <div>
-                  <Label>Empresa</Label>
-                  <Select value={companyId} onValueChange={setCompanyId}>
-                    <SelectTrigger><SelectValue placeholder="Seleccionar empresa" /></SelectTrigger>
-                    <SelectContent>
-                      {companies?.map(c => (
-                        <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
                 <Button onClick={handleCreate} disabled={createKey.isPending} className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
                   {createKey.isPending ? "Creando..." : "Generar API Key"}
                 </Button>
