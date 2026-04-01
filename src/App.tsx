@@ -35,6 +35,7 @@ import AdminUpdates from "./pages/admin/AdminUpdates";
 import AdminDocuments from "./pages/admin/AdminDocuments";
 import AdminMessages from "./pages/admin/AdminMessages";
 import AdminNotes from "./pages/admin/AdminNotes";
+import AdminApiKeys from "./pages/admin/AdminApiKeys";
 
 const queryClient = new QueryClient();
 
@@ -86,6 +87,7 @@ const AppRoutes = () => (
     <Route path="/admin/documents" element={<ProtectedRoute requiredRole="admin"><AdminDocuments /></ProtectedRoute>} />
     <Route path="/admin/messages" element={<ProtectedRoute requiredRole="admin"><AdminMessages /></ProtectedRoute>} />
     <Route path="/admin/notes" element={<ProtectedRoute requiredRole="admin"><AdminNotes /></ProtectedRoute>} />
+    <Route path="/admin/api-keys" element={<ProtectedRoute requiredRole="admin"><AdminApiKeys /></ProtectedRoute>} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard, FolderKanban, ListChecks, FileText, MessageSquare,
   Settings, LogOut, ChevronLeft, ChevronRight, Clock, Milestone,
-  Users, Bell, StickyNote, Upload, Menu, X
+  Users, Bell, StickyNote, Upload, Menu, X, Key
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -38,6 +38,7 @@ const adminNavItems: NavItem[] = [
   { label: "Documentos", to: "/admin/documents", icon: Upload },
   { label: "Mensajes", to: "/admin/messages", icon: MessageSquare },
   { label: "Notas internas", to: "/admin/notes", icon: StickyNote },
+  { label: "API Keys", to: "/admin/api-keys", icon: Key },
 ];
 
 interface PortalLayoutProps {
