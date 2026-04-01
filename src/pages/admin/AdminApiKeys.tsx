@@ -175,7 +175,7 @@ const AdminApiKeys = () => {
                     <Copy className="w-4 h-4" />
                   </Button>
                 </div>
-                <Button onClick={() => { setDialogOpen(false); setNewKeyVisible(null); setName(""); setCompanyId(""); }} className="w-full">
+                <Button onClick={() => { setDialogOpen(false); setNewKeyVisible(null); setName(""); }} className="w-full">
                   Listo
                 </Button>
               </div>
