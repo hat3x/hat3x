@@ -52,6 +52,9 @@ const AdminApiKeys = () => {
 
   const createKey = useMutation({
     mutationFn: async () => {
+      // Get first company as default (API keys are admin-only)
+      const { data: firstCompany } = await supabase.from("companies").select("id").limit(1).single();
+      if (!firstCompany) throw new Error("No company found");
       const rawKey = generateApiKey();
       const keyHash = await hashKey(rawKey);
       const keyPrefix = rawKey.slice(0, 12) + "...";
