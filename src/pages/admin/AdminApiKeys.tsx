@@ -104,8 +104,8 @@ const AdminApiKeys = () => {
   });
 
   const handleCreate = () => {
-    if (!name.trim() || !companyId) {
-      toast({ title: "Completa todos los campos", variant: "destructive" });
+    if (!name.trim()) {
+      toast({ title: "Ingresa un nombre para la API key", variant: "destructive" });
       return;
     }
     createKey.mutate();
