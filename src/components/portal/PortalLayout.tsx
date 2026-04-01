@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard, FolderKanban, ListChecks, FileText, MessageSquare,
   Settings, LogOut, ChevronLeft, ChevronRight, Clock, Milestone,
-  Users, Bell, StickyNote, Upload, Menu, X
+  Users, Bell, StickyNote, Upload, Menu, X, Key
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
