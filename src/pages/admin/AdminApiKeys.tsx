@@ -6,7 +6,6 @@ import PageHeader from "@/components/portal/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
@@ -35,7 +34,7 @@ const AdminApiKeys = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newKeyVisible, setNewKeyVisible] = useState<string | null>(null);
   const [name, setName] = useState("");
-  const [companyId, setCompanyId] = useState("");
+  
 
   const { data: apiKeys, isLoading } = useQuery({
     queryKey: ["api-keys"],
@@ -49,17 +48,12 @@ const AdminApiKeys = () => {
     },
   });
 
-  const { data: companies } = useQuery({
-    queryKey: ["companies-list"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("companies").select("id, name").order("name");
-      if (error) throw error;
-      return data;
-    },
-  });
 
   const createKey = useMutation({
     mutationFn: async () => {
+      // Get first company as default (API keys are admin-only)
+      const { data: firstCompany } = await supabase.from("companies").select("id").limit(1).single();
+      if (!firstCompany) throw new Error("No company found");
       const rawKey = generateApiKey();
       const keyHash = await hashKey(rawKey);
       const keyPrefix = rawKey.slice(0, 12) + "...";
@@ -67,7 +61,7 @@ const AdminApiKeys = () => {
       if (!user) throw new Error("No user");
 
       const { error } = await supabase.from("api_keys").insert({
-        company_id: companyId,
+        company_id: firstCompany.id,
         created_by: user.id,
         name,
         key_prefix: keyPrefix,
@@ -109,8 +103,8 @@ const AdminApiKeys = () => {
   });
 
   const handleCreate = () => {
-    if (!name.trim() || !companyId) {
-      toast({ title: "Completa todos los campos", variant: "destructive" });
+    if (!name.trim()) {
+      toast({ title: "Ingresa un nombre para la API key", variant: "destructive" });
       return;
     }
     createKey.mutate();
@@ -158,7 +152,7 @@ const AdminApiKeys = () => {
 
       {/* Create button */}
       <div className="flex justify-end mb-4">
-        <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) { setNewKeyVisible(null); setName(""); setCompanyId(""); } }}>
+        <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) { setNewKeyVisible(null); setName(""); } }}>
           <DialogTrigger asChild>
             <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
               <Plus className="w-4 h-4 mr-2" /> Nueva API Key
@@ -180,7 +174,7 @@ const AdminApiKeys = () => {
                     <Copy className="w-4 h-4" />
                   </Button>
                 </div>
-                <Button onClick={() => { setDialogOpen(false); setNewKeyVisible(null); setName(""); setCompanyId(""); }} className="w-full">
+                <Button onClick={() => { setDialogOpen(false); setNewKeyVisible(null); setName(""); }} className="w-full">
                   Listo
                 </Button>
               </div>
@@ -189,17 +183,6 @@ const AdminApiKeys = () => {
                 <div>
                   <Label>Nombre</Label>
                   <Input value={name} onChange={e => setName(e.target.value)} placeholder="Ej: Integración CRM" />
-                </div>
-                <div>
-                  <Label>Empresa</Label>
-                  <Select value={companyId} onValueChange={setCompanyId}>
-                    <SelectTrigger><SelectValue placeholder="Seleccionar empresa" /></SelectTrigger>
-                    <SelectContent>
-                      {companies?.map(c => (
-                        <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                 </div>
                 <Button onClick={handleCreate} disabled={createKey.isPending} className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
                   {createKey.isPending ? "Creando..." : "Generar API Key"}
