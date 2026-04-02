@@ -87,6 +87,7 @@ const AdminApiKeys = () => {
         name,
         key_prefix: keyPrefix,
         key_hash: keyHash,
+        permissions: selectedPermissions,
       });
       if (error) throw error;
       return rawKey;
