@@ -19,12 +19,12 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     
-    // Convert client ID to internal email format
-    const cleanId = clientId.trim().toLowerCase();
-    const internalEmail = `${cleanId}@hat3x.local`;
+    const input = clientId.trim().toLowerCase();
+    // If it looks like an email, use directly; otherwise convert to internal format
+    const email = input.includes("@") ? input : `${input}@hat3x.local`;
     
     const { error } = await supabase.auth.signInWithPassword({
-      email: internalEmail,
+      email,
       password,
     });
     setLoading(false);
