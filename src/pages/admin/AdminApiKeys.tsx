@@ -34,7 +34,20 @@ const AdminApiKeys = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newKeyVisible, setNewKeyVisible] = useState<string | null>(null);
   const [name, setName] = useState("");
-  
+  const allPermissions = [
+    { key: "projects", label: "Proyectos" },
+    { key: "tasks", label: "Tareas" },
+    { key: "milestones", label: "Hitos" },
+    { key: "updates", label: "Actualizaciones" },
+    { key: "files", label: "Archivos" },
+  ];
+  const [selectedPermissions, setSelectedPermissions] = useState<string[]>(allPermissions.map(p => p.key));
+
+  const togglePermission = (key: string) => {
+    setSelectedPermissions(prev =>
+      prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]
+    );
+  };
 
   const { data: apiKeys, isLoading } = useQuery({
     queryKey: ["api-keys"],
