@@ -211,6 +211,20 @@ const AdminApiKeys = () => {
                   <Label>Nombre</Label>
                   <Input value={name} onChange={e => setName(e.target.value)} placeholder="Ej: Integración CRM" />
                 </div>
+                <div>
+                  <Label>Permisos</Label>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    {allPermissions.map(p => (
+                      <label key={p.key} className="flex items-center gap-2 text-sm cursor-pointer">
+                        <Checkbox
+                          checked={selectedPermissions.includes(p.key)}
+                          onCheckedChange={() => togglePermission(p.key)}
+                        />
+                        {p.label}
+                      </label>
+                    ))}
+                  </div>
+                </div>
                 <Button onClick={handleCreate} disabled={createKey.isPending} className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
                   {createKey.isPending ? "Creando..." : "Generar API Key"}
                 </Button>
