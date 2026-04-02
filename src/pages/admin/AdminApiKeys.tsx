@@ -130,6 +130,10 @@ const AdminApiKeys = () => {
       toast({ title: "Ingresa un nombre para la API key", variant: "destructive" });
       return;
     }
+    if (selectedPermissions.length === 0) {
+      toast({ title: "Selecciona al menos un permiso", variant: "destructive" });
+      return;
+    }
     createKey.mutate();
   };
 
