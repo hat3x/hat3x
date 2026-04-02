@@ -9,7 +9,7 @@ import { Eye, EyeOff, ArrowLeft, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [clientId, setClientId] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -18,10 +18,18 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    
+    const input = clientId.trim().toLowerCase();
+    // If it looks like an email, use directly; otherwise convert to internal format
+    const email = input.includes("@") ? input : `${input}@hat3x.local`;
+    
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     setLoading(false);
     if (error) {
-      toast({ title: "Error de acceso", description: "Email o contraseña incorrectos", variant: "destructive" });
+      toast({ title: "Error de acceso", description: "ID o contraseña incorrectos", variant: "destructive" });
     }
     // Redirect handled by App.tsx based on role
   };
@@ -49,20 +57,20 @@ const Login = () => {
             Acceso al portal
           </h1>
           <p className="text-sm text-muted-foreground text-center mb-8">
-            Inicia sesión para acceder a tu área privada
+            Introduce tu ID de cliente y contraseña
           </p>
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-foreground">Email</Label>
+              <Label htmlFor="clientId" className="text-foreground">ID de cliente</Label>
               <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@empresa.com"
+                id="clientId"
+                type="text"
+                value={clientId}
+                onChange={(e) => setClientId(e.target.value)}
+                placeholder="CLI-001"
                 required
-                className="bg-secondary/50 border-border/50 focus:border-primary/50"
+                className="bg-secondary/50 border-border/50 focus:border-primary/50 uppercase"
               />
             </div>
 
