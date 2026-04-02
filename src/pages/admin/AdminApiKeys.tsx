@@ -201,7 +201,7 @@ const AdminApiKeys = () => {
                     <Copy className="w-4 h-4" />
                   </Button>
                 </div>
-                <Button onClick={() => { setDialogOpen(false); setNewKeyVisible(null); setName(""); }} className="w-full">
+                <Button onClick={() => { setDialogOpen(false); setNewKeyVisible(null); setName(""); setSelectedPermissions(allPermissions.map(p => p.key)); }} className="w-full">
                   Listo
                 </Button>
               </div>
