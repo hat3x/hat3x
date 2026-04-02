@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { Key, Plus, Copy, Trash2, Eye, EyeOff } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -34,7 +35,20 @@ const AdminApiKeys = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newKeyVisible, setNewKeyVisible] = useState<string | null>(null);
   const [name, setName] = useState("");
-  
+  const allPermissions = [
+    { key: "projects", label: "Proyectos" },
+    { key: "tasks", label: "Tareas" },
+    { key: "milestones", label: "Hitos" },
+    { key: "updates", label: "Actualizaciones" },
+    { key: "files", label: "Archivos" },
+  ];
+  const [selectedPermissions, setSelectedPermissions] = useState<string[]>(allPermissions.map(p => p.key));
+
+  const togglePermission = (key: string) => {
+    setSelectedPermissions(prev =>
+      prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]
+    );
+  };
 
   const { data: apiKeys, isLoading } = useQuery({
     queryKey: ["api-keys"],
@@ -74,6 +88,7 @@ const AdminApiKeys = () => {
         name,
         key_prefix: keyPrefix,
         key_hash: keyHash,
+        permissions: selectedPermissions,
       });
       if (error) throw error;
       return rawKey;
@@ -113,6 +128,10 @@ const AdminApiKeys = () => {
   const handleCreate = () => {
     if (!name.trim()) {
       toast({ title: "Ingresa un nombre para la API key", variant: "destructive" });
+      return;
+    }
+    if (selectedPermissions.length === 0) {
+      toast({ title: "Selecciona al menos un permiso", variant: "destructive" });
       return;
     }
     createKey.mutate();
@@ -160,7 +179,7 @@ const AdminApiKeys = () => {
 
       {/* Create button */}
       <div className="flex justify-end mb-4">
-        <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) { setNewKeyVisible(null); setName(""); } }}>
+        <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) { setNewKeyVisible(null); setName(""); setSelectedPermissions(allPermissions.map(p => p.key)); } }}>
           <DialogTrigger asChild>
             <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
               <Plus className="w-4 h-4 mr-2" /> Nueva API Key
@@ -182,7 +201,7 @@ const AdminApiKeys = () => {
                     <Copy className="w-4 h-4" />
                   </Button>
                 </div>
-                <Button onClick={() => { setDialogOpen(false); setNewKeyVisible(null); setName(""); }} className="w-full">
+                <Button onClick={() => { setDialogOpen(false); setNewKeyVisible(null); setName(""); setSelectedPermissions(allPermissions.map(p => p.key)); }} className="w-full">
                   Listo
                 </Button>
               </div>
@@ -191,6 +210,20 @@ const AdminApiKeys = () => {
                 <div>
                   <Label>Nombre</Label>
                   <Input value={name} onChange={e => setName(e.target.value)} placeholder="Ej: Integración CRM" />
+                </div>
+                <div>
+                  <Label>Permisos</Label>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    {allPermissions.map(p => (
+                      <label key={p.key} className="flex items-center gap-2 text-sm cursor-pointer">
+                        <Checkbox
+                          checked={selectedPermissions.includes(p.key)}
+                          onCheckedChange={() => togglePermission(p.key)}
+                        />
+                        {p.label}
+                      </label>
+                    ))}
+                  </div>
                 </div>
                 <Button onClick={handleCreate} disabled={createKey.isPending} className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
                   {createKey.isPending ? "Creando..." : "Generar API Key"}
