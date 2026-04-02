@@ -179,7 +179,7 @@ const AdminApiKeys = () => {
 
       {/* Create button */}
       <div className="flex justify-end mb-4">
-        <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) { setNewKeyVisible(null); setName(""); } }}>
+        <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) { setNewKeyVisible(null); setName(""); setSelectedPermissions(allPermissions.map(p => p.key)); } }}>
           <DialogTrigger asChild>
             <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
               <Plus className="w-4 h-4 mr-2" /> Nueva API Key
