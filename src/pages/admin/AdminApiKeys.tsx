@@ -157,9 +157,9 @@ const AdminApiKeys = () => {
         <p className="text-xs text-muted-foreground mb-3">
           Endpoint base: <code className="bg-secondary/50 px-2 py-0.5 rounded text-primary text-[11px]">{baseUrl}</code>
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div>
-            <p className="text-xs font-medium text-foreground mb-1">Endpoints disponibles:</p>
+            <p className="text-xs font-medium text-foreground mb-1">Endpoints:</p>
             <ul className="text-xs text-muted-foreground space-y-0.5">
               <li><code className="text-primary">/projects</code> — Proyectos</li>
               <li><code className="text-primary">/tasks</code> — Tareas</li>
@@ -169,9 +169,20 @@ const AdminApiKeys = () => {
             </ul>
           </div>
           <div>
-            <p className="text-xs font-medium text-foreground mb-1">Ejemplo:</p>
-            <code className="text-[10px] text-muted-foreground block bg-secondary/30 p-2 rounded">
-              curl -H "x-api-key: hat3x_..." {baseUrl}/projects
+            <p className="text-xs font-medium text-foreground mb-1">Métodos:</p>
+            <ul className="text-xs text-muted-foreground space-y-0.5">
+              <li><code className="text-primary">GET</code> — Listar recursos</li>
+              <li><code className="text-primary">POST</code> — Crear recurso</li>
+              <li><code className="text-primary">PUT /recurso/&#123;id&#125;</code> — Actualizar</li>
+            </ul>
+          </div>
+          <div>
+            <p className="text-xs font-medium text-foreground mb-1">Ejemplo POST:</p>
+            <code className="text-[10px] text-muted-foreground block bg-secondary/30 p-2 rounded whitespace-pre-wrap">
+{`curl -X POST -H "x-api-key: hat3x_..." \\
+  -H "Content-Type: application/json" \\
+  -d '{"name":"Mi tarea","project_id":"..."}' \\
+  ${baseUrl}/tasks`}
             </code>
           </div>
         </div>
