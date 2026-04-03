@@ -54,6 +54,15 @@ const AdminMessages = () => {
     fetchConversations();
   };
 
+  const deleteConversation = async (convId: string) => {
+    await supabase.from("messages").delete().eq("conversation_id", convId);
+    const { error } = await supabase.from("conversations").delete().eq("id", convId);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    toast({ title: "Conversación eliminada" });
+    if (selected?.id === convId) { setSelected(null); setMessages([]); }
+    fetchConversations();
+  };
+
   return (
     <PortalLayout type="admin">
       <PageHeader title="Mensajes de clientes" subtitle="Gestiona consultas y solicitudes" />
