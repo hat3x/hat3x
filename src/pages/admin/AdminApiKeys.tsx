@@ -165,6 +165,7 @@ const AdminApiKeys = () => {
               <li><code className="text-primary">/projects</code> — Proyectos</li>
               <li><code className="text-primary">/tasks</code> — Tareas</li>
               <li><code className="text-primary">/milestones</code> — Hitos</li>
+              <li><code className="text-primary">/phases</code> — Fases</li>
               <li><code className="text-primary">/updates</code> — Actualizaciones</li>
               <li><code className="text-primary">/files</code> — Archivos</li>
             </ul>
