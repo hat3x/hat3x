@@ -1,6 +1,7 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import Hat3xLogo from "@/components/Hat3xLogo";
 import { Button } from "@/components/ui/button";
 import {
