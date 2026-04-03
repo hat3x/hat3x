@@ -93,9 +93,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const isAdmin = roles.includes("admin");
   const isClient = roles.includes("client");
+  const mustChangePassword = profile?.must_change_password === true;
 
   return (
-    <AuthContext.Provider value={{ user, session, roles, isAdmin, isClient, loading, profile, companyId, signOut }}>
+    <AuthContext.Provider value={{ user, session, roles, isAdmin, isClient, loading, profile, companyId, mustChangePassword, signOut }}>
       {children}
     </AuthContext.Provider>
   );
