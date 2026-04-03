@@ -6,7 +6,9 @@ import PageHeader from "@/components/portal/PageHeader";
 import StatusBadge from "@/components/portal/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send } from "lucide-react";
+import { Send, Trash2 } from "lucide-react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { toast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -27,8 +29,15 @@ const AdminMessages = () => {
 
   const selectConversation = async (conv: any) => {
     setSelected(conv);
-    const { data } = await supabase.from("messages").select("*, profiles:sender_id(full_name)").eq("conversation_id", conv.id).order("created_at");
-    setMessages(data || []);
+    const { data: msgs } = await supabase.from("messages").select("*").eq("conversation_id", conv.id).order("created_at");
+    if (msgs && msgs.length > 0) {
+      const senderIds = [...new Set(msgs.map(m => m.sender_id))];
+      const { data: profiles } = await supabase.from("profiles").select("id, full_name").in("id", senderIds);
+      const profileMap = Object.fromEntries((profiles || []).map(p => [p.id, p.full_name]));
+      setMessages(msgs.map(m => ({ ...m, sender_name: profileMap[m.sender_id] || "Usuario" })));
+    } else {
+      setMessages([]);
+    }
   };
 
   const sendMessage = async () => {
@@ -42,6 +51,15 @@ const AdminMessages = () => {
 
   const updateConvStatus = async (id: string, status: string) => {
     await supabase.from("conversations").update({ status }).eq("id", id);
+    fetchConversations();
+  };
+
+  const deleteConversation = async (convId: string) => {
+    await supabase.from("messages").delete().eq("conversation_id", convId);
+    const { error } = await supabase.from("conversations").delete().eq("id", convId);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    toast({ title: "Conversación eliminada" });
+    if (selected?.id === convId) { setSelected(null); setMessages([]); }
     fetchConversations();
   };
 
@@ -59,7 +77,26 @@ const AdminMessages = () => {
             >
               <div className="flex items-center justify-between gap-2">
                 <h4 className="font-semibold text-foreground text-sm truncate">{c.subject}</h4>
-                <StatusBadge status={c.status} />
+                <div className="flex items-center gap-1">
+                  <StatusBadge status={c.status} />
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0 text-destructive hover:text-destructive" onClick={e => e.stopPropagation()}>
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="glass-card border-border/30 bg-card" onClick={e => e.stopPropagation()}>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>¿Eliminar conversación?</AlertDialogTitle>
+                        <AlertDialogDescription>Se eliminarán todos los mensajes. Esta acción no se puede deshacer.</AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => deleteConversation(c.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Eliminar</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
               </div>
               <p className="text-xs text-muted-foreground mt-1">{(c as any).companies?.name} · {format(new Date(c.updated_at), "d MMM", { locale: es })}</p>
             </button>
@@ -87,7 +124,7 @@ const AdminMessages = () => {
                 {messages.map(m => (
                   <div key={m.id} className={`flex ${m.sender_id === user?.id ? "justify-end" : "justify-start"}`}>
                     <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm ${m.sender_id === user?.id ? "bg-primary/20 text-foreground" : "bg-secondary/50 text-foreground"}`}>
-                      <p className="text-[10px] font-semibold text-muted-foreground mb-1">{(m as any).profiles?.full_name || "Usuario"}</p>
+                      <p className="text-[10px] font-semibold text-muted-foreground mb-1">{m.sender_name || "Usuario"}</p>
                       <p>{m.content}</p>
                       <p className="text-[10px] text-muted-foreground mt-1">{format(new Date(m.created_at), "d MMM, HH:mm", { locale: es })}</p>
                     </div>

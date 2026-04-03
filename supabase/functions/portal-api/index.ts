@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.99.1";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-api-key",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
 };
 
 function json(data: unknown, status = 200) {
@@ -59,8 +59,8 @@ Deno.serve(async (req) => {
     return json({ error: `No permission for resource: ${resource}` }, 403);
   }
 
-  if (!["GET", "POST", "PUT"].includes(method)) {
-    return json({ error: "Method not allowed. Supported: GET, POST, PUT" }, 405);
+  if (!["GET", "POST", "PUT", "DELETE"].includes(method)) {
+    return json({ error: "Method not allowed. Supported: GET, POST, PUT, DELETE" }, 405);
   }
 
   try {
@@ -411,13 +411,93 @@ Deno.serve(async (req) => {
         break;
       }
 
+      // ==================== PHASES ====================
+      case "phases": {
+        if (method === "GET") {
+          const projectId = url.searchParams.get("project_id");
+          let query = supabaseAdmin
+            .from("project_phases")
+            .select("id, name, description, status, sort_order, visible_to_client, created_at, updated_at, project_id")
+            .eq("visible_to_client", true);
+          if (projectId) {
+            query = query.eq("project_id", projectId);
+          } else {
+            const projectIds = await getCompanyProjectIds();
+            if (projectIds.length === 0) return json({ data: [] });
+            query = query.in("project_id", projectIds);
+          }
+          const { data, error } = await query.order("sort_order");
+          if (error) throw error;
+          return json({ data });
+        }
+
+        if (method === "POST") {
+          const body = await req.json();
+          if (!body.name) return json({ error: "Field 'name' is required" }, 400);
+          if (!body.project_id) return json({ error: "Field 'project_id' is required" }, 400);
+          if (!(await verifyProjectOwnership(body.project_id))) return json({ error: "Project not found or not owned by your company" }, 403);
+          const { data, error } = await supabaseAdmin
+            .from("project_phases")
+            .insert({
+              name: body.name,
+              description: body.description || "",
+              status: body.status || "pending",
+              sort_order: body.sort_order ?? 0,
+              project_id: body.project_id,
+              visible_to_client: body.visible_to_client ?? true,
+            })
+            .select("id, name, description, status, sort_order, visible_to_client, created_at, updated_at, project_id")
+            .single();
+          if (error) throw error;
+          return json({ data }, 201);
+        }
+
+        if (method === "PUT") {
+          if (!resourceId) return json({ error: "Phase ID required in URL path: /phases/{id}" }, 400);
+          const body = await req.json();
+          const updates: Record<string, unknown> = {};
+          for (const field of ["name", "description", "status", "sort_order", "visible_to_client"]) {
+            if (body[field] !== undefined) updates[field] = body[field];
+          }
+          if (Object.keys(updates).length === 0) return json({ error: "No valid fields to update" }, 400);
+          updates.updated_at = new Date().toISOString();
+          const projectIds = await getCompanyProjectIds();
+          const { data, error } = await supabaseAdmin
+            .from("project_phases")
+            .update(updates)
+            .eq("id", resourceId)
+            .in("project_id", projectIds)
+            .select("id, name, description, status, sort_order, visible_to_client, created_at, updated_at, project_id")
+            .single();
+          if (error) throw error;
+          if (!data) return json({ error: "Phase not found" }, 404);
+          return json({ data });
+        }
+
+        if (method === "DELETE") {
+          if (!resourceId) return json({ error: "Phase ID required in URL path: /phases/{id}" }, 400);
+          const projectIds = await getCompanyProjectIds();
+          const { data, error } = await supabaseAdmin
+            .from("project_phases")
+            .delete()
+            .eq("id", resourceId)
+            .in("project_id", projectIds)
+            .select("id")
+            .single();
+          if (error) throw error;
+          if (!data) return json({ error: "Phase not found" }, 404);
+          return json({ message: "Phase deleted" });
+        }
+        break;
+      }
+
       // ==================== ROOT ====================
       case "": {
         return json({
           message: "HAT3X Portal API v1",
           endpoints: permissions.map(p => `/${p}`),
-          methods: ["GET", "POST", "PUT"],
-          docs: "Use x-api-key header for authentication. GET to list, POST to create, PUT /{resource}/{id} to update.",
+          methods: ["GET", "POST", "PUT", "DELETE"],
+          docs: "Use x-api-key header for authentication. GET to list, POST to create, PUT /{resource}/{id} to update, DELETE /{resource}/{id} to delete.",
         });
         break;
       }

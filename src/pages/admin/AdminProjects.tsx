@@ -7,7 +7,8 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus, Search, ChevronRight } from "lucide-react";
+import { Plus, Search, ChevronRight, Trash2 } from "lucide-react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -45,6 +46,29 @@ const AdminProjects = () => {
     toast({ title: "Proyecto creado" });
     setForm({ name: "", company_id: "", service_type: "custom", description: "", start_date: "", estimated_end_date: "" });
     setShowCreate(false);
+    fetchAll();
+  };
+
+  const deleteProject = async (projectId: string) => {
+    // Delete related data first
+    await Promise.all([
+      supabase.from("tasks").delete().eq("project_id", projectId),
+      supabase.from("milestones").delete().eq("project_id", projectId),
+      supabase.from("project_phases").delete().eq("project_id", projectId),
+      supabase.from("project_updates").delete().eq("project_id", projectId),
+      supabase.from("files").delete().eq("project_id", projectId),
+      supabase.from("internal_notes").delete().eq("project_id", projectId),
+    ]);
+    // Delete conversations and their messages
+    const { data: convs } = await supabase.from("conversations").select("id").eq("project_id", projectId);
+    if (convs && convs.length > 0) {
+      const convIds = convs.map(c => c.id);
+      await supabase.from("messages").delete().in("conversation_id", convIds);
+      await supabase.from("conversations").delete().eq("project_id", projectId);
+    }
+    const { error } = await supabase.from("projects").delete().eq("id", projectId);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    toast({ title: "Proyecto eliminado" });
     fetchAll();
   };
 
@@ -104,6 +128,23 @@ const AdminProjects = () => {
               <div className="flex items-center gap-2">
                 <StatusBadge status={p.priority} />
                 <StatusBadge status={p.status} />
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="ghost" size="icon" className="shrink-0 text-destructive hover:text-destructive" onClick={e => e.stopPropagation()}>
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="glass-card border-border/30 bg-card" onClick={e => e.stopPropagation()}>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>¿Eliminar proyecto?</AlertDialogTitle>
+                      <AlertDialogDescription>Se eliminarán todas las tareas, fases, hitos, documentos, actualizaciones y conversaciones asociadas. Esta acción no se puede deshacer.</AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction onClick={() => deleteProject(p.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Eliminar</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
                 <ChevronRight className="w-4 h-4 text-muted-foreground" />
               </div>
             </div>
