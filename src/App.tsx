@@ -42,9 +42,10 @@ import AdminProjectDetail from "./pages/admin/AdminProjectDetail";
 const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode; requiredRole?: "admin" | "client" }) => {
-  const { user, loading, isAdmin, isClient } = useAuth();
+  const { user, loading, isAdmin, isClient, mustChangePassword } = useAuth();
   if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>;
   if (!user) return <Navigate to="/login" replace />;
+  if (mustChangePassword) return <Navigate to="/change-password" replace />;
   if (requiredRole === "admin" && !isAdmin) return <Navigate to="/portal" replace />;
   if (requiredRole === "client" && !isClient && !isAdmin) return <Navigate to="/login" replace />;
   return <>{children}</>;
