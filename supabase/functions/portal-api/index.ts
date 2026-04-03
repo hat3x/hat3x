@@ -59,8 +59,8 @@ Deno.serve(async (req) => {
     return json({ error: `No permission for resource: ${resource}` }, 403);
   }
 
-  if (!["GET", "POST", "PUT"].includes(method)) {
-    return json({ error: "Method not allowed. Supported: GET, POST, PUT" }, 405);
+  if (!["GET", "POST", "PUT", "DELETE"].includes(method)) {
+    return json({ error: "Method not allowed. Supported: GET, POST, PUT, DELETE" }, 405);
   }
 
   try {
