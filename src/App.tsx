@@ -52,8 +52,9 @@ const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode;
 };
 
 const LoginRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading, isAdmin } = useAuth();
+  const { user, loading, isAdmin, mustChangePassword } = useAuth();
   if (loading) return null;
+  if (user && mustChangePassword) return <Navigate to="/change-password" replace />;
   if (user) return <Navigate to={isAdmin ? "/admin" : "/portal"} replace />;
   return <>{children}</>;
 };
