@@ -57,32 +57,45 @@ const PortalLayout = ({ children, type }: PortalLayoutProps) => {
     if (!user) return;
 
     const fetchUnread = async () => {
-      if (type === "admin") {
-        // Admin: count open conversations with messages not from admin
-        const { data: convs } = await supabase.from("conversations").select("id").eq("status", "open");
-        if (!convs?.length) { setUnreadCount(0); return; }
-        const { count } = await supabase
+      // Get all conversations the user has access to
+      const { data: convs } = type === "admin"
+        ? await supabase.from("conversations").select("id")
+        : await supabase.from("conversations").select("id");
+      if (!convs?.length) { setUnreadCount(0); return; }
+
+      const convIds = convs.map(c => c.id);
+
+      // Get read timestamps for each conversation
+      const { data: reads } = await supabase
+        .from("message_reads")
+        .select("conversation_id, last_read_at")
+        .eq("user_id", user.id)
+        .in("conversation_id", convIds);
+
+      const readMap: Record<string, string> = {};
+      (reads || []).forEach(r => { readMap[r.conversation_id] = r.last_read_at; });
+
+      // Count messages not sent by this user AND newer than last_read_at
+      let total = 0;
+      for (const convId of convIds) {
+        let query = supabase
           .from("messages")
           .select("id", { count: "exact", head: true })
-          .in("conversation_id", convs.map(c => c.id))
+          .eq("conversation_id", convId)
           .neq("sender_id", user.id);
-        setUnreadCount(count || 0);
-      } else {
-        // Client: count messages from admin in their conversations
-        const { data: convs } = await supabase.from("conversations").select("id");
-        if (!convs?.length) { setUnreadCount(0); return; }
-        const { count } = await supabase
-          .from("messages")
-          .select("id", { count: "exact", head: true })
-          .in("conversation_id", convs.map(c => c.id))
-          .neq("sender_id", user.id);
-        setUnreadCount(count || 0);
+
+        if (readMap[convId]) {
+          query = query.gt("created_at", readMap[convId]);
+        }
+
+        const { count } = await query;
+        total += count || 0;
       }
+      setUnreadCount(total);
     };
 
     fetchUnread();
 
-    // Subscribe to realtime messages
     const channel = supabase
       .channel("unread-messages")
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, () => fetchUnread())
