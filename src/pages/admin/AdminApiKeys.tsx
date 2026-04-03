@@ -39,6 +39,7 @@ const AdminApiKeys = () => {
     { key: "projects", label: "Proyectos" },
     { key: "tasks", label: "Tareas" },
     { key: "milestones", label: "Hitos" },
+    { key: "phases", label: "Fases" },
     { key: "updates", label: "Actualizaciones" },
     { key: "files", label: "Archivos" },
   ];
