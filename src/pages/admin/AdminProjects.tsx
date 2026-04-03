@@ -49,6 +49,29 @@ const AdminProjects = () => {
     fetchAll();
   };
 
+  const deleteProject = async (projectId: string) => {
+    // Delete related data first
+    await Promise.all([
+      supabase.from("tasks").delete().eq("project_id", projectId),
+      supabase.from("milestones").delete().eq("project_id", projectId),
+      supabase.from("project_phases").delete().eq("project_id", projectId),
+      supabase.from("project_updates").delete().eq("project_id", projectId),
+      supabase.from("files").delete().eq("project_id", projectId),
+      supabase.from("internal_notes").delete().eq("project_id", projectId),
+    ]);
+    // Delete conversations and their messages
+    const { data: convs } = await supabase.from("conversations").select("id").eq("project_id", projectId);
+    if (convs && convs.length > 0) {
+      const convIds = convs.map(c => c.id);
+      await supabase.from("messages").delete().in("conversation_id", convIds);
+      await supabase.from("conversations").delete().eq("project_id", projectId);
+    }
+    const { error } = await supabase.from("projects").delete().eq("id", projectId);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    toast({ title: "Proyecto eliminado" });
+    fetchAll();
+  };
+
   const filtered = projects.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
