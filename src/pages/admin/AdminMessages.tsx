@@ -27,6 +27,14 @@ const AdminMessages = () => {
 
   useEffect(() => { fetchConversations(); }, []);
 
+  const markAsRead = async (convId: string) => {
+    if (!user) return;
+    await supabase.from("message_reads").upsert(
+      { user_id: user.id, conversation_id: convId, last_read_at: new Date().toISOString() },
+      { onConflict: "user_id,conversation_id" }
+    );
+  };
+
   const selectConversation = async (conv: any) => {
     setSelected(conv);
     const { data: msgs } = await supabase.from("messages").select("*").eq("conversation_id", conv.id).order("created_at");
@@ -38,6 +46,7 @@ const AdminMessages = () => {
     } else {
       setMessages([]);
     }
+    await markAsRead(conv.id);
   };
 
   const sendMessage = async () => {
