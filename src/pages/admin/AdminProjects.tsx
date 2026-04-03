@@ -95,7 +95,7 @@ const AdminProjects = () => {
 
       <div className="space-y-4">
         {filtered.map(p => (
-          <div key={p.id} className="glass-card p-5">
+          <div key={p.id} className="glass-card p-5 cursor-pointer hover:border-primary/30 transition-all" onClick={() => navigate(`/admin/projects/${p.id}`)}>
             <div className="flex items-start justify-between gap-4 mb-3">
               <div>
                 <h3 className="font-semibold text-foreground">{p.name}</h3>
@@ -104,6 +104,7 @@ const AdminProjects = () => {
               <div className="flex items-center gap-2">
                 <StatusBadge status={p.priority} />
                 <StatusBadge status={p.status} />
+                <ChevronRight className="w-4 h-4 text-muted-foreground" />
               </div>
             </div>
             <div className="flex items-center gap-4">
