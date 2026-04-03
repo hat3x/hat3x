@@ -128,6 +128,23 @@ const AdminProjects = () => {
               <div className="flex items-center gap-2">
                 <StatusBadge status={p.priority} />
                 <StatusBadge status={p.status} />
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="ghost" size="icon" className="shrink-0 text-destructive hover:text-destructive" onClick={e => e.stopPropagation()}>
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="glass-card border-border/30 bg-card" onClick={e => e.stopPropagation()}>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>¿Eliminar proyecto?</AlertDialogTitle>
+                      <AlertDialogDescription>Se eliminarán todas las tareas, fases, hitos, documentos, actualizaciones y conversaciones asociadas. Esta acción no se puede deshacer.</AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction onClick={() => deleteProject(p.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Eliminar</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
                 <ChevronRight className="w-4 h-4 text-muted-foreground" />
               </div>
             </div>
