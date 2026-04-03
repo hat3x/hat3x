@@ -200,8 +200,15 @@ const AdminProjectDetail = () => {
   // Messages
   const selectConversation = async (conv: any) => {
     setSelectedConv(conv);
-    const { data } = await supabase.from("messages").select("*, profiles:sender_id(full_name)").eq("conversation_id", conv.id).order("created_at");
-    setMessages(data || []);
+    const { data: msgs } = await supabase.from("messages").select("*").eq("conversation_id", conv.id).order("created_at");
+    if (msgs && msgs.length > 0) {
+      const senderIds = [...new Set(msgs.map(m => m.sender_id))];
+      const { data: profiles } = await supabase.from("profiles").select("id, full_name").in("id", senderIds);
+      const profileMap = Object.fromEntries((profiles || []).map(p => [p.id, p.full_name]));
+      setMessages(msgs.map(m => ({ ...m, sender_name: profileMap[m.sender_id] || "Usuario" })));
+    } else {
+      setMessages([]);
+    }
   };
 
   const sendMessage = async () => {
