@@ -36,6 +36,7 @@ import AdminDocuments from "./pages/admin/AdminDocuments";
 import AdminMessages from "./pages/admin/AdminMessages";
 import AdminNotes from "./pages/admin/AdminNotes";
 import AdminApiKeys from "./pages/admin/AdminApiKeys";
+import AdminProjectDetail from "./pages/admin/AdminProjectDetail";
 
 const queryClient = new QueryClient();
 
@@ -81,6 +82,7 @@ const AppRoutes = () => (
     <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>} />
     <Route path="/admin/clients" element={<ProtectedRoute requiredRole="admin"><AdminClients /></ProtectedRoute>} />
     <Route path="/admin/projects" element={<ProtectedRoute requiredRole="admin"><AdminProjects /></ProtectedRoute>} />
+    <Route path="/admin/projects/:id" element={<ProtectedRoute requiredRole="admin"><AdminProjectDetail /></ProtectedRoute>} />
     <Route path="/admin/phases" element={<ProtectedRoute requiredRole="admin"><AdminPhases /></ProtectedRoute>} />
     <Route path="/admin/tasks" element={<ProtectedRoute requiredRole="admin"><AdminTasks /></ProtectedRoute>} />
     <Route path="/admin/updates" element={<ProtectedRoute requiredRole="admin"><AdminUpdates /></ProtectedRoute>} />

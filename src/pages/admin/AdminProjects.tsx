@@ -7,7 +7,8 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
@@ -15,6 +16,7 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
 const AdminProjects = () => {
+  const navigate = useNavigate();
   const [projects, setProjects] = useState<any[]>([]);
   const [companies, setCompanies] = useState<any[]>([]);
   const [search, setSearch] = useState("");
@@ -93,7 +95,7 @@ const AdminProjects = () => {
 
       <div className="space-y-4">
         {filtered.map(p => (
-          <div key={p.id} className="glass-card p-5">
+          <div key={p.id} className="glass-card p-5 cursor-pointer hover:border-primary/30 transition-all" onClick={() => navigate(`/admin/projects/${p.id}`)}>
             <div className="flex items-start justify-between gap-4 mb-3">
               <div>
                 <h3 className="font-semibold text-foreground">{p.name}</h3>
@@ -102,6 +104,7 @@ const AdminProjects = () => {
               <div className="flex items-center gap-2">
                 <StatusBadge status={p.priority} />
                 <StatusBadge status={p.status} />
+                <ChevronRight className="w-4 h-4 text-muted-foreground" />
               </div>
             </div>
             <div className="flex items-center gap-4">
