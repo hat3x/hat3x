@@ -45,11 +45,51 @@ interface PortalLayoutProps {
 const PortalLayout = ({ children, type }: PortalLayoutProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
-  const { signOut, profile, isAdmin } = useAuth();
+  const { signOut, profile, isAdmin, user } = useAuth();
 
   const navItems = type === "admin" ? adminNavItems : clientNavItems;
+
+  // Fetch unread messages count
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchUnread = async () => {
+      if (type === "admin") {
+        // Admin: count open conversations with messages not from admin
+        const { data: convs } = await supabase.from("conversations").select("id").eq("status", "open");
+        if (!convs?.length) { setUnreadCount(0); return; }
+        const { count } = await supabase
+          .from("messages")
+          .select("id", { count: "exact", head: true })
+          .in("conversation_id", convs.map(c => c.id))
+          .neq("sender_id", user.id);
+        setUnreadCount(count || 0);
+      } else {
+        // Client: count messages from admin in their conversations
+        const { data: convs } = await supabase.from("conversations").select("id");
+        if (!convs?.length) { setUnreadCount(0); return; }
+        const { count } = await supabase
+          .from("messages")
+          .select("id", { count: "exact", head: true })
+          .in("conversation_id", convs.map(c => c.id))
+          .neq("sender_id", user.id);
+        setUnreadCount(count || 0);
+      }
+    };
+
+    fetchUnread();
+
+    // Subscribe to realtime messages
+    const channel = supabase
+      .channel("unread-messages")
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, () => fetchUnread())
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [user, type]);
 
   const handleSignOut = async () => {
     await signOut();
