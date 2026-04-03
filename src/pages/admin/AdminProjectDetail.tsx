@@ -555,7 +555,7 @@ const AdminProjectDetail = () => {
                     {messages.map(m => (
                       <div key={m.id} className={`flex ${m.sender_id === user?.id ? "justify-end" : "justify-start"}`}>
                         <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm ${m.sender_id === user?.id ? "bg-primary/20 text-foreground" : "bg-secondary/50 text-foreground"}`}>
-                          <p className="text-[10px] font-semibold text-muted-foreground mb-1">{(m as any).profiles?.full_name || "Usuario"}</p>
+                          <p className="text-[10px] font-semibold text-muted-foreground mb-1">{m.sender_name || "Usuario"}</p>
                           <p>{m.content}</p>
                           <p className="text-[10px] text-muted-foreground mt-1">{format(new Date(m.created_at), "d MMM, HH:mm", { locale: es })}</p>
                         </div>
