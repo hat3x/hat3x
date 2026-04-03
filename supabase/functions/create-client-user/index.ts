@@ -108,11 +108,12 @@ Deno.serve(async (req) => {
 
     const userId = newUser.user.id;
 
-    // Update profile with client_id and full_name
+    // Update profile with client_id, full_name, and force password change
     await adminClient.from("profiles").update({
       client_id: cleanId,
       full_name: full_name || cleanId,
       phone: phone || "",
+      must_change_password: true,
     }).eq("id", userId);
 
     // Assign client role
