@@ -71,7 +71,7 @@ const AppRoutes = () => (
     <Route path="/legal/privacidad" element={<Privacidad />} />
     <Route path="/legal/terminos" element={<Terminos />} />
     <Route path="/login" element={<LoginRoute><Login /></LoginRoute>} />
-    <Route path="/change-password" element={<ProtectedRoute><ChangePassword /></ProtectedRoute>} />
+    <Route path="/change-password" element={<ChangePasswordRoute><ChangePassword /></ChangePasswordRoute>} />
     {/* Client portal */}
     <Route path="/portal" element={<ProtectedRoute><ClientDashboard /></ProtectedRoute>} />
     <Route path="/portal/timeline" element={<ProtectedRoute><ClientTimeline /></ProtectedRoute>} />
