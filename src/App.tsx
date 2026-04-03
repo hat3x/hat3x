@@ -15,6 +15,7 @@ import Privacidad from "./pages/Privacidad";
 import Terminos from "./pages/Terminos";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
+import ChangePassword from "./pages/ChangePassword";
 // Client portal
 import ClientDashboard from "./pages/portal/ClientDashboard";
 import ClientTimeline from "./pages/portal/ClientTimeline";
@@ -41,18 +42,27 @@ import AdminProjectDetail from "./pages/admin/AdminProjectDetail";
 const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode; requiredRole?: "admin" | "client" }) => {
-  const { user, loading, isAdmin, isClient } = useAuth();
+  const { user, loading, isAdmin, isClient, mustChangePassword } = useAuth();
   if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>;
   if (!user) return <Navigate to="/login" replace />;
+  if (mustChangePassword) return <Navigate to="/change-password" replace />;
   if (requiredRole === "admin" && !isAdmin) return <Navigate to="/portal" replace />;
   if (requiredRole === "client" && !isClient && !isAdmin) return <Navigate to="/login" replace />;
   return <>{children}</>;
 };
 
 const LoginRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading, isAdmin } = useAuth();
+  const { user, loading, isAdmin, mustChangePassword } = useAuth();
   if (loading) return null;
+  if (user && mustChangePassword) return <Navigate to="/change-password" replace />;
   if (user) return <Navigate to={isAdmin ? "/admin" : "/portal"} replace />;
+  return <>{children}</>;
+};
+
+const ChangePasswordRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, loading } = useAuth();
+  if (loading) return null;
+  if (!user) return <Navigate to="/login" replace />;
   return <>{children}</>;
 };
 
@@ -68,6 +78,7 @@ const AppRoutes = () => (
     <Route path="/legal/privacidad" element={<Privacidad />} />
     <Route path="/legal/terminos" element={<Terminos />} />
     <Route path="/login" element={<LoginRoute><Login /></LoginRoute>} />
+    <Route path="/change-password" element={<ChangePasswordRoute><ChangePassword /></ChangePasswordRoute>} />
     {/* Client portal */}
     <Route path="/portal" element={<ProtectedRoute><ClientDashboard /></ProtectedRoute>} />
     <Route path="/portal/timeline" element={<ProtectedRoute><ClientTimeline /></ProtectedRoute>} />

@@ -11,8 +11,9 @@ interface AuthContextType {
   isAdmin: boolean;
   isClient: boolean;
   loading: boolean;
-  profile: { full_name: string; email: string; phone: string; avatar_url: string } | null;
+  profile: { full_name: string; email: string; phone: string; avatar_url: string; must_change_password: boolean } | null;
   companyId: string | null;
+  mustChangePassword: boolean;
   signOut: () => Promise<void>;
 }
 
@@ -25,6 +26,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   profile: null,
   companyId: null,
+  mustChangePassword: false,
   signOut: async () => {},
 });
 
@@ -91,9 +93,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const isAdmin = roles.includes("admin");
   const isClient = roles.includes("client");
+  const mustChangePassword = profile?.must_change_password === true;
 
   return (
-    <AuthContext.Provider value={{ user, session, roles, isAdmin, isClient, loading, profile, companyId, signOut }}>
+    <AuthContext.Provider value={{ user, session, roles, isAdmin, isClient, loading, profile, companyId, mustChangePassword, signOut }}>
       {children}
     </AuthContext.Provider>
   );
