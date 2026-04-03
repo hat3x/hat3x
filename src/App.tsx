@@ -15,6 +15,7 @@ import Privacidad from "./pages/Privacidad";
 import Terminos from "./pages/Terminos";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
+import ChangePassword from "./pages/ChangePassword";
 // Client portal
 import ClientDashboard from "./pages/portal/ClientDashboard";
 import ClientTimeline from "./pages/portal/ClientTimeline";
