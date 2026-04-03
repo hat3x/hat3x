@@ -1,6 +1,7 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import Hat3xLogo from "@/components/Hat3xLogo";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,12 +33,7 @@ const adminNavItems: NavItem[] = [
   { label: "Dashboard", to: "/admin", icon: LayoutDashboard },
   { label: "Clientes", to: "/admin/clients", icon: Users },
   { label: "Proyectos", to: "/admin/projects", icon: FolderKanban },
-  { label: "Fases e hitos", to: "/admin/phases", icon: Milestone },
-  { label: "Tareas", to: "/admin/tasks", icon: ListChecks },
-  { label: "Actualizaciones", to: "/admin/updates", icon: Bell },
-  { label: "Documentos", to: "/admin/documents", icon: Upload },
   { label: "Mensajes", to: "/admin/messages", icon: MessageSquare },
-  { label: "Notas internas", to: "/admin/notes", icon: StickyNote },
   { label: "API Keys", to: "/admin/api-keys", icon: Key },
 ];
 
@@ -49,11 +45,51 @@ interface PortalLayoutProps {
 const PortalLayout = ({ children, type }: PortalLayoutProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
-  const { signOut, profile, isAdmin } = useAuth();
+  const { signOut, profile, isAdmin, user } = useAuth();
 
   const navItems = type === "admin" ? adminNavItems : clientNavItems;
+
+  // Fetch unread messages count
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchUnread = async () => {
+      if (type === "admin") {
+        // Admin: count open conversations with messages not from admin
+        const { data: convs } = await supabase.from("conversations").select("id").eq("status", "open");
+        if (!convs?.length) { setUnreadCount(0); return; }
+        const { count } = await supabase
+          .from("messages")
+          .select("id", { count: "exact", head: true })
+          .in("conversation_id", convs.map(c => c.id))
+          .neq("sender_id", user.id);
+        setUnreadCount(count || 0);
+      } else {
+        // Client: count messages from admin in their conversations
+        const { data: convs } = await supabase.from("conversations").select("id");
+        if (!convs?.length) { setUnreadCount(0); return; }
+        const { count } = await supabase
+          .from("messages")
+          .select("id", { count: "exact", head: true })
+          .in("conversation_id", convs.map(c => c.id))
+          .neq("sender_id", user.id);
+        setUnreadCount(count || 0);
+      }
+    };
+
+    fetchUnread();
+
+    // Subscribe to realtime messages
+    const channel = supabase
+      .channel("unread-messages")
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, () => fetchUnread())
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [user, type]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -109,7 +145,14 @@ const PortalLayout = ({ children, type }: PortalLayoutProps) => {
                   : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
               )}
             >
-              <Icon className={cn("w-[18px] h-[18px] shrink-0", active && "text-primary")} />
+              <div className="relative shrink-0">
+                <Icon className={cn("w-[18px] h-[18px]", active && "text-primary")} />
+                {item.icon === MessageSquare && unreadCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 bg-accent text-accent-foreground text-[9px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1">
+                    {unreadCount > 99 ? "99+" : unreadCount}
+                  </span>
+                )}
+              </div>
               {!collapsed && <span>{item.label}</span>}
             </Link>
           );
