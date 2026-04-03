@@ -32,12 +32,7 @@ const adminNavItems: NavItem[] = [
   { label: "Dashboard", to: "/admin", icon: LayoutDashboard },
   { label: "Clientes", to: "/admin/clients", icon: Users },
   { label: "Proyectos", to: "/admin/projects", icon: FolderKanban },
-  { label: "Fases e hitos", to: "/admin/phases", icon: Milestone },
-  { label: "Tareas", to: "/admin/tasks", icon: ListChecks },
-  { label: "Actualizaciones", to: "/admin/updates", icon: Bell },
-  { label: "Documentos", to: "/admin/documents", icon: Upload },
   { label: "Mensajes", to: "/admin/messages", icon: MessageSquare },
-  { label: "Notas internas", to: "/admin/notes", icon: StickyNote },
   { label: "API Keys", to: "/admin/api-keys", icon: Key },
 ];
 
