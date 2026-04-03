@@ -36,6 +36,7 @@ import AdminDocuments from "./pages/admin/AdminDocuments";
 import AdminMessages from "./pages/admin/AdminMessages";
 import AdminNotes from "./pages/admin/AdminNotes";
 import AdminApiKeys from "./pages/admin/AdminApiKeys";
+import AdminProjectDetail from "./pages/admin/AdminProjectDetail";
 
 const queryClient = new QueryClient();
 
