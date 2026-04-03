@@ -77,7 +77,26 @@ const AdminMessages = () => {
             >
               <div className="flex items-center justify-between gap-2">
                 <h4 className="font-semibold text-foreground text-sm truncate">{c.subject}</h4>
-                <StatusBadge status={c.status} />
+                <div className="flex items-center gap-1">
+                  <StatusBadge status={c.status} />
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0 text-destructive hover:text-destructive" onClick={e => e.stopPropagation()}>
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="glass-card border-border/30 bg-card" onClick={e => e.stopPropagation()}>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>¿Eliminar conversación?</AlertDialogTitle>
+                        <AlertDialogDescription>Se eliminarán todos los mensajes. Esta acción no se puede deshacer.</AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => deleteConversation(c.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Eliminar</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
               </div>
               <p className="text-xs text-muted-foreground mt-1">{(c as any).companies?.name} · {format(new Date(c.updated_at), "d MMM", { locale: es })}</p>
             </button>
