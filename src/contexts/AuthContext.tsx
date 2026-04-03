@@ -11,8 +11,9 @@ interface AuthContextType {
   isAdmin: boolean;
   isClient: boolean;
   loading: boolean;
-  profile: { full_name: string; email: string; phone: string; avatar_url: string } | null;
+  profile: { full_name: string; email: string; phone: string; avatar_url: string; must_change_password: boolean } | null;
   companyId: string | null;
+  mustChangePassword: boolean;
   signOut: () => Promise<void>;
 }
 
