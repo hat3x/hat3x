@@ -154,9 +154,12 @@ const AdminApiKeys = () => {
 
       {/* Usage instructions */}
       <div className="glass-card p-5 mb-6">
-        <h3 className="text-sm font-semibold text-foreground mb-2">Uso de la API</h3>
-        <p className="text-xs text-muted-foreground mb-3">
+        <h3 className="text-sm font-semibold text-foreground mb-2">Uso de la API — Acceso Global</h3>
+        <p className="text-xs text-muted-foreground mb-1">
           Endpoint base: <code className="bg-secondary/50 px-2 py-0.5 rounded text-primary text-[11px]">{baseUrl}</code>
+        </p>
+        <p className="text-xs text-muted-foreground mb-3">
+          Las API keys tienen acceso global a <strong>todos los proyectos</strong>. Usa filtros por query params para acotar resultados.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div>
@@ -168,23 +171,31 @@ const AdminApiKeys = () => {
               <li><code className="text-primary">/phases</code> — Fases</li>
               <li><code className="text-primary">/updates</code> — Actualizaciones</li>
               <li><code className="text-primary">/files</code> — Archivos</li>
+              <li><code className="text-primary">/companies</code> — Clientes (GET)</li>
             </ul>
           </div>
           <div>
             <p className="text-xs font-medium text-foreground mb-1">Métodos:</p>
             <ul className="text-xs text-muted-foreground space-y-0.5">
-              <li><code className="text-primary">GET</code> — Listar recursos</li>
+              <li><code className="text-primary">GET</code> — Listar todos</li>
               <li><code className="text-primary">POST</code> — Crear recurso</li>
               <li><code className="text-primary">PUT /recurso/&#123;id&#125;</code> — Actualizar</li>
+              <li><code className="text-primary">DELETE /recurso/&#123;id&#125;</code> — Eliminar</li>
+            </ul>
+            <p className="text-xs font-medium text-foreground mt-2 mb-1">Filtros (query params):</p>
+            <ul className="text-xs text-muted-foreground space-y-0.5">
+              <li><code className="text-primary">?project_id=...</code></li>
+              <li><code className="text-primary">?status=...</code></li>
+              <li><code className="text-primary">?company_id=...</code></li>
             </ul>
           </div>
           <div>
-            <p className="text-xs font-medium text-foreground mb-1">Ejemplo POST:</p>
+            <p className="text-xs font-medium text-foreground mb-1">Ejemplo — Crear proyecto:</p>
             <code className="text-[10px] text-muted-foreground block bg-secondary/30 p-2 rounded whitespace-pre-wrap">
 {`curl -X POST -H "x-api-key: hat3x_..." \\
   -H "Content-Type: application/json" \\
-  -d '{"name":"Mi tarea","project_id":"..."}' \\
-  ${baseUrl}/tasks`}
+  -d '{"name":"Nuevo proyecto","company_id":"..."}' \\
+  ${baseUrl}/projects`}
             </code>
           </div>
         </div>
