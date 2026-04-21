@@ -15,6 +15,13 @@ const fade = {
 
 const casos = [
   {
+    icon: PhoneCall,
+    title: "Llamadas perdidas y citas sin gestionar",
+    problema: "Muchas empresas pierden clientes y oportunidades porque no pueden atender todas las llamadas que reciben, sobre todo fuera del horario laboral.",
+    solucion: "Una recepcionista IA que atiende llamadas con voz natural, agenda citas en el calendario y recoge los datos del cliente automáticamente.",
+    resultado: "Ninguna llamada sin atender, citas organizadas y más oportunidades de venta aprovechadas.",
+  },
+  {
     icon: MessageCircle,
     title: "Demasiados mensajes de clientes",
     problema: "Los clientes escriben constantemente por WhatsApp o la web preguntando horarios, precios o información básica.",
