@@ -19,6 +19,7 @@ import {
   Headphones,
   Zap,
   TrendingUp,
+  PhoneCall,
 } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
