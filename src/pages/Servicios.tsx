@@ -69,6 +69,20 @@ function MetricCard({ icon: Icon, target, prefix = "", suffix = "", title, text 
 
 const servicios = [
 {
+  icon: PhoneCall,
+  title: "Recepcionista IA para llamadas",
+  desc: "Implantamos una recepcionista virtual con inteligencia artificial capaz de atender llamadas, agendar citas y recoger los datos de tus clientes 24 horas al día, los 7 días de la semana.",
+  incluye: [
+    "Atención automática de llamadas con voz natural",
+    "Agendado de citas en tu calendario",
+    "Recogida y registro de datos del cliente",
+    "Resolución de preguntas frecuentes por teléfono",
+    "Estas son solo algunas posibilidades. Cada proyecto se adapta a las necesidades de la empresa.",
+  ],
+  para: "Empresas que reciben muchas llamadas, pierden oportunidades cuando nadie puede atender o quieren agendar citas de forma automática.",
+  tiempo: "2–4 semanas"
+},
+{
   icon: Globe,
   title: "Creación de páginas web profesionales",
   desc: "Creamos páginas web modernas para que tu empresa tenga presencia online, genere confianza y atraiga nuevos clientes.",
