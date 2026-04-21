@@ -19,6 +19,7 @@ import {
   Headphones,
   Zap,
   TrendingUp,
+  PhoneCall,
 } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
@@ -138,6 +139,12 @@ function useTypewriter(speed = 38) {
 
 const services = [
   {
+    icon: PhoneCall,
+    title: "Recepcionista IA para llamadas",
+    desc: "Una recepcionista virtual que atiende llamadas, agenda citas y recoge los datos de tus clientes 24 horas al día.",
+    detail: "Atención de llamadas · Agenda de citas · Recogida de datos",
+  },
+  {
     icon: Globe,
     title: "Páginas web profesionales",
     desc: "Creamos webs modernas para que tu empresa genere confianza y atraiga nuevos clientes.",
@@ -176,6 +183,14 @@ const services = [
 ];
 
 const problems = [
+  {
+    icon: PhoneCall,
+    title: "Llamadas perdidas y citas sin gestionar",
+    points: [
+      "Cuando no podéis atender el teléfono, se pierden clientes y oportunidades de venta.",
+      "Una recepcionista IA puede atender llamadas, agendar citas y recoger los datos del cliente automáticamente.",
+    ],
+  },
   {
     icon: MessageCircle,
     title: "Demasiados mensajes y consultas",

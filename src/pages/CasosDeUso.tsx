@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MessageCircle, FileText, LayoutGrid, CalendarX, Monitor, Zap, RefreshCw, Clock, Inbox, Cog } from "lucide-react";
+import { ArrowRight, MessageCircle, FileText, LayoutGrid, CalendarX, Monitor, Zap, RefreshCw, Clock, Inbox, Cog, PhoneCall } from "lucide-react";
 
 const fade = {
   initial: { opacity: 0, y: 20 },
@@ -14,6 +14,13 @@ const fade = {
 };
 
 const casos = [
+  {
+    icon: PhoneCall,
+    title: "Llamadas perdidas y citas sin gestionar",
+    problema: "Muchas empresas pierden clientes y oportunidades porque no pueden atender todas las llamadas que reciben, sobre todo fuera del horario laboral.",
+    solucion: "Una recepcionista IA que atiende llamadas con voz natural, agenda citas en el calendario y recoge los datos del cliente automáticamente.",
+    resultado: "Ninguna llamada sin atender, citas organizadas y más oportunidades de venta aprovechadas.",
+  },
   {
     icon: MessageCircle,
     title: "Demasiados mensajes de clientes",
