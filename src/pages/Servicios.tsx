@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, ArrowRight, Zap, Clock, MessageCircle, TrendingUp } from "lucide-react";
+import { Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, ArrowRight, Zap, Clock, MessageCircle, TrendingUp, PhoneCall } from "lucide-react";
 import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
