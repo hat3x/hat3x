@@ -54,6 +54,11 @@ const plazos = [
 
 const Proceso = () =>
   <Layout>
+    <SEO
+      title="Proceso de trabajo HAT3X — De la idea a la implementación"
+      description="Metodología en 4 fases para implementar IA en tu empresa: análisis, diseño, desarrollo y puesta en marcha. Claro y sin tecnicismos."
+      path="/proceso"
+    />
     <section className="py-20 md:py-28">
       <div className="container mx-auto px-4 lg:px-8">
         <SectionHeader

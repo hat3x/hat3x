@@ -83,6 +83,11 @@ const casos = [
 const CasosDeUso = () => {
   return (
     <Layout>
+      <SEO
+        title="Casos de uso reales de IA para empresas | HAT3X"
+        description="Ejemplos prácticos: llamadas perdidas, atención al cliente, gestión de citas, automatización de tareas. Problema, solución y resultado."
+        path="/casos-de-uso"
+      />
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 lg:px-8">
           <SectionHeader
