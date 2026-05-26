@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Lightbulb, Rocket, Handshake, ArrowRight } from "lucide-react";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import SectionHeader from "@/components/SectionHeader";
 import GlassCard from "@/components/GlassCard";
 import { Button } from "@/components/ui/button";

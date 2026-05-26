@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle, Clock, Wrench, TrendingUp } from "lucide-react";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
 
