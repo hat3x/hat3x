@@ -22,6 +22,7 @@ import {
   PhoneCall,
 } from "lucide-react";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
 import Hat3xLogo from "@/components/Hat3xLogo";
@@ -348,8 +349,24 @@ function MetricCard({
 const Index = () => {
   const { text1, text2, showCursor } = useTypewriter(36);
 
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   return (
     <Layout>
+      <SEO
+        title="HAT3X — Consultoría IA para empresas"
+        description="Implementamos recepcionista IA, automatización, agentes y apps a medida que mejoran tu negocio desde el primer mes."
+        path="/"
+        jsonLd={faqLd}
+      />
       {/* HERO */}
       <section className="relative overflow-hidden py-20 md:py-32 lg:py-40">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />

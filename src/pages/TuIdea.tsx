@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Lightbulb, Rocket, Handshake, ArrowRight } from "lucide-react";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import SectionHeader from "@/components/SectionHeader";
 import GlassCard from "@/components/GlassCard";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,11 @@ const steps = [
 
 const TuIdea = () => (
   <Layout>
+    <SEO
+      title="Tu idea, nuestra tecnología | HAT3X"
+      description="Convierte tu idea de negocio en una solución real con IA. Cuéntanos la idea, la evaluamos y la hacemos realidad."
+      path="/tu-idea"
+    />
     <section className="relative overflow-hidden py-20 md:py-32">
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />
       <div className="container mx-auto px-4 lg:px-8 relative">

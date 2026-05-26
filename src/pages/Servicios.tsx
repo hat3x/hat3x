@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Globe, BrainCircuit, Cog, MessageSquare, LayoutDashboard, Headset, ArrowRight, Zap, Clock, MessageCircle, TrendingUp, PhoneCall } from "lucide-react";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
 import { Button } from "@/components/ui/button";
@@ -169,6 +170,19 @@ const servicios = [
 
 const Servicios = () =>
 <Layout>
+    <SEO
+      title="Servicios IA — Recepcionista, automatización y agentes | HAT3X"
+      description="Catálogo de servicios HAT3X: recepcionista IA 24/7, automatización de procesos, agentes conversacionales, apps a medida e integraciones."
+      path="/servicios"
+      jsonLd={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        serviceType: "Consultoría e implementación de Inteligencia Artificial",
+        provider: { "@type": "Organization", name: "HAT3X", url: "https://hat3x.lovable.app" },
+        areaServed: "ES",
+        description: "Recepcionista IA, automatización, agentes conversacionales, apps a medida e integraciones para empresas.",
+      }}
+    />
     <section className="py-20 md:py-28">
       <div className="container mx-auto px-4 lg:px-8">
         <SectionHeader

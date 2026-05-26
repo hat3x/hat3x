@@ -12,3 +12,9 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /portal
+Disallow: /login
+Disallow: /change-password
+
+Sitemap: https://hat3x.lovable.app/sitemap.xml

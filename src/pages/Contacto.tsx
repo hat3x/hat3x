@@ -2,10 +2,16 @@ import Layout from "@/components/Layout";
 import GlassCard from "@/components/GlassCard";
 import SectionHeader from "@/components/SectionHeader";
 import ContactForm from "@/components/ContactForm";
+import SEO from "@/components/SEO";
 import { Mail, Phone } from "lucide-react";
 
 const Contacto = () =>
 <Layout>
+    <SEO
+      title="Contacto — Hablemos de tu proyecto | HAT3X"
+      description="Cuéntanos tu proyecto de IA o automatización. Respondemos en 24–48h laborables, sin compromiso."
+      path="/contacto"
+    />
     <section className="py-20 md:py-28">
       <div className="container mx-auto px-4 lg:px-8">
         <SectionHeader
